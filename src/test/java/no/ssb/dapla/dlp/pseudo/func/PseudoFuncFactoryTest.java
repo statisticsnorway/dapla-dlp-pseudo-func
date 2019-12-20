@@ -41,9 +41,10 @@ class PseudoFuncFactoryTest {
     );
 
     @Test
-    void create() {
+    void exampleConfigs_create_shouldInstantiateSuccessfully() {
         GENERIC_CONFIG.forEach(config -> {
-            PseudoFuncFactory.create(config);
+            PseudoFunc func = PseudoFuncFactory.create(config);
+            assertThat(func).isNotNull();
         });
     }
 

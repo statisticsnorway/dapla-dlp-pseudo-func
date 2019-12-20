@@ -8,7 +8,7 @@ import no.ssb.dapla.dlp.pseudo.key.service.PseudoKeyServiceDummyImpl;
 
 public class FpeConfigService {
 
-    private final static PseudoKeyService pseudoKeyService = new PseudoKeyServiceDummyImpl();
+    private final PseudoKeyService pseudoKeyService = new PseudoKeyServiceDummyImpl();
 
     public FpeFuncConfig resolve(PseudoFuncConfig genericConfig) {
 

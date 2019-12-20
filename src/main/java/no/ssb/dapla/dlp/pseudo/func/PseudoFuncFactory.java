@@ -1,7 +1,10 @@
 package no.ssb.dapla.dlp.pseudo.func;
 
+import lombok.experimental.UtilityClass;
+
 import java.lang.reflect.Constructor;
 
+@UtilityClass
 public class PseudoFuncFactory {
     public static <T extends PseudoFuncConfig> PseudoFunc create(T config) {
         try {

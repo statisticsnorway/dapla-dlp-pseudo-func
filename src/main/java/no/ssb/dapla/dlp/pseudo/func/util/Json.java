@@ -20,7 +20,7 @@ public class Json {
             return OBJECT_MAPPER.readValue(json, type);
         }
         catch (IOException e) {
-            throw new RuntimeException("Error mapping JSON to " + type.getSimpleName() + " object", e);
+            throw new JsonException("Error mapping JSON to " + type.getSimpleName() + " object", e);
         }
     }
 
@@ -34,7 +34,7 @@ public class Json {
             return OBJECT_MAPPER.readValue(json, type);
         }
         catch (IOException e) {
-            throw new RuntimeException("Error mapping JSON to " + type.getType() + " object", e);
+            throw new JsonException("Error mapping JSON to " + type.getType() + " object", e);
         }
     }
 
@@ -52,7 +52,7 @@ public class Json {
         try {
             return OBJECT_MAPPER.writeValueAsString(object);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException("Error mapping " +  object.getClass().getSimpleName() + " object to JSON", e);
+            throw new JsonException("Error mapping " +  object.getClass().getSimpleName() + " object to JSON", e);
         }
     }
 
@@ -63,7 +63,13 @@ public class Json {
         try {
             return OBJECT_MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(object);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException("Error mapping " +  object.getClass().getSimpleName() + " object to JSON", e);
+            throw new JsonException("Error mapping " +  object.getClass().getSimpleName() + " object to JSON", e);
+        }
+    }
+
+    public static class JsonException extends RuntimeException {
+        public JsonException(String message, Throwable cause) {
+            super(message, cause);
         }
     }
 }

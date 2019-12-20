@@ -7,8 +7,7 @@
   <groupId>no.ssb.dapla.dlp.pseudo.func</groupId>
   <artifactId>dapla-dlp-pseudo-func</artifactId>
   <version>0.1.0-SNAPSHOT</version>
-
-  <name>Dapla Pseudonymization Functions</name>
+  <name>dapla-dlp-pseudo-func</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

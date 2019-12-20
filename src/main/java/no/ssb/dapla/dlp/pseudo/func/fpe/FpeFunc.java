@@ -46,7 +46,8 @@ public class FpeFunc extends AbstractPseudoFunc {
         return output;
     }
 
-    // TODO: Implement
+    // TODO: Implement this, some rationale here:
+    // https://crypto.stackexchange.com/questions/10903/what-are-the-uses-of-tweaks-in-block-ciphers
     byte[] tweakOf(PseudoFuncInput input) {
         return new byte[0];
     }

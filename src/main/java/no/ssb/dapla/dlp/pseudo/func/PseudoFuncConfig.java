@@ -44,8 +44,6 @@ public class PseudoFuncConfig {
     }
 
     public <T> T getRequired(String paramName, Class<T> clazz) {
-        Optional<T> optional = get(paramName, clazz);
-
         return get(paramName, clazz)
           .orElseThrow(() -> new PseudoFuncMissingParamException(paramName));
     }

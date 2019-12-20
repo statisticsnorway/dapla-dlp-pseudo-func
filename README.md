@@ -2,6 +2,8 @@
 
 > Data pseudonymization functions used by Statistics Norway (SSB)
 
+[![Build Status](https://drone.prod-bip-ci.ssb.no/api/badges/statisticsnorway/dapla-dlp-pseudo-func/status.svg)](https://drone.prod-bip-ci.ssb.no/statisticsnorway/dapla-dlp-pseudo-func)
+
 Pseudonymization is a data management and de-identification procedure by which personally identifiable information fields within a data record are replaced by one or more artificial identifiers, or pseudonyms. A single pseudonym for each replaced field or collection of replaced fields makes the data record less identifiable while remaining suitable for data analysis and data processing.
 
 This lib contains functions that can be used to implement data pseudonymization.

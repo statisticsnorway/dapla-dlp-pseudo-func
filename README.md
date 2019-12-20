@@ -31,21 +31,21 @@ The following exemplifies how a pseudo function config can be described in JSON:
 ```
 [
 	{
-		"name": "fpe-alphanumeric",
-		"impl": "no.ssb.dapla.dlp.pseudo.func.fpe",
+		"name": "fpe-alphanumeric-1",
+		"impl": "no.ssb.dapla.dlp.pseudo.func.FpeFunc",
 		"keyId": "411f2af1-7588-4c7f-95e4-1c15d82ef202",
 		"alphabet": "alphanumeric+whitespace"
 	},
 	{
-		"name": "fpe-digits",
-		"impl": "no.ssb.dapla.dlp.pseudo.func.fpe",
+		"name": "fpe-digits-1",
+		"impl": "no.ssb.dapla.dlp.pseudo.func.FpeFunc",
 		"keyId": "411f2af1-7588-4c7f-95e4-1c15d82ef202",
 		"alphabet": "digits"
 	},
 	{	
-		"name": "fpe-custom",
+		"name": "fpe-custom-1",
 		"impl": "no.ssb.dapla.dlp.pseudo.func.FpeFunc",
-		"keyId": "blah",
+		"keyId": "411f2af1-7588-4c7f-95e4-1c15d82ef202",
 		"alphabet": "abcdefghij123_ "
 	}
 ] 
@@ -65,14 +65,14 @@ registry.init(configJson)
 
 ### Invoke pseudonymization function
 ```java
-PseudoFunc func = registry.get("fpe-alphanumeric");
+PseudoFunc func = registry.get("fpe-alphanumeric-1");
 PseudoFuncInput input = PseudoFuncInput.of("Ken sent me");
 PseudoFuncOutput output = func.apply(input); // '2y RazFwxQM'
 ```
 
 ### Restore to original value ("depseudonymize")
 ```java
-PseudoFunc func = registry.get("fpe-alphanumeric");
+PseudoFunc func = registry.get("fpe-alphanumeric-1");
 PseudoFuncInput input = PseudoFuncInput.of("2y RazFwxQM");
 PseudoFuncOutput output = func.restore(input); // 'Ken sent me'
 ```

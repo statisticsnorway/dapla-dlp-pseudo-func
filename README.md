@@ -50,13 +50,9 @@ The following exemplifies how a pseudo function config can be described in JSON:
 ```
 
 The `name` and `impl` properties are mandatory for all functions.
-Other properties are dependent on the implentation underneath. In the above,
-the `FpeFunc` requires additional properties `keyId` and `alphabet`. Notice that
-the `keyId` is just a reference to a key that can be looked up via a standalone
-service.
-
-Pseudonymized datasets will (via metadata) reference pseudo functions by name
-to describe how certain columns in a dataset has been pseudonymized.
+Other properties are dependent on the implentation. In the above,
+the `FpeFunc` function requires that additional properties `keyId` and `alphabet`
+must be set. 
 
 ### Initialize function registry
 ```java

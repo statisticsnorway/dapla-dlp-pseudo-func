@@ -1,0 +1,103 @@
+kind: pipeline
+name: default
+
+steps:
+
+  - name: authenticate
+    image: robertstettner/drone-mvn-auth
+    pull: always
+    settings:
+      servers:
+        from_secret: maven_servers
+      profiles:
+        - id: ssb-bip
+          repositories:
+            - id: ssb-bip-releases
+              url: https://nexus.prod-bip-ci.ssb.no/repository/maven-releases/
+              layout: default
+            - id: ssb-bip-snapshots
+              url: https://nexus.prod-bip-ci.ssb.no/repository/maven-snapshots/
+              layout: default
+
+  - name: build
+    image: maven:3-jdk-11
+    commands:
+      - mvn compile -P ssb-bip -DskipTests=true -Dmaven.javadoc.skip=true --batch-mode --global-settings settings.xml
+    environment:
+      MAVEN_HOME: /drone/src/.m2
+      M2_HOME: /drone/src/.m2
+    depends_on:
+      - authenticate
+
+  - name: test
+    image: maven:3-jdk-11
+    commands:
+      - mvn verify test -P ssb-bip,coverage --batch-mode --global-settings settings.xml
+    environment:
+      MAVEN_HOME: /drone/src/.m2
+      M2_HOME: /drone/src/.m2
+    depends_on:
+      - build
+
+  - name: sonarqube
+    image: maven:3-jdk-11
+    commands:
+      - mvn -X -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_PROJECTKEY sonar:sonar -P ssb-bip,coverage -Dmaven.javadoc.skip=true --batch-mode --global-settings settings.xml
+    environment:
+      SONAR_HOST_URL: https://sonarqube.prod-bip-ci.ssb.no
+      SONAR_PROJECTKEY:
+        from_secret: sonar_token
+      MAVEN_HOME: /drone/src/.m2
+      M2_HOME: /drone/src/.m2
+    depends_on:
+      - test
+
+  - name: publish-maven
+    image: maven:3-jdk-11
+    commands:
+      - mvn clean deploy -P ssb-bip, -DskipTests=true --batch-mode --global-settings settings.xml
+    when:
+      ref:
+        - refs/tags/*
+    environment:
+      MAVEN_HOME: /drone/src/.m2
+      M2_HOME: /drone/src/.m2
+    depends_on:
+      - sonarqube
+
+  - name: slack
+    image: plugins/slack
+    settings:
+      webhook:
+        from_secret: slack_webhook_url
+      channel: bip-ci-test
+    when:
+      status: [ success, failure ]
+    depends_on:
+      - publish-maven
+
+---
+kind: secret
+name: maven_servers
+get:
+  path: drone-maven-servers
+  name: ssb-bip-maven-servers
+
+---
+kind: secret
+name: slack_webhook_url
+get:
+  path: drone-slack-webhook-url
+  name: slack-webhook-url
+---
+kind: secret
+name: sonar_host
+get:
+  path: drone-sonarqube-configuration
+  name: url
+---
+kind: secret
+name: sonar_token
+get:
+  path: drone-sonarqube-configuration
+  name: token

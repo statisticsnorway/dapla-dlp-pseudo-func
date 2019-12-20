@@ -18,20 +18,16 @@ public class PseudoFuncConfig {
 
     private final Map<String, Object> config = new HashMap<>();
 
-    /** Construct from map */
+    /** Construct from Map */
     public PseudoFuncConfig(Map<String, Object> params) {
         config.putAll(params);
         funcName = getRequired(Param.FUNC_NAME, String.class);
         funcImpl = getRequired(Param.FUNC_IMPL, String.class);
     }
 
-    /** Construct from json */
+    /** Construct from JSON */
     public PseudoFuncConfig(String json) {
         this(Json.toGenericMap(json));
-    }
-
-    public boolean isDefined(String paramName) {
-        return config.containsKey(paramName);
     }
 
     public <T> Optional<T> get(String paramName, Class<T> clazz) {

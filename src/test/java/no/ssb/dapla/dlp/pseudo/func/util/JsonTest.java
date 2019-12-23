@@ -2,16 +2,9 @@ package no.ssb.dapla.dlp.pseudo.func.util;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Value;
-import no.ssb.dapla.dlp.pseudo.func.PseudoFuncConfig;
-import no.ssb.dapla.dlp.pseudo.func.PseudoFuncException;
-import no.ssb.dapla.dlp.pseudo.func.PseudoFuncFactory;
-import no.ssb.dapla.dlp.pseudo.func.fpe.AlphabetType;
-import no.ssb.dapla.dlp.pseudo.func.fpe.FpeFunc;
-import no.ssb.dapla.dlp.pseudo.func.fpe.FpeFuncConfig;
 import no.ssb.dapla.dlp.pseudo.func.util.Json.JsonException;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;

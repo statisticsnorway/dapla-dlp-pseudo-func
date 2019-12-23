@@ -4,6 +4,7 @@ import lombok.NoArgsConstructor;
 import lombok.Value;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,6 +17,9 @@ public class PseudoFuncOutput {
     public PseudoFuncOutput(Object v) {
         if (v instanceof Collection) {
             values.addAll((Collection) v);
+        }
+        else if (v.getClass().isArray()) {
+            values.addAll(Arrays.asList((Object[]) v));
         }
         else {
             values.add(v);

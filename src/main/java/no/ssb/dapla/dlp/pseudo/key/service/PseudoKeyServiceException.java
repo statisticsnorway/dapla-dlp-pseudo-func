@@ -6,8 +6,4 @@ public class PseudoKeyServiceException extends RuntimeException {
         super(message);
     }
 
-    public PseudoKeyServiceException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
 }

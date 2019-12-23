@@ -12,6 +12,7 @@ It is important to note that pseudonymization is not the same as anonymization. 
 
 The library is currently in a "pre-alpha" stage. We're experimenting with the architecture related to how and when psedonymization is being applied in our data management platform. Also, currently there are only a few and simplistic functions in this library. Breaking changes should be expected.
 
+
 ## Installation
 
 Maven coordinates:
@@ -89,9 +90,10 @@ PseudoFunc func = PseudoFuncFactory.create(config);
 
 For more usage examples, have a look at the [tests](https://github.com/statisticsnorway/dapla-dlp-pseudo-func/tree/master/tests).
 
+
 ## Development
 
-Run `make help` to see common development commands.
+From the CLI, run `make help` to see common development commands.
 
 ```
 build-mvn                      Build the project and install to you local maven repo
@@ -99,6 +101,11 @@ test                           Run tests
 release-dryrun                 Simulate a release in order to detect any issues
 release                        Release a new version. Update POMs and tag the new version in git.
 ```
+
+E.g. to run tests, execute `make test`.
+
+If you're on windows, you might need to install make first. Using [chocolatey](https://chocolatey.org/), you can do `choco install make`.
+
 
 ## Contributing
 1. Fork it (https://github.com/statisticsnorway/dapla-dlp-pseudo-func/fork)

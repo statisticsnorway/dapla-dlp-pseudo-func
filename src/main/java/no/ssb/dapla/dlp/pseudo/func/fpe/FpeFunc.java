@@ -16,6 +16,10 @@ public class FpeFunc extends AbstractPseudoFunc {
     private final FormatPreservingEncryption fpe;
     private final FpeConfigService fpeConfigService = new FpeConfigService();
 
+    // We should consider implementing a more sophisticated tweak, see:
+    // https://crypto.stackexchange.com/questions/10903/what-are-the-uses-of-tweaks-in-block-ciphers
+    private static final byte[] STATIC_TWEAK = new byte[0];
+
     public FpeFunc(PseudoFuncConfig genericConfig) {
         super(genericConfig.getFuncName());
         config = fpeConfigService.resolve(genericConfig);
@@ -32,7 +36,7 @@ public class FpeFunc extends AbstractPseudoFunc {
     public PseudoFuncOutput apply(PseudoFuncInput input) {
         PseudoFuncOutput output = new PseudoFuncOutput();
         for (String plain : input.getStringValues()) {
-            output.add(fpe.encrypt(plain, tweakOf(input)));
+            output.add(fpe.encrypt(plain, STATIC_TWEAK));
         }
         return output;
     }
@@ -41,15 +45,9 @@ public class FpeFunc extends AbstractPseudoFunc {
     public PseudoFuncOutput restore(PseudoFuncInput input) {
         PseudoFuncOutput output = new PseudoFuncOutput();
         for (String plain : input.getStringValues()) {
-            output.add(fpe.decrypt(plain, tweakOf(input)));
+            output.add(fpe.decrypt(plain, STATIC_TWEAK));
         }
         return output;
-    }
-
-    // TODO: Implement this, some rationale here:
-    // https://crypto.stackexchange.com/questions/10903/what-are-the-uses-of-tweaks-in-block-ciphers
-    byte[] tweakOf(PseudoFuncInput input) {
-        return new byte[0];
     }
 
 }

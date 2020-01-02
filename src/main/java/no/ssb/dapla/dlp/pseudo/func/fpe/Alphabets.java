@@ -1,5 +1,6 @@
 package no.ssb.dapla.dlp.pseudo.func.fpe;
 
+import com.google.common.collect.ImmutableMap;
 import com.idealista.fpe.config.Alphabet;
 import lombok.experimental.UtilityClass;
 import no.ssb.dapla.dlp.pseudo.func.PseudoFuncException;
@@ -18,65 +19,75 @@ import static no.ssb.dapla.dlp.pseudo.func.fpe.AlphabetType.DIGITS_WHITESPACE_PU
 @UtilityClass
 class Alphabets {
 
-    private Map<String, Alphabet> DEFAULT_ALPHABETS = Map.of(
-      ALPHANUMERIC, newAlphabet(new StringBuilder()
+    private Map<String, Alphabet> DEFAULT_ALPHABETS = ImmutableMap.<String, Alphabet>builder()
+        .put(
+          ALPHANUMERIC, newAlphabet(new StringBuilder()
+            .append(CharacterGroup.ASCII_LOWERCASE)
+            .append(CharacterGroup.ASCII_LOWERCASE_INTERNATIONAL)
+            .append(CharacterGroup.ASCII_UPPERCASE)
+            .append(CharacterGroup.ASCII_UPPERCASE_INTERNATIONAL)
+            .append(CharacterGroup.DIGITS)
+            .toString()))
+
+        .put(
+          ALPHANUMERIC_WHITESPACE, newAlphabet(new StringBuilder()
+            .append(CharacterGroup.ASCII_LOWERCASE)
+            .append(CharacterGroup.ASCII_LOWERCASE_INTERNATIONAL)
+            .append(CharacterGroup.ASCII_UPPERCASE)
+            .append(CharacterGroup.ASCII_UPPERCASE_INTERNATIONAL)
+            .append(CharacterGroup.DIGITS)
+            .append(CharacterGroup.WHITESPACE)
+            .toString()))
+
+        .put(
+          ALPHANUMERIC_WHITESPACE_PUNCTUATION, newAlphabet(new StringBuilder()
+            .append(CharacterGroup.ASCII_LOWERCASE)
+            .append(CharacterGroup.ASCII_LOWERCASE_INTERNATIONAL)
+            .append(CharacterGroup.ASCII_UPPERCASE)
+            .append(CharacterGroup.ASCII_UPPERCASE_INTERNATIONAL)
+            .append(CharacterGroup.DIGITS)
+            .append(CharacterGroup.WHITESPACE)
+            .append(CharacterGroup.PUNCTUATION)
+            .toString()))
+
+      .put(
+        ALPHANUMERIC_WHITESPACE_PUNCTUATION_SPECIAL, newAlphabet(new StringBuilder()
         .append(CharacterGroup.ASCII_LOWERCASE)
         .append(CharacterGroup.ASCII_LOWERCASE_INTERNATIONAL)
         .append(CharacterGroup.ASCII_UPPERCASE)
         .append(CharacterGroup.ASCII_UPPERCASE_INTERNATIONAL)
-        .append(CharacterGroup.DIGITS)
-        .toString()),
-
-      ALPHANUMERIC_WHITESPACE, newAlphabet(new StringBuilder()
-        .append(CharacterGroup.ASCII_LOWERCASE)
-        .append(CharacterGroup.ASCII_LOWERCASE_INTERNATIONAL)
-        .append(CharacterGroup.ASCII_UPPERCASE)
-        .append(CharacterGroup.ASCII_UPPERCASE_INTERNATIONAL)
-        .append(CharacterGroup.DIGITS)
-        .append(CharacterGroup.WHITESPACE)
-        .toString()),
-
-      ALPHANUMERIC_WHITESPACE_PUNCTUATION, newAlphabet(new StringBuilder()
-        .append(CharacterGroup.ASCII_LOWERCASE)
-        .append(CharacterGroup.ASCII_LOWERCASE_INTERNATIONAL)
-        .append(CharacterGroup.ASCII_UPPERCASE)
-        .append(CharacterGroup.ASCII_UPPERCASE_INTERNATIONAL)
-        .append(CharacterGroup.DIGITS)
-        .append(CharacterGroup.WHITESPACE)
-        .append(CharacterGroup.PUNCTUATION)
-        .toString()),
-
-      ALPHANUMERIC_WHITESPACE_PUNCTUATION_SPECIAL, newAlphabet(new StringBuilder()
-        .append(CharacterGroup.ASCII_LOWERCASE)
-        .append(CharacterGroup.ASCII_LOWERCASE_INTERNATIONAL)
-        .append(CharacterGroup.ASCII_UPPERCASE)
-        .append(CharacterGroup.ASCII_UPPERCASE_INTERNATIONAL)
-        .append(CharacterGroup.DIGITS)
-        .append(CharacterGroup.WHITESPACE)
-        .append(CharacterGroup.PUNCTUATION)
-        .append(CharacterGroup.SPECIAL)
-        .toString()),
-
-      DIGITS, newAlphabet(CharacterGroup.DIGITS),
-
-      DIGITS_WHITESPACE, newAlphabet(new StringBuilder()
-        .append(CharacterGroup.DIGITS)
-        .append(CharacterGroup.WHITESPACE)
-        .toString()),
-
-      DIGITS_WHITESPACE_PUNCTUATION, newAlphabet(new StringBuilder()
-        .append(CharacterGroup.DIGITS)
-        .append(CharacterGroup.WHITESPACE)
-        .append(CharacterGroup.PUNCTUATION)
-        .toString()),
-
-      DIGITS_WHITESPACE_PUNCTUATION_SPECIAL, newAlphabet(new StringBuilder()
         .append(CharacterGroup.DIGITS)
         .append(CharacterGroup.WHITESPACE)
         .append(CharacterGroup.PUNCTUATION)
         .append(CharacterGroup.SPECIAL)
-        .toString())
-    );
+        .toString()))
+
+      .put(
+        DIGITS, newAlphabet(CharacterGroup.DIGITS)
+      )
+
+      .put(
+        DIGITS_WHITESPACE, newAlphabet(new StringBuilder()
+            .append(CharacterGroup.DIGITS)
+            .append(CharacterGroup.WHITESPACE)
+            .toString()))
+
+      .put(
+        DIGITS_WHITESPACE_PUNCTUATION, newAlphabet(new StringBuilder()
+            .append(CharacterGroup.DIGITS)
+            .append(CharacterGroup.WHITESPACE)
+            .append(CharacterGroup.PUNCTUATION)
+            .toString()))
+
+      .put(
+        DIGITS_WHITESPACE_PUNCTUATION_SPECIAL, newAlphabet(new StringBuilder()
+            .append(CharacterGroup.DIGITS)
+            .append(CharacterGroup.WHITESPACE)
+            .append(CharacterGroup.PUNCTUATION)
+            .append(CharacterGroup.SPECIAL)
+            .toString()))
+
+      .build();
 
     /**
      * Return an alphabet - either a default (defined in @{@link AlphabetType}) or

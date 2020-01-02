@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -19,7 +20,7 @@ public class PseudoFuncRegistry {
 
     public void init(String json) {
         try {
-            List<Map<String, Object>> configMaps = Json.toObject(new TypeReference<>() {}, json);
+            List<Map<String, Object>> configMaps = Json.toObject(new TypeReference<List<Map<String, Object>>>() {}, json);
             List<PseudoFuncConfig> configs = configMaps.stream().map(PseudoFuncConfig::new).collect(Collectors.toList());
             init(configs);
         }
@@ -49,5 +50,9 @@ public class PseudoFuncRegistry {
         public PseudoFuncNotFoundException(String funcName) {
             super("Unable to find pseudo function '" + funcName + "'");
         }
+    }
+
+    public Set<String> registeredFunctions() {
+        return funcs.keySet();
     }
 }

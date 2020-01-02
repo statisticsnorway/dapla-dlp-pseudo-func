@@ -1,5 +1,7 @@
 package no.ssb.dapla.dlp.pseudo.func.fpe;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import no.ssb.dapla.dlp.pseudo.func.PseudoFunc;
 import no.ssb.dapla.dlp.pseudo.func.PseudoFuncConfig;
 import no.ssb.dapla.dlp.pseudo.func.PseudoFuncFactory;
@@ -18,7 +20,7 @@ class FpeFuncTest {
     void alphanumeric_fpe_shouldTransformAndRestore() {
         String originalVal = "Ken sent me";
         String expectedVal = "2y RãzFwxQM";
-        transformAndRestore(originalVal, expectedVal, new PseudoFuncConfig(Map.of(
+        transformAndRestore(originalVal, expectedVal, new PseudoFuncConfig(ImmutableMap.of(
           PseudoFuncConfig.Param.FUNC_NAME, "fpe-alphanumeric-test",
           PseudoFuncConfig.Param.FUNC_IMPL, FpeFunc.class.getName(),
           FpeFuncConfig.Param.ALPHABET, AlphabetType.ALPHANUMERIC_WHITESPACE,
@@ -28,9 +30,9 @@ class FpeFuncTest {
 
     @Test
     void multipleAlphanumeric_fpe_shouldTransformAndRestore() {
-        List originalVal = List.of("Ken sent me...", "Kilroy was here!");
-        List expectedVal = List.of("{IX$};rözS$3??", ",dj0Ãl(]|0=t3%Z<");
-        transformAndRestore(originalVal, expectedVal, new PseudoFuncConfig(Map.of(
+        List originalVal = ImmutableList.of("Ken sent me...", "Kilroy was here!");
+        List expectedVal = ImmutableList.of("{IX$};rözS$3??", ",dj0Ãl(]|0=t3%Z<");
+        transformAndRestore(originalVal, expectedVal, new PseudoFuncConfig(ImmutableMap.of(
           PseudoFuncConfig.Param.FUNC_NAME, "fpe-alphanumeric-test",
           PseudoFuncConfig.Param.FUNC_IMPL, FpeFunc.class.getName(),
           FpeFuncConfig.Param.ALPHABET, AlphabetType.ALPHANUMERIC_WHITESPACE_PUNCTUATION,
@@ -42,7 +44,7 @@ class FpeFuncTest {
     void digits_fpe_shouldTransformAndRestore() {
         String originalVal = "01010050134";
         String expectedVal = "08226599165";
-        transformAndRestore(originalVal, expectedVal, new PseudoFuncConfig(Map.of(
+        transformAndRestore(originalVal, expectedVal, new PseudoFuncConfig(ImmutableMap.of(
           PseudoFuncConfig.Param.FUNC_NAME, "fpe-digits-test",
           PseudoFuncConfig.Param.FUNC_IMPL, FpeFunc.class.getName(),
           FpeFuncConfig.Param.ALPHABET, AlphabetType.DIGITS,
@@ -54,7 +56,7 @@ class FpeFuncTest {
     void customAlphabet_fpe_shouldTransformAndRestore() {
         String originalVal = "AABBCC";
         String expectedVal = "CAAHJE";
-        transformAndRestore(originalVal, expectedVal, new PseudoFuncConfig(Map.of(
+        transformAndRestore(originalVal, expectedVal, new PseudoFuncConfig(ImmutableMap.of(
               PseudoFuncConfig.Param.FUNC_NAME, "fpe-custom-test",
               PseudoFuncConfig.Param.FUNC_IMPL, FpeFunc.class.getName(),
               FpeFuncConfig.Param.ALPHABET, "ABCDEFGHIJ",
@@ -65,8 +67,8 @@ class FpeFuncTest {
     private void transformAndRestore(Object originalVal, Object expectedVal, PseudoFuncConfig config) {
         PseudoFunc func = PseudoFuncFactory.create(config);
 
-        Iterable expectedElements = (expectedVal instanceof Iterable) ? (Iterable) expectedVal : List.of(expectedVal);
-        Iterable originalElements = (originalVal instanceof Iterable) ? (Iterable) originalVal : List.of(originalVal);
+        Iterable expectedElements = (expectedVal instanceof Iterable) ? (Iterable) expectedVal : ImmutableList.of(expectedVal);
+        Iterable originalElements = (originalVal instanceof Iterable) ? (Iterable) originalVal : ImmutableList.of(originalVal);
 
 
         PseudoFuncOutput pseudonymized = func.apply(PseudoFuncInput.of(originalVal));

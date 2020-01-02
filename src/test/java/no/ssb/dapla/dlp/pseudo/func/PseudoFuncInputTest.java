@@ -1,5 +1,6 @@
 package no.ssb.dapla.dlp.pseudo.func;
 
+import com.google.common.collect.ImmutableList;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -15,7 +16,7 @@ class PseudoFuncInputTest {
 
     @Test
     void listOfObjects_newPseudoFuncOutput_shouldPopulateInternalListProperly() {
-        assertThat(PseudoFuncInput.of(List.of("foo", "bar")).getStringValues()).containsExactly("foo", "bar");
+        assertThat(PseudoFuncInput.of(ImmutableList.of("foo", "bar")).getStringValues()).containsExactly("foo", "bar");
     }
 
     @Test

@@ -1,5 +1,6 @@
 package no.ssb.dapla.dlp.pseudo.key.service;
 
+import com.google.common.collect.ImmutableMap;
 import no.ssb.dapla.dlp.pseudo.key.PseudoKey;
 
 import java.util.Map;
@@ -11,7 +12,7 @@ public class PseudoKeyServiceDummyImpl implements PseudoKeyService {
     static final String DUMMY_KEY2 = "01DWENCY4JP5VFWKTTS0KBA8QZ";
     static final String DUMMY_KEY3 = "01DWENDBC2EHDSWX52JDQFA1BG";
 
-    private final Map<String, PseudoKey> keys = Map.of(
+    private final Map<String, PseudoKey> keys = ImmutableMap.of(
       DUMMY_KEY1, new PseudoKey("8weo9VlQTuPqxjVWaHAupOdCwNpn4CFz"),
       DUMMY_KEY2, new PseudoKey("kz3Z3XIMMVdZ7q9VHSQjWoNIMbGBT1cI"),
       DUMMY_KEY3, new PseudoKey("ERLWBPuZXJLig4THqAIr1SxPfArkpnYz")

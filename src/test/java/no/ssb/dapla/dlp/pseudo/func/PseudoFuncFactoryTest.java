@@ -1,5 +1,7 @@
 package no.ssb.dapla.dlp.pseudo.func;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import no.ssb.dapla.dlp.pseudo.func.fpe.AlphabetType;
 import no.ssb.dapla.dlp.pseudo.func.fpe.FpeFunc;
 import no.ssb.dapla.dlp.pseudo.func.fpe.FpeFuncConfig;
@@ -17,22 +19,22 @@ class PseudoFuncFactoryTest {
 
     private final static String KEY_ID = "01DWENC90WW9K41EN0QS2Q23X4";
 
-    private final static List<PseudoFuncConfig> GENERIC_CONFIG = List.of(
-      new PseudoFuncConfig(Map.of(
+    private final static List<PseudoFuncConfig> GENERIC_CONFIG = ImmutableList.of(
+      new PseudoFuncConfig(ImmutableMap.of(
         PseudoFuncConfig.Param.FUNC_NAME, "fpe-digits",
         PseudoFuncConfig.Param.FUNC_IMPL, FpeFunc.class.getName(),
         FpeFuncConfig.Param.ALPHABET, AlphabetType.DIGITS,
         FpeFuncConfig.Param.KEY_ID, KEY_ID
       )),
 
-      new PseudoFuncConfig(Map.of(
+      new PseudoFuncConfig(ImmutableMap.of(
         PseudoFuncConfig.Param.FUNC_NAME, "fpe-alphanumeric+whitespace",
         PseudoFuncConfig.Param.FUNC_IMPL, FpeFunc.class.getName(),
         FpeFuncConfig.Param.ALPHABET, AlphabetType.ALPHANUMERIC_WHITESPACE,
         FpeFuncConfig.Param.KEY_ID, "01DWENC90WW9K41EN0QS2Q23X4"
       )),
 
-      new PseudoFuncConfig(Map.of(
+      new PseudoFuncConfig(ImmutableMap.of(
         PseudoFuncConfig.Param.FUNC_NAME, "fpe-alphanumeric+whitespace",
         PseudoFuncConfig.Param.FUNC_IMPL, FpeFunc.class.getName(),
         FpeFuncConfig.Param.ALPHABET, AlphabetType.ALPHANUMERIC_WHITESPACE,
@@ -52,7 +54,7 @@ class PseudoFuncFactoryTest {
     void missingParam_create_shouldFailWithProperError() {
         PseudoFuncException e;
         e = assertThrows(PseudoFuncException.class, () -> {
-            PseudoFuncConfig config = new PseudoFuncConfig(Map.of(
+            PseudoFuncConfig config = new PseudoFuncConfig(ImmutableMap.of(
               PseudoFuncConfig.Param.FUNC_IMPL, FpeFunc.class.getName(),
               FpeFuncConfig.Param.ALPHABET, AlphabetType.ALPHANUMERIC_WHITESPACE,
               FpeFuncConfig.Param.KEY_ID, KEY_ID
@@ -62,7 +64,7 @@ class PseudoFuncFactoryTest {
         assertThat(e.getMessage()).isEqualTo("Missing pseudo func param 'name'");
 
         e = assertThrows(PseudoFuncException.class, () -> {
-            PseudoFuncConfig config = new PseudoFuncConfig(Map.of(
+            PseudoFuncConfig config = new PseudoFuncConfig(ImmutableMap.of(
               PseudoFuncConfig.Param.FUNC_NAME, "fpe-alphanumeric+whitespace",
               FpeFuncConfig.Param.ALPHABET, AlphabetType.ALPHANUMERIC_WHITESPACE,
               FpeFuncConfig.Param.KEY_ID, KEY_ID
@@ -72,7 +74,7 @@ class PseudoFuncFactoryTest {
         assertThat(e.getMessage()).isEqualTo("Missing pseudo func param 'impl'");
 
         e = assertThrows(PseudoFuncException.class, () -> {
-            PseudoFuncConfig config = new PseudoFuncConfig(Map.of(
+            PseudoFuncConfig config = new PseudoFuncConfig(ImmutableMap.of(
               PseudoFuncConfig.Param.FUNC_NAME, "fpe-alphanumeric+whitespace",
               PseudoFuncConfig.Param.FUNC_IMPL, FpeFunc.class.getName(),
               FpeFuncConfig.Param.KEY_ID, KEY_ID

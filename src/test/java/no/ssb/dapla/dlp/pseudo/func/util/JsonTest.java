@@ -1,6 +1,8 @@
 package no.ssb.dapla.dlp.pseudo.func.util;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -45,12 +47,12 @@ class JsonTest {
 
     @Test
     void nestedMap_shouldConvertToAndFromJson() throws Exception {
-        Map<String, Object> obj = Map.of(
+        Map<String, Object> obj = ImmutableMap.of(
           "someInt", 1,
           "someString", "blah",
           "someBool", true,
-          "someList", List.of(1, 2, 3),
-          "someMap", Map.of("one", 1)
+          "someList", ImmutableList.of(1, 2, 3),
+          "someMap", ImmutableMap.of("one", 1)
         );
 
         String json = Json.from(obj);
@@ -59,15 +61,15 @@ class JsonTest {
           json, JSONCompareMode.LENIENT
         );
 
-        Map<String, Object> obj2 = Json.toObject(new TypeReference<>() {}, json);
+        Map<String, Object> obj2 = Json.toObject(new TypeReference<Map<String, Object>>() {}, json);
         assertThat(obj).isEqualTo(obj2);
     }
 
     @Test
     void arrayOfNestedMaps_shouldConvertToAndFromJson() throws Exception {
-        List<Map<String,Object>> obj = List.of(
-          Map.of("foo", "foo val"),
-          Map.of("bar", "bar val")
+        List<Map<String,Object>> obj = ImmutableList.of(
+          ImmutableMap.of("foo", "foo val"),
+          ImmutableMap.of("bar", "bar val")
         );
 
         String json = Json.from(obj);
@@ -76,7 +78,7 @@ class JsonTest {
           json, JSONCompareMode.LENIENT
         );
 
-        List<Map<String, Object>> obj2 = Json.toObject(new TypeReference<>() {}, json);
+        List<Map<String, Object>> obj2 = Json.toObject(new TypeReference<List<Map<String, Object>>>() {}, json);
         assertThat(obj).isEqualTo(obj2);
     }
 

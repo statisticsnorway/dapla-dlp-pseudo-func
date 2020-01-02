@@ -42,7 +42,7 @@ public class Json {
      * Convert JSON to String->Object map
      */
     public static Map<String, Object> toGenericMap(String json) {
-        return Json.toObject(new TypeReference<>() {}, json);
+        return Json.toObject(new TypeReference<Map<String, Object>>() {}, json);
     }
 
     /**

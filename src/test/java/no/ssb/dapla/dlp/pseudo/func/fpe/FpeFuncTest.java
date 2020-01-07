@@ -64,6 +64,18 @@ class FpeFuncTest {
           )));
     }
 
+    @Test
+    void longValue_fpe_shouldTransformAndRestore() {
+        Long originalVal = 123456789L;
+        Long expectedVal = 429145476L;
+        transformAndRestore(originalVal, expectedVal, new PseudoFuncConfig(ImmutableMap.of(
+          PseudoFuncConfig.Param.FUNC_NAME, "fpe-digits-test",
+          PseudoFuncConfig.Param.FUNC_IMPL, FpeFunc.class.getName(),
+          FpeFuncConfig.Param.ALPHABET, AlphabetType.DIGITS,
+          FpeFuncConfig.Param.KEY_ID, "01DWENC90WW9K41EN0QS2Q23X4"
+        )));
+    }
+
     private void transformAndRestore(Object originalVal, Object expectedVal, PseudoFuncConfig config) {
         PseudoFunc func = PseudoFuncFactory.create(config);
 

@@ -7,6 +7,7 @@ import no.ssb.dapla.dlp.pseudo.func.AbstractPseudoFunc;
 import no.ssb.dapla.dlp.pseudo.func.PseudoFuncConfig;
 import no.ssb.dapla.dlp.pseudo.func.PseudoFuncInput;
 import no.ssb.dapla.dlp.pseudo.func.PseudoFuncOutput;
+import no.ssb.dapla.dlp.pseudo.func.util.FromString;
 
 import static no.ssb.dapla.dlp.pseudo.func.fpe.Domains.domainOf;
 
@@ -35,18 +36,26 @@ public class FpeFunc extends AbstractPseudoFunc {
     @Override
     public PseudoFuncOutput apply(PseudoFuncInput input) {
         PseudoFuncOutput output = new PseudoFuncOutput();
-        for (String plain : input.getStringValues()) {
-            output.add(fpe.encrypt(plain, STATIC_TWEAK));
+
+        for (Object inputValue : input.getValues()) {
+            String plain = String.valueOf(inputValue);
+            String pseudonymized = fpe.encrypt(plain, STATIC_TWEAK);
+            output.add(FromString.convert(pseudonymized, inputValue.getClass()));
         }
+
         return output;
     }
 
     @Override
     public PseudoFuncOutput restore(PseudoFuncInput input) {
         PseudoFuncOutput output = new PseudoFuncOutput();
-        for (String plain : input.getStringValues()) {
-            output.add(fpe.decrypt(plain, STATIC_TWEAK));
+
+        for (Object inputValue : input.getValues()) {
+            String pseudonymized = String.valueOf(inputValue);
+            String plain = fpe.decrypt(pseudonymized, STATIC_TWEAK);
+            output.add(FromString.convert(plain, inputValue.getClass()));
         }
+
         return output;
     }
 

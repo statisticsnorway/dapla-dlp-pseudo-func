@@ -3,7 +3,11 @@ default: | help
 
 .PHONY: build-mvn
 build-mvn: ## Build the project and install to you local maven repo
+ifndef skipTest
 	./mvnw clean install
+else
+	./mvnw clean install -Dmaven.test.skip=true
+endif
 
 .PHONY: test
 test: ## Run tests

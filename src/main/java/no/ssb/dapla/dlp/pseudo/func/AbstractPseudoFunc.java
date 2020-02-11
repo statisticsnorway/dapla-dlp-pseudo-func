@@ -8,5 +8,5 @@ import lombok.RequiredArgsConstructor;
 public abstract class AbstractPseudoFunc implements PseudoFunc {
 
     @NonNull @Getter
-    private final String funcName;
+    private final String funcDecl;
 }

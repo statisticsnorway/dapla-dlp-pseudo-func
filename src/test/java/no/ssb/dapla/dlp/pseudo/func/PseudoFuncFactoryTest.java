@@ -18,27 +18,31 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class PseudoFuncFactoryTest {
 
     private final static String KEY_ID = "01DWENC90WW9K41EN0QS2Q23X4";
+    private final static String KEY_CONTENT = "8weo9VlQTuPqxjVWaHAupOdCwNpn4CFz";
 
     private final static List<PseudoFuncConfig> GENERIC_CONFIG = ImmutableList.of(
       new PseudoFuncConfig(ImmutableMap.of(
-        PseudoFuncConfig.Param.FUNC_NAME, "fpe-digits",
+        PseudoFuncConfig.Param.FUNC_DECL, "fpe-digits(param1)",
         PseudoFuncConfig.Param.FUNC_IMPL, FpeFunc.class.getName(),
         FpeFuncConfig.Param.ALPHABET, AlphabetType.DIGITS,
-        FpeFuncConfig.Param.KEY_ID, KEY_ID
+        FpeFuncConfig.Param.KEY_ID, KEY_ID,
+        FpeFuncConfig.Param.KEY, KEY_CONTENT
       )),
 
       new PseudoFuncConfig(ImmutableMap.of(
-        PseudoFuncConfig.Param.FUNC_NAME, "fpe-alphanumeric+whitespace",
+        PseudoFuncConfig.Param.FUNC_DECL, "fpe-text(param1)",
         PseudoFuncConfig.Param.FUNC_IMPL, FpeFunc.class.getName(),
         FpeFuncConfig.Param.ALPHABET, AlphabetType.ALPHANUMERIC_WHITESPACE,
-        FpeFuncConfig.Param.KEY_ID, "01DWENC90WW9K41EN0QS2Q23X4"
+        FpeFuncConfig.Param.KEY_ID, "01DWENC90WW9K41EN0QS2Q23X4",
+        FpeFuncConfig.Param.KEY, KEY_CONTENT
       )),
 
       new PseudoFuncConfig(ImmutableMap.of(
-        PseudoFuncConfig.Param.FUNC_NAME, "fpe-alphanumeric+whitespace",
+        PseudoFuncConfig.Param.FUNC_DECL, "fpe-alphanumeric+whitespace(param1)",
         PseudoFuncConfig.Param.FUNC_IMPL, FpeFunc.class.getName(),
         FpeFuncConfig.Param.ALPHABET, AlphabetType.ALPHANUMERIC_WHITESPACE,
-        FpeFuncConfig.Param.KEY_ID, KEY_ID
+        FpeFuncConfig.Param.KEY_ID, KEY_ID,
+        FpeFuncConfig.Param.KEY, KEY_CONTENT
       ))
     );
 
@@ -57,17 +61,19 @@ class PseudoFuncFactoryTest {
             PseudoFuncConfig config = new PseudoFuncConfig(ImmutableMap.of(
               PseudoFuncConfig.Param.FUNC_IMPL, FpeFunc.class.getName(),
               FpeFuncConfig.Param.ALPHABET, AlphabetType.ALPHANUMERIC_WHITESPACE,
-              FpeFuncConfig.Param.KEY_ID, KEY_ID
+              FpeFuncConfig.Param.KEY_ID, KEY_ID,
+              FpeFuncConfig.Param.KEY, KEY_CONTENT
             ));
             PseudoFuncFactory.create(config);
         });
-        assertThat(e.getMessage()).isEqualTo("Missing pseudo func param 'name'");
+        assertThat(e.getMessage()).isEqualTo("Missing pseudo func param 'decl'");
 
         e = assertThrows(PseudoFuncException.class, () -> {
             PseudoFuncConfig config = new PseudoFuncConfig(ImmutableMap.of(
-              PseudoFuncConfig.Param.FUNC_NAME, "fpe-alphanumeric+whitespace",
+              PseudoFuncConfig.Param.FUNC_DECL, "fpe-alphanumeric(param1)",
               FpeFuncConfig.Param.ALPHABET, AlphabetType.ALPHANUMERIC_WHITESPACE,
-              FpeFuncConfig.Param.KEY_ID, KEY_ID
+              FpeFuncConfig.Param.KEY_ID, KEY_ID,
+              FpeFuncConfig.Param.KEY, KEY_CONTENT
             ));
             PseudoFuncFactory.create(config);
         });
@@ -75,9 +81,10 @@ class PseudoFuncFactoryTest {
 
         e = assertThrows(PseudoFuncException.class, () -> {
             PseudoFuncConfig config = new PseudoFuncConfig(ImmutableMap.of(
-              PseudoFuncConfig.Param.FUNC_NAME, "fpe-alphanumeric+whitespace",
+              PseudoFuncConfig.Param.FUNC_DECL, "fpe-text",
               PseudoFuncConfig.Param.FUNC_IMPL, FpeFunc.class.getName(),
-              FpeFuncConfig.Param.KEY_ID, KEY_ID
+              FpeFuncConfig.Param.KEY_ID, KEY_ID,
+              FpeFuncConfig.Param.KEY, KEY_CONTENT
             ));
             PseudoFuncFactory.create(config);
         });

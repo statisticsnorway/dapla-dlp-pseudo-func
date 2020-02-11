@@ -40,6 +40,10 @@ public class PseudoFuncOutput {
           .collect(Collectors.toList());
     }
 
+    public Object getFirstValue() {
+        return getValues().get(0);
+    }
+
     @Override
     public String toString() {
         return String.valueOf(values);

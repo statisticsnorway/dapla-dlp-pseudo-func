@@ -12,7 +12,6 @@ import java.util.stream.Collectors;
 public class PseudoFuncInput {
     private final List<Object> values = new ArrayList<>();
 
-
     public PseudoFuncInput(Object v) {
         if (v instanceof Collection) {
             values.addAll((Collection) v);

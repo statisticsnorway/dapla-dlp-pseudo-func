@@ -1,27 +1,31 @@
 package no.ssb.dapla.dlp.pseudo.func;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.experimental.UtilityClass;
 import no.ssb.dapla.dlp.pseudo.func.util.Json;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-public class PseudoFuncConfig {
+@EqualsAndHashCode
+public class PseudoFuncConfig implements Serializable {
 
     @Getter
-    private final String funcName;
+    private final String funcDecl;
 
     @Getter
     private final String funcImpl;
+
 
     private final Map<String, Object> config = new HashMap<>();
 
     /** Construct from Map */
     public PseudoFuncConfig(Map<String, Object> params) {
         config.putAll(params);
-        funcName = getRequired(Param.FUNC_NAME, String.class);
+        funcDecl = getRequired(Param.FUNC_DECL, String.class);
         funcImpl = getRequired(Param.FUNC_IMPL, String.class);
     }
 
@@ -44,9 +48,17 @@ public class PseudoFuncConfig {
           .orElseThrow(() -> new PseudoFuncMissingParamException(paramName));
     }
 
+    public void add(String paramName, Object o) {
+        config.put(paramName, o);
+    }
+
+    public boolean has(String paramName) {
+        return config.containsKey(paramName);
+    }
+
     @UtilityClass
     public static class Param {
-        public static final String FUNC_NAME = "name";
+        public static final String FUNC_DECL = "decl";
         public static final String FUNC_IMPL = "impl";
     }
 

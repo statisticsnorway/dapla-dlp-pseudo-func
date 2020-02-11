@@ -15,5 +15,6 @@ public class FpeFuncConfig {
     public static class Param {
         public static final String ALPHABET = "alphabet";
         public static final String KEY_ID = "keyId";
+        public static final String KEY = "key";
     }
 }

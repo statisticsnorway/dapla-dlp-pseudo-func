@@ -13,7 +13,7 @@ public class PseudoFuncFactory {
             return ctr.newInstance(config);
         }
         catch (Exception e) {
-            throw new PseudoFuncInitException("Error instantiating pseudo function '" + config.getFuncName() + "'", e);
+            throw new PseudoFuncInitException("Error instantiating pseudo function '" + config.getFuncDecl() + "'", e);
         }
     }
 

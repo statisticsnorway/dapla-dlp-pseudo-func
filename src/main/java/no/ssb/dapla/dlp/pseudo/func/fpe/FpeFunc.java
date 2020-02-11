@@ -22,7 +22,7 @@ public class FpeFunc extends AbstractPseudoFunc {
     private static final byte[] STATIC_TWEAK = new byte[0];
 
     public FpeFunc(PseudoFuncConfig genericConfig) {
-        super(genericConfig.getFuncName());
+        super(genericConfig.getFuncDecl());
         config = fpeConfigService.resolve(genericConfig);
 
         fpe = FormatPreservingEncryptionBuilder

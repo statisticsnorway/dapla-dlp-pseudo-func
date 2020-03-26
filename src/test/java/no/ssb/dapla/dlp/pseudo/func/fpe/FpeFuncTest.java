@@ -2,13 +2,20 @@ package no.ssb.dapla.dlp.pseudo.func.fpe;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Lists;
+import lombok.Value;
 import no.ssb.dapla.dlp.pseudo.func.PseudoFunc;
 import no.ssb.dapla.dlp.pseudo.func.PseudoFuncConfig;
 import no.ssb.dapla.dlp.pseudo.func.PseudoFuncFactory;
 import no.ssb.dapla.dlp.pseudo.func.PseudoFuncInput;
 import no.ssb.dapla.dlp.pseudo.func.PseudoFuncOutput;
+import org.assertj.core.util.Arrays;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -44,10 +51,12 @@ class FpeFuncTest {
         )));
     }
 
-    @Test
-    void digits_fpe_shouldTransformAndRestore() {
-        String originalVal = "01010050134";
-        String expectedVal = "02052091614";
+    @ParameterizedTest
+    @CsvSource({
+      "01010050134, 02052091614",
+      "00, 99"
+    })
+    void digits_fpe_shouldTransformAndRestore(String originalVal, String expectedVal) {
         transformAndRestore(originalVal, expectedVal, new PseudoFuncConfig(ImmutableMap.of(
           PseudoFuncConfig.Param.FUNC_DECL, "fpe-digits-test",
           PseudoFuncConfig.Param.FUNC_IMPL, FpeFunc.class.getName(),

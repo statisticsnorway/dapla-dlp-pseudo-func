@@ -5,6 +5,7 @@ import com.idealista.fpe.builder.FormatPreservingEncryptionBuilder;
 import lombok.extern.slf4j.Slf4j;
 import no.ssb.dapla.dlp.pseudo.func.AbstractPseudoFunc;
 import no.ssb.dapla.dlp.pseudo.func.PseudoFuncConfig;
+import no.ssb.dapla.dlp.pseudo.func.PseudoFuncException;
 import no.ssb.dapla.dlp.pseudo.func.PseudoFuncInput;
 import no.ssb.dapla.dlp.pseudo.func.PseudoFuncOutput;
 import no.ssb.dapla.dlp.pseudo.func.util.FromString;
@@ -39,7 +40,14 @@ public class FpeFunc extends AbstractPseudoFunc {
 
         for (Object inputValue : input.getValues()) {
             String plain = String.valueOf(inputValue);
-            String pseudonymized = fpe.encrypt(plain, STATIC_TWEAK);
+            final String pseudonymized;
+            try {
+                pseudonymized = fpe.encrypt(plain, STATIC_TWEAK);
+            }
+            catch (Exception e) {
+                throw new FpePseudoFuncException("FPE pseudo apply error. func=" + getFuncDecl() + ", contentType=" + input.getParamMetadata(), e);
+            }
+
             output.add(FromString.convert(pseudonymized, inputValue.getClass()));
         }
 
@@ -57,6 +65,12 @@ public class FpeFunc extends AbstractPseudoFunc {
         }
 
         return output;
+    }
+
+    public static class FpePseudoFuncException extends PseudoFuncException {
+        public FpePseudoFuncException(String message, Throwable cause) {
+            super(message, cause);
+        }
     }
 
 }

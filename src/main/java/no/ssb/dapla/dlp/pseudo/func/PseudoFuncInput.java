@@ -34,6 +34,12 @@ public class PseudoFuncInput {
           .collect(Collectors.toList());
     }
 
+    public List<ParamMetadata> getParamMetadata() {
+        return getStringValues().stream()
+          .map(ParamMetadata::parse)
+          .collect(Collectors.toList());
+    }
+
     @Override
     public String toString() {
         return String.valueOf(values);

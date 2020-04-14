@@ -20,7 +20,7 @@ public class CharacterGroup {
      * Lowercase interational letters
      * {@code æãøöå}
      */
-    public static final String ASCII_LOWERCASE_INTERNATIONAL = "æãøöå";
+    public static final String ASCII_LOWERCASE_INTERNATIONAL = "æäøöå";
 
 
     /**

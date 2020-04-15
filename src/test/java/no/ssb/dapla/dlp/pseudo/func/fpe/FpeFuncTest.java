@@ -2,20 +2,15 @@ package no.ssb.dapla.dlp.pseudo.func.fpe;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Lists;
-import lombok.Value;
 import no.ssb.dapla.dlp.pseudo.func.PseudoFunc;
 import no.ssb.dapla.dlp.pseudo.func.PseudoFuncConfig;
 import no.ssb.dapla.dlp.pseudo.func.PseudoFuncFactory;
 import no.ssb.dapla.dlp.pseudo.func.PseudoFuncInput;
 import no.ssb.dapla.dlp.pseudo.func.PseudoFuncOutput;
-import org.assertj.core.util.Arrays;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -27,11 +22,11 @@ class FpeFuncTest {
     @Test
     void alphanumeric_fpe_shouldTransformAndRestore() {
         String originalVal = "Ken sent me";
-        String expectedVal = "80k6tXYpÅYp";
+        String expectedVal = "0GI4RLcgjHC";
         transformAndRestore(originalVal, expectedVal, new PseudoFuncConfig(ImmutableMap.of(
-          PseudoFuncConfig.Param.FUNC_DECL, "fpe-alphanumeric-test",
+          PseudoFuncConfig.Param.FUNC_DECL, "fpe-test",
           PseudoFuncConfig.Param.FUNC_IMPL, FpeFunc.class.getName(),
-          FpeFuncConfig.Param.ALPHABET, AlphabetType.ALPHANUMERIC_WHITESPACE,
+          FpeFuncConfig.Param.ALPHABET, "alphanumeric+whitespace",
           FpeFuncConfig.Param.KEY_ID, "keyId1",
           FpeFuncConfig.Param.KEY, BASE64_ENCODED_KEY
 
@@ -41,11 +36,11 @@ class FpeFuncTest {
     @Test
     void multipleAlphanumeric_fpe_shouldTransformAndRestore() {
         List originalVal = ImmutableList.of("Ken sent me...", "Kilroy was here!");
-        List expectedVal = ImmutableList.of("6>\\SNXjTyhajLy", "`(JI,xQ|&mÖeA:s)");
+        List expectedVal = ImmutableList.of(",y++d{^fWe*nl?", "SsB]J);`fy)k29tU");
         transformAndRestore(originalVal, expectedVal, new PseudoFuncConfig(ImmutableMap.of(
-          PseudoFuncConfig.Param.FUNC_DECL, "fpe-alphanumeric-test",
+          PseudoFuncConfig.Param.FUNC_DECL, "fpe-test",
           PseudoFuncConfig.Param.FUNC_IMPL, FpeFunc.class.getName(),
-          FpeFuncConfig.Param.ALPHABET, AlphabetType.ALPHANUMERIC_WHITESPACE_PUNCTUATION,
+          FpeFuncConfig.Param.ALPHABET, "alphanumeric+whitespace+punctuation",
           FpeFuncConfig.Param.KEY_ID, "keyId1",
           FpeFuncConfig.Param.KEY, BASE64_ENCODED_KEY
         )));
@@ -60,7 +55,7 @@ class FpeFuncTest {
         transformAndRestore(originalVal, expectedVal, new PseudoFuncConfig(ImmutableMap.of(
           PseudoFuncConfig.Param.FUNC_DECL, "fpe-digits-test",
           PseudoFuncConfig.Param.FUNC_IMPL, FpeFunc.class.getName(),
-          FpeFuncConfig.Param.ALPHABET, AlphabetType.DIGITS,
+          FpeFuncConfig.Param.ALPHABET, "digits",
           FpeFuncConfig.Param.KEY_ID, "keyId1",
           FpeFuncConfig.Param.KEY, BASE64_ENCODED_KEY
         )));
@@ -86,7 +81,7 @@ class FpeFuncTest {
         transformAndRestore(originalVal, expectedVal, new PseudoFuncConfig(ImmutableMap.of(
           PseudoFuncConfig.Param.FUNC_DECL, "fpe-digits-test",
           PseudoFuncConfig.Param.FUNC_IMPL, FpeFunc.class.getName(),
-          FpeFuncConfig.Param.ALPHABET, AlphabetType.DIGITS,
+          FpeFuncConfig.Param.ALPHABET, "digits",
           FpeFuncConfig.Param.KEY_ID, "keyId1",
           FpeFuncConfig.Param.KEY, BASE64_ENCODED_KEY
         )));

@@ -1,6 +1,7 @@
 package no.ssb.dapla.dlp.pseudo.func.util;
 
 import com.google.common.collect.ImmutableMap;
+import lombok.experimental.UtilityClass;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -10,7 +11,9 @@ import java.util.function.Function;
 import static com.google.common.base.Strings.emptyToNull;
 import static com.google.common.base.Strings.nullToEmpty;
 
+@UtilityClass
 public class FromString {
+
     private static Map<Class<?>, Function<String,?>> fromStringFunctionMap = ImmutableMap.<Class<?>, Function<String,?>>builder()
       .put(String.class, s -> s)
       .put(Long.class, s -> (blankToNull(s) == null) ? null : Long.valueOf(s))

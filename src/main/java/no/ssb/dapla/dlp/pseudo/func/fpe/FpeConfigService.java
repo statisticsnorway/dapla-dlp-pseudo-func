@@ -19,7 +19,7 @@ public class FpeConfigService {
     }
 
     Alphabet resolveAlphabet(String alphabet) {
-        return Alphabets.alphabetOf(alphabet);
+        return Alphabets.fromAlphabetName(alphabet);
     }
 
     byte[] resolveKey(String base64EncodedKey) {

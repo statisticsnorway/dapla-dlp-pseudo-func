@@ -22,7 +22,7 @@ class FpeFuncTest {
     @Test
     void alphanumeric_fpe_shouldTransformAndRestore() {
         String originalVal = "Ken sent me";
-        String expectedVal = "0GI4RLcgjHC";
+        String expectedVal = "sXVnUlOJlvB";
         transformAndRestore(originalVal, expectedVal, new PseudoFuncConfig(ImmutableMap.of(
           PseudoFuncConfig.Param.FUNC_DECL, "fpe-test",
           PseudoFuncConfig.Param.FUNC_IMPL, FpeFunc.class.getName(),
@@ -36,7 +36,7 @@ class FpeFuncTest {
     @Test
     void multipleAlphanumeric_fpe_shouldTransformAndRestore() {
         List originalVal = ImmutableList.of("Ken sent me...", "Kilroy was here!");
-        List expectedVal = ImmutableList.of(",y++d{^fWe*nl?", "SsB]J);`fy)k29tU");
+        List expectedVal = ImmutableList.of("iAx&FOjfM:%=_j", "&;71QCCU2>\"V?<.=");
         transformAndRestore(originalVal, expectedVal, new PseudoFuncConfig(ImmutableMap.of(
           PseudoFuncConfig.Param.FUNC_DECL, "fpe-test",
           PseudoFuncConfig.Param.FUNC_IMPL, FpeFunc.class.getName(),

@@ -6,94 +6,94 @@ import java.util.stream.Collectors;
 
 public enum CharacterGroup {
     /**
+     * The default english uppercase letters
+     * {@code ABCDEFGHIJKLMNOPQRSTUVWXYZ}
+     */
+    LETTERS_UPPERCASE("ABCDEFGHIJKLMNOPQRSTUVWXYZ"),
+
+    /**
      * The default english lowercase letters
      * {@code abcdefghijklmnopqrstuvwxyz}
      */
     LETTERS_LOWERCASE("abcdefghijklmnopqrstuvwxyz"),
 
     /**
-     * The default english uppercase letters
-     * {@code ABCDEFGHIJKLMNOPQRSTUVWXYZ}
-     */
-    LETTERS_UPPERCASE(LETTERS_LOWERCASE.getChars().toUpperCase()),
-
-    /**
      * The default english letters (lower- and uppercase)
-     * {@code abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ}
+     * {@code ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz}
      */
-    LETTERS(LETTERS_LOWERCASE, LETTERS_UPPERCASE),
+    LETTERS(LETTERS_UPPERCASE, LETTERS_LOWERCASE),
 
     /**
-     * Norwegian special letters (lowercase)
-     * {@code æøå}
-     */
-    LETTERS_NO_SPECIAL_LOWERCASE("æøå"),
-
-    /**
-     * Norwegian special letters (uppercase)
+     * Norwegian extended letters (uppercase)
      * {@code ÆØÅ}
      */
-    LETTERS_NO_SPECIAL_UPPERCASE( "ÆØÅ"),
+    LETTERS_EXT_NO_UPPERCASE( "ÅÆØ"),
 
     /**
-     * Norwegian special letters (lower- and uppercase)
-     * {@code æøåÆØÅ}
+     * Norwegian extended letters (lowercase)
+     * {@code æøå}
      */
-    LETTERS_NO_SPECIAL( LETTERS_NO_SPECIAL_LOWERCASE, LETTERS_NO_SPECIAL_UPPERCASE),
+    LETTERS_EXT_NO_LOWERCASE("åæø"),
 
     /**
-     * All norwegian lowercase letters
-     * {@code abcdefghijklmnopqrstuvwxyzæøå}
+     * Norwegian extended letters (lower- and uppercase)
+     * {@code ÅÆØåæø}
      */
-    LETTERS_NO_LOWERCASE(LETTERS_LOWERCASE, LETTERS_NO_SPECIAL_LOWERCASE),
+    LETTERS_EXT_NO(LETTERS_EXT_NO_UPPERCASE, LETTERS_EXT_NO_LOWERCASE),
 
     /**
      * All norwegian uppercase letters
-     * {@code ABCDEFGHIJKLMNOPQRSTUVWXYZÆØÅ}
+     * {@code ABCDEFGHIJKLMNOPQRSTUVWXYZÅÆØ}
      */
-    LETTERS_NO_UPPERCASE(LETTERS_UPPERCASE, LETTERS_NO_SPECIAL_UPPERCASE),
+    LETTERS_NO_UPPERCASE(LETTERS_UPPERCASE, LETTERS_EXT_NO_UPPERCASE),
+
+    /**
+     * All norwegian lowercase letters
+     * {@code abcdefghijklmnopqrstuvwxyzåæø}
+     */
+    LETTERS_NO_LOWERCASE(LETTERS_LOWERCASE, LETTERS_EXT_NO_LOWERCASE),
 
     /**
      * All norwegian letters (lower- and uppercase)
-     * {@code abcdefghijklmnopqrstuvwxyzæøåABCDEFGHIJKLMNOPQRSTUVWXYZÆØÅ}
+     * {@code ABCDEFGHIJKLMNOPQRSTUVWXYZÆØÅabcdefghijklmnopqrstuvwxyzæøå}
      */
-    LETTERS_NO(LETTERS_NO_LOWERCASE, LETTERS_NO_UPPERCASE),
+    LETTERS_NO(LETTERS_NO_UPPERCASE, LETTERS_NO_LOWERCASE),
 
     /**
-     * Swedish special letters (lowercase)
-     * {@code äöå}
+     * Extended ascii letters (uppercase)
+     * {@code ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞ}
      */
-    LETTERS_SE_SPECIAL_LOWERCASE("äöå"),
+    LETTERS_EXT_UPPERCASE("ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞ"),
 
     /**
-     * Swedish special letters (uppercase)
-     * {@code ÄÖÅ}
+     * Extended ascii letters (lowercase)
+     * {@code àáâãäåæçèéêëìíîïðñòóôõöøùúûüýÞß}
      */
-    LETTERS_SE_SPECIAL_UPPERCASE("ÄÖÅ"),
+    LETTERS_EXT_LOWERCASE("àáâãäåæçèéêëìíîïðñòóôõöøùúûüýþß"),
 
     /**
-     * Swedish special letters (lower- and uppercase)
-     * {@code äöåÄÖÅ}
+     * Extended ascii letters (lower- and uppercase)
+     * {@code ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþß}
      */
-    LETTERS_SE_SPECIAL(LETTERS_SE_SPECIAL_LOWERCASE, LETTERS_SE_SPECIAL_UPPERCASE),
+    LETTERS_EXT(LETTERS_EXT_UPPERCASE, LETTERS_EXT_LOWERCASE),
 
     /**
-     * All swedish lowercase letters
-     * {@code abcdefghijklmnopqrstuvwxyzäöå}
+     * All lowercase letters (including extended)
+     * {@code abcdefghijklmnopqrstuvwxyzàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþß}
      */
-    LETTERS_SE_LOWERCASE(LETTERS_LOWERCASE, LETTERS_SE_SPECIAL_LOWERCASE),
+    LETTERS_ALL_LOWERCASE(LETTERS_EXT_LOWERCASE, LETTERS_LOWERCASE),
 
     /**
-     * All swedish uppercase letters
-     * {@code ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÅ}
+     * All uppercase letters (including extended)
+     * {@code ABCDEFGHIJKLMNOPQRSTUVWXYZÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞ}
      */
-    LETTERS_SE_UPPERCASE(LETTERS_UPPERCASE, LETTERS_SE_SPECIAL_UPPERCASE),
+    LETTERS_ALL_UPPERCASE(LETTERS_UPPERCASE, LETTERS_EXT_UPPERCASE),
 
     /**
-     * All swedish letters (lower- and uppercase)
-     * {@code abcdefghijklmnopqrstuvwxyzäöåABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÅ}
+     * All letters (lower- and uppercase, including extended)
+     * {@code ABCDEFGHIJKLMNOPQRSTUVWXYZÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞabcdefghijklmnopqrstuvwxyzàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþß}
      */
-    LETTERS_SE(LETTERS_SE_LOWERCASE, LETTERS_SE_UPPERCASE),
+    LETTERS_ALL(LETTERS_ALL_UPPERCASE, LETTERS_ALL_LOWERCASE),
 
     /**
      * Numeric characters
@@ -119,7 +119,7 @@ public enum CharacterGroup {
 
     /**
      * Default alphanumeric characters
-     * {@code abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789}
+     * {@code ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789}
      */
     ALPHANUMERIC(LETTERS, DIGITS),
 
@@ -131,27 +131,45 @@ public enum CharacterGroup {
 
     /**
      * Default lowercase alphanumeric characters
-     * {@code abcdefghijklmnopqrstuvwxyz0123456789}
+     * {@code ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789}
      */
     ALPHANUMERIC_UPPERCASE(LETTERS_UPPERCASE, DIGITS),
 
     /**
      * Norwegian alphanumeric characters
-     * {@code abcdefghijklmnopqrstuvwxyzæøåABCDEFGHIJKLMNOPQRSTUVWXYZÆØÅ0123456789}
+     * {@code ABCDEFGHIJKLMNOPQRSTUVWXYZÅÆØabcdefghijklmnopqrstuvwxyzåæø0123456789}
      */
     ALPHANUMERIC_NO(LETTERS_NO, DIGITS),
 
     /**
      * Norwegian lowercase alphanumeric characters
-     * {@code abcdefghijklmnopqrstuvwxyzæøå0123456789}
+     * {@code abcdefghijklmnopqrstuvwxyzåæø0123456789}
      */
-    ALPHANUMERIC_NO_LOWERCASE(LETTERS_LOWERCASE, LETTERS_NO_SPECIAL_LOWERCASE, DIGITS),
+    ALPHANUMERIC_NO_LOWERCASE(LETTERS_LOWERCASE, LETTERS_EXT_NO_LOWERCASE, DIGITS),
 
     /**
      * Norwegian uppercase alphanumeric characters
-     * {@code ABCDEFGHIJKLMNOPQRSTUVWXYZÆØÅ0123456789}
+     * {@code ABCDEFGHIJKLMNOPQRSTUVWXYZÅÆØ0123456789}
      */
-    ALPHANUMERIC_NO_UPPERCASE(LETTERS_UPPERCASE, LETTERS_NO_SPECIAL_UPPERCASE, DIGITS)
+    ALPHANUMERIC_NO_UPPERCASE(LETTERS_UPPERCASE, LETTERS_EXT_NO_UPPERCASE, DIGITS),
+
+    /**
+     * All (including extended) alphanumeric characters
+     * {@code ABCDEFGHIJKLMNOPQRSTUVWXYZÅÆØabcdefghijklmnopqrstuvwxyzåæø0123456789}
+     */
+    ALPHANUMERIC_ALL(LETTERS_ALL, DIGITS),
+
+    /**
+     * All alphanumeric lowercase characters (including extended)
+     * {@code abcdefghijklmnopqrstuvwxyzàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþß0123456789}
+     */
+    ALPHANUMERIC_ALL_LOWERCASE(LETTERS_LOWERCASE, LETTERS_EXT_LOWERCASE, DIGITS),
+
+    /**
+     * All alphanumeric uppercase characters (including extended)
+     * {@code ABCDEFGHIJKLMNOPQRSTUVWXYZÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝ0123456789}
+     */
+    ALPHANUMERIC_ALL_UPPERCASE(LETTERS_UPPERCASE, LETTERS_EXT_NO_UPPERCASE, DIGITS)
 
     ;
 

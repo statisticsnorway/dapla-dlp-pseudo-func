@@ -75,6 +75,26 @@ class FpeFuncTest {
     }
 
     @Test
+    void stringWithIllegalChars_fpe_shouldNotFailPseudonumization() {
+        String originalVal = "ABCæøå";
+
+        PseudoFunc func = PseudoFuncFactory.create(new PseudoFuncConfig(ImmutableMap.<String, Object>builder()
+          .put(PseudoFuncConfig.Param.FUNC_DECL, "fpe-test")
+          .put(PseudoFuncConfig.Param.FUNC_IMPL, FpeFunc.class.getName())
+          .put(FpeFuncConfig.Param.ALPHABET, "ABCDEFGHIJ")
+          .put(FpeFuncConfig.Param.KEY_ID, "keyId1")
+          .put(FpeFuncConfig.Param.KEY, BASE64_ENCODED_KEY)
+//          .put(FpeFuncConfig.Param.REPLACE_ILLEGAL_CHARS, false)
+//          .put(FpeFuncConfig.Param.REPLACE_ILLEGAL_CHARS_WITH, "J")
+          .build()
+        ));
+
+        PseudoFuncOutput pseudonymized = func.apply(PseudoFuncInput.of(originalVal));
+        assertThat(pseudonymized.getValues()).containsExactly("GGB");
+    }
+
+
+    @Test
     void longValue_fpe_shouldTransformAndRestore() {
         Long originalVal = 123456789L;
         Long expectedVal = 204992912L;

@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class PseudoFuncOutput {
     private List<Object> values = new ArrayList<>();
+    private List<String> warnings = new ArrayList<>();
 
     public PseudoFuncOutput(Object v) {
         if (v instanceof Collection) {
@@ -34,6 +35,10 @@ public class PseudoFuncOutput {
         values.add(object);
     }
 
+    public void addWarning(String warning) {
+        warnings.add(warning);
+    }
+
     public List<String> getStringValues() {
         return values.stream()
           .map(String::valueOf)
@@ -47,5 +52,9 @@ public class PseudoFuncOutput {
     @Override
     public String toString() {
         return String.valueOf(values);
+    }
+
+    public boolean hasWarnings() {
+        return ! warnings.isEmpty();
     }
 }

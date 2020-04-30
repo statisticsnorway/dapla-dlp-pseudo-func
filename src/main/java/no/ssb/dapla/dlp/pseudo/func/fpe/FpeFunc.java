@@ -40,6 +40,15 @@ public class FpeFunc extends AbstractPseudoFunc {
 
         for (Object inputValue : input.getValues()) {
             String plain = String.valueOf(inputValue);
+
+            if (config.isReplaceIllegalChars()) {
+                CharReplacer.ReplacementResult res = CharReplacer.replace(plain, config.getReplaceIllegalCharsWith(), config.getAlphabet().availableCharacters());
+                if (res.hasReplacedChars()) {
+                    plain = res.getResult();
+                    output.addWarning(String.format("%s --> Plaintext was altered before pseudonymization. Characters %s was replaced with '%s'",
+                      getFuncDecl(), res.getReplacedChars(), res.getReplacementString()));
+                }
+            }
             final String pseudonymized;
             try {
                 pseudonymized = fpe.encrypt(plain, STATIC_TWEAK);

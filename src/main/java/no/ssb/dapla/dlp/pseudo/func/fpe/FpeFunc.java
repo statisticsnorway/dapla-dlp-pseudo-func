@@ -45,7 +45,7 @@ public class FpeFunc extends AbstractPseudoFunc {
                 CharReplacer.ReplacementResult res = CharReplacer.replace(plain, config.getReplaceIllegalCharsWith(), config.getAlphabet().availableCharacters());
                 if (res.hasReplacedChars()) {
                     plain = res.getResult();
-                    output.addWarning(String.format("%s --> Plaintext was altered before pseudonymization. Characters %s was replaced with '%s'",
+                    output.addWarning(String.format("%s --> %s replaced by '%s' before pseudo",
                       getFuncDecl(), res.getReplacedChars(), res.getReplacementString()));
                 }
             }

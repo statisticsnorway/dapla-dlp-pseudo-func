@@ -169,7 +169,12 @@ public enum CharacterGroup {
      * All alphanumeric uppercase characters (including extended)
      * {@code ABCDEFGHIJKLMNOPQRSTUVWXYZÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝ0123456789}
      */
-    ALPHANUMERIC_ALL_UPPERCASE(LETTERS_UPPERCASE, LETTERS_EXT_NO_UPPERCASE, DIGITS)
+    ALPHANUMERIC_ALL_UPPERCASE(LETTERS_UPPERCASE, LETTERS_EXT_NO_UPPERCASE, DIGITS),
+
+    /**
+     * Any characters
+     */
+    ANYCHAR(ALPHANUMERIC_ALL, PUNCTUATION, WHITESPACE)
 
     ;
 

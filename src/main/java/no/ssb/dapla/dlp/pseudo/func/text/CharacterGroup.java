@@ -1,45 +1,51 @@
-package no.ssb.dapla.dlp.pseudo.func;
+package no.ssb.dapla.dlp.pseudo.func.text;
+
+import com.google.common.base.CharMatcher;
+import com.google.common.collect.Range;
+import no.ssb.dapla.dlp.pseudo.func.text.UnicodeChars.CharType;
 
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static java.lang.Character.UnicodeBlock.BASIC_LATIN;
+import static java.lang.Character.UnicodeBlock.LATIN_1_SUPPLEMENT;
+import static no.ssb.dapla.dlp.pseudo.func.text.UnicodeChars.subset;
+
 public enum CharacterGroup {
     /**
-     * The default english uppercase letters
+     * The basic latin uppercase letters
      * {@code ABCDEFGHIJKLMNOPQRSTUVWXYZ}
      */
-    LETTERS_UPPERCASE("ABCDEFGHIJKLMNOPQRSTUVWXYZ"),
+    LETTERS_UPPERCASE(UnicodeChars.stringOf(
+      subset(BASIC_LATIN).and(CharType.UPPERCASE))
+    ),
 
     /**
-     * The default english lowercase letters
+     * The basic latin lowercase letters
      * {@code abcdefghijklmnopqrstuvwxyz}
      */
-    LETTERS_LOWERCASE("abcdefghijklmnopqrstuvwxyz"),
+    LETTERS_LOWERCASE(UnicodeChars.stringOf(
+      subset(BASIC_LATIN).and(CharType.LOWERCASE))
+    ),
 
     /**
-     * The default english letters (lower- and uppercase)
+     * The basic latin letters (lower- and uppercase)
      * {@code ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz}
      */
     LETTERS(LETTERS_UPPERCASE, LETTERS_LOWERCASE),
 
     /**
      * Norwegian extended letters (uppercase)
-     * {@code ÆØÅ}
+     * {@code ÅÆØ}
      */
-    LETTERS_EXT_NO_UPPERCASE( "ÅÆØ"),
+    LETTERS_EXT_NO_UPPERCASE("ÅÆØ"),
 
     /**
      * Norwegian extended letters (lowercase)
-     * {@code æøå}
+     * {@code åæø}
      */
     LETTERS_EXT_NO_LOWERCASE("åæø"),
-
-    /**
-     * Norwegian extended letters (lower- and uppercase)
-     * {@code ÅÆØåæø}
-     */
-    LETTERS_EXT_NO(LETTERS_EXT_NO_UPPERCASE, LETTERS_EXT_NO_LOWERCASE),
 
     /**
      * All norwegian uppercase letters
@@ -55,31 +61,35 @@ public enum CharacterGroup {
 
     /**
      * All norwegian letters (lower- and uppercase)
-     * {@code ABCDEFGHIJKLMNOPQRSTUVWXYZÆØÅabcdefghijklmnopqrstuvwxyzæøå}
+     * {@code ABCDEFGHIJKLMNOPQRSTUVWXYZÅÆØabcdefghijklmnopqrstuvwxyzåæø}
      */
     LETTERS_NO(LETTERS_NO_UPPERCASE, LETTERS_NO_LOWERCASE),
 
     /**
-     * Extended ascii letters (uppercase)
+     * Extended latin letters (uppercase)
      * {@code ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞ}
      */
-    LETTERS_EXT_UPPERCASE("ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞ"),
+    LETTERS_EXT_UPPERCASE(UnicodeChars.stringOf(
+      subset(LATIN_1_SUPPLEMENT).and(CharType.UPPERCASE)
+    )),
 
     /**
-     * Extended ascii letters (lowercase)
-     * {@code àáâãäåæçèéêëìíîïðñòóôõöøùúûüýÞß}
+     * Extended latin letters (lowercase)
+     * {@code ªµºßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ}
      */
-    LETTERS_EXT_LOWERCASE("àáâãäåæçèéêëìíîïðñòóôõöøùúûüýþß"),
+    LETTERS_EXT_LOWERCASE(UnicodeChars.stringOf(
+      subset(LATIN_1_SUPPLEMENT).and(CharType.LOWERCASE)
+    )),
 
     /**
-     * Extended ascii letters (lower- and uppercase)
-     * {@code ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþß}
+     * Extended latin letters (lower- and uppercase)
+     * {@code ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞªµºßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ}
      */
     LETTERS_EXT(LETTERS_EXT_UPPERCASE, LETTERS_EXT_LOWERCASE),
 
     /**
      * All lowercase letters (including extended)
-     * {@code abcdefghijklmnopqrstuvwxyzàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþß}
+     * {@code ªµºßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿabcdefghijklmnopqrstuvwxyz}
      */
     LETTERS_ALL_LOWERCASE(LETTERS_EXT_LOWERCASE, LETTERS_LOWERCASE),
 
@@ -91,7 +101,7 @@ public enum CharacterGroup {
 
     /**
      * All letters (lower- and uppercase, including extended)
-     * {@code ABCDEFGHIJKLMNOPQRSTUVWXYZÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞabcdefghijklmnopqrstuvwxyzàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþß}
+     * {@code ABCDEFGHIJKLMNOPQRSTUVWXYZÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞªµºßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿabcdefghijklmnopqrstuvwxyz}
      */
     LETTERS_ALL(LETTERS_ALL_UPPERCASE, LETTERS_ALL_LOWERCASE),
 
@@ -102,20 +112,31 @@ public enum CharacterGroup {
     DIGITS("0123456789"),
 
     /**
-     * ASCII characters which are considered punctuation characters
-     * {@code !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~}
+     * Symbol characters
+     * {@code !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~¡¢£¤¥¦§¨©«¬­®¯°±²³´¶·¸¹»¼½¾¿×÷}
      */
-    PUNCTUATION("!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"),
+    SYMBOLS("!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~¡¢£¤¥¦§¨©«¬\u00AD®¯°±²³´¶·¸¹»¼½¾¿×÷"),
 
     /**
-     * ASCII characters that are considered whitespace.
+     * The space character.
      */
-    WHITESPACE(" "),
+    SPACE(" "),
 
     /**
-     * Special ASCII characters, such as linebreaks, formfeed, tabs, etc.
+     * Any characters that are considered whitespace.
      */
-    SPECIAL("\t\f\r\n"),
+    WHITESPACE(UnicodeChars.stringOf(
+      subset(BASIC_LATIN).and(CharType.WHITESPACE),
+      subset(LATIN_1_SUPPLEMENT).and(CharType.WHITESPACE))
+    ),
+
+    /**
+     * Control characters used to control the interpretation or display of text.
+     * These characters themselves have no visual or spatial representation.
+     */
+    CONTROL(UnicodeChars.stringOf(
+      subset(BASIC_LATIN).and(CharType.CONTROL))
+    ),
 
     /**
      * Default alphanumeric characters
@@ -172,9 +193,16 @@ public enum CharacterGroup {
     ALPHANUMERIC_ALL_UPPERCASE(LETTERS_UPPERCASE, LETTERS_EXT_NO_UPPERCASE, DIGITS),
 
     /**
-     * Any characters
+     * Any non-control from the basic and exteded latin unicode charset
      */
-    ANYCHAR(ALPHANUMERIC_ALL, PUNCTUATION, WHITESPACE)
+    ANYCHAR(UnicodeChars.stringOf(
+      subset(BASIC_LATIN).and(CharType.ALPHANUMERIC),
+      subset(BASIC_LATIN).and(CharType.SYMBOLS),
+      subset(BASIC_LATIN).and(CharType.WHITESPACE),
+      subset(LATIN_1_SUPPLEMENT).and(CharType.ALPHANUMERIC),
+      subset(LATIN_1_SUPPLEMENT).and(CharType.SYMBOLS),
+      subset(LATIN_1_SUPPLEMENT).and(CharType.WHITESPACE)
+    ))
 
     ;
 
@@ -182,6 +210,16 @@ public enum CharacterGroup {
 
     CharacterGroup(String chars) {
         this.chars = chars;
+    }
+
+    CharacterGroup(Range<Integer>... codePointRanges) {
+        StringBuilder sb = new StringBuilder();
+        for (Range<Integer> r : codePointRanges) {
+            for (int charNo = r.lowerEndpoint(); charNo <= r.upperEndpoint(); charNo++) {
+                sb.append((char) charNo);
+            }
+        }
+        this.chars = sb.toString();
     }
 
     CharacterGroup(CharacterGroup... characterGroups) {

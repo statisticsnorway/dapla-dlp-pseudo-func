@@ -1,6 +1,6 @@
 package no.ssb.dapla.dlp.pseudo.func.fpe;
 
-  import no.ssb.dapla.dlp.pseudo.func.CharacterGroup;
+  import no.ssb.dapla.dlp.pseudo.func.text.CharacterGroup;
   import no.ssb.dapla.dlp.pseudo.func.PseudoFuncException;
   import org.junit.jupiter.api.Test;
 

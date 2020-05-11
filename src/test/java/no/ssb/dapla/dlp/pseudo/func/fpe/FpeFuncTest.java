@@ -36,11 +36,11 @@ class FpeFuncTest {
     @Test
     void multipleAlphanumeric_fpe_shouldTransformAndRestore() {
         List originalVal = ImmutableList.of("Ken sent me...", "Kilroy was here!");
-        List expectedVal = ImmutableList.of("iAx&FOjfM:%=_j", "&;71QCCU2>\"V?<.=");
+        List expectedVal = ImmutableList.of("dvm.'pvDY¼&lZ$", "p³h<N¥£u¿lZ²'­S ");
         transformAndRestore(originalVal, expectedVal, new PseudoFuncConfig(ImmutableMap.of(
           PseudoFuncConfig.Param.FUNC_DECL, "fpe-test",
           PseudoFuncConfig.Param.FUNC_IMPL, FpeFunc.class.getName(),
-          FpeFuncConfig.Param.ALPHABET, "alphanumeric+whitespace+punctuation",
+          FpeFuncConfig.Param.ALPHABET, "alphanumeric+whitespace+symbols",
           FpeFuncConfig.Param.KEY_ID, "keyId1",
           FpeFuncConfig.Param.KEY, BASE64_ENCODED_KEY
         )));

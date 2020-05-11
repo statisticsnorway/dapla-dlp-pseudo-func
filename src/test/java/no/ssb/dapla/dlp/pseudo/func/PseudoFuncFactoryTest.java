@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import no.ssb.dapla.dlp.pseudo.func.fpe.FpeFunc;
 import no.ssb.dapla.dlp.pseudo.func.fpe.FpeFuncConfig;
+import no.ssb.dapla.dlp.pseudo.func.text.CharacterGroup;
 import org.junit.jupiter.api.Test;
 
 import java.io.PrintWriter;

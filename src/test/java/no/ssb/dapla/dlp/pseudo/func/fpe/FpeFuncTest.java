@@ -49,7 +49,8 @@ class FpeFuncTest {
     @ParameterizedTest
     @CsvSource({
       "01010050134, 02052091614",
-      "00, 99"
+      "00, 00",
+      "000, 336"
     })
     void digits_fpe_shouldTransformAndRestore(String originalVal, String expectedVal) {
         transformAndRestore(originalVal, expectedVal, new PseudoFuncConfig(ImmutableMap.of(
@@ -84,8 +85,6 @@ class FpeFuncTest {
           .put(FpeFuncConfig.Param.ALPHABET, "ABCDEFGHIJ")
           .put(FpeFuncConfig.Param.KEY_ID, "keyId1")
           .put(FpeFuncConfig.Param.KEY, BASE64_ENCODED_KEY)
-//          .put(FpeFuncConfig.Param.REPLACE_ILLEGAL_CHARS, false)
-//          .put(FpeFuncConfig.Param.REPLACE_ILLEGAL_CHARS_WITH, "J")
           .build()
         ));
 

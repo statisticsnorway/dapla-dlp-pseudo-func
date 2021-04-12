@@ -50,8 +50,11 @@ public class FpeFunc extends AbstractPseudoFunc {
                 }
             }
             final String pseudonymized;
+
             try {
-                pseudonymized = fpe.encrypt(plain, STATIC_TWEAK);
+                pseudonymized = isFpeTransformCompliant(plain)
+                  ? fpe.encrypt(plain, STATIC_TWEAK)
+                  : plain;
             }
             catch (Exception e) {
                 throw new FpePseudoFuncException("FPE pseudo apply error. func=" + getFuncDecl() + ", contentType=" + input.getParamMetadata(), e);
@@ -69,11 +72,24 @@ public class FpeFunc extends AbstractPseudoFunc {
 
         for (Object inputValue : input.getValues()) {
             String pseudonymized = String.valueOf(inputValue);
-            String plain = fpe.decrypt(pseudonymized, STATIC_TWEAK);
+            String plain = isFpeTransformCompliant(pseudonymized)
+              ? fpe.decrypt(pseudonymized, STATIC_TWEAK)
+              : pseudonymized;
             output.add(FromString.convert(plain, inputValue.getClass()));
         }
 
         return output;
+    }
+
+    /**
+     * FPE functions require input data to be compliant. E.g. non-null and
+     * minimum length of 2
+     *
+     * @param s the value to check
+     * @return true iff a string can be transformed by the FPE function
+     */
+    private static boolean isFpeTransformCompliant(String s) {
+        return s != null && s.length() > 2;
     }
 
     public static class FpePseudoFuncException extends PseudoFuncException {

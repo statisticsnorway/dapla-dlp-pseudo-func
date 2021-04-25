@@ -1,0 +1,50 @@
+trigger:
+  branches:
+    include:
+      - '*'
+  tags:
+    include:
+      - '*'
+
+jobs:
+  - job: testAndBuild
+    container: maven:3.6.3-openjdk-15
+    pool:
+      vmImage: 'ubuntu-latest'
+    variables:
+      MAVEN_CACHE_FOLDER: $(Pipeline.Workspace)/.m2/repository
+      MAVEN_OPTS: '-Dmaven.repo.local=$(MAVEN_CACHE_FOLDER)'
+    steps:
+
+      #Cache maven artifacts
+      - task: Cache@2
+        displayName: Cache Maven local repo
+        inputs:
+          key: 'maven | "$(Agent.OS)" | **/pom.xml'
+          restoreKeys: |
+            maven | "$(Agent.OS)"
+            maven
+          path: $(MAVEN_CACHE_FOLDER)
+
+      #Authenticate with maven
+      - task: MavenAuthenticate@0
+        displayName: 'Authenticate'
+        inputs:
+          mavenServiceConnections: 'mvnSsbBipPublic, mvnSsbBipReleases, mvnSsbBipSnapshots'
+
+      #Test and build
+      - task: Maven@3
+        displayName: 'Test and build'
+        inputs:
+          goals: 'verify test'
+          options: '-P ssb-bip --batch-mode'
+          mavenOptions: '$(MAVEN_OPTS)'
+
+      #Publish build artifact
+      - task: Maven@3
+        displayName: 'Publish build artifact'
+        condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/')) # When a tag is pushed
+        inputs:
+          goals: 'clean deploy'
+          options: '-P ssb-bip -DskipTests=true --batch-mode'
+          mavenOptions: '$(MAVEN_OPTS)'

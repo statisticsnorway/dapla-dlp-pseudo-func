@@ -89,6 +89,13 @@
   </dependencies>
 
   <build>
+    <extensions>
+      <extension>
+        <groupId>com.google.cloud.artifactregistry</groupId>
+        <artifactId>artifactregistry-maven-wagon</artifactId>
+        <version>2.1.4</version>
+      </extension>
+    </extensions>
     <pluginManagement>
       <plugins>
         <plugin>
@@ -179,16 +186,14 @@
     <profile>
       <id>ssb-bip</id>
       <distributionManagement>
-        <repository>
-          <id>ssb-bip-releases</id>
-          <name>SSB Nexus Releases</name>
-          <url>https://nexus.prod-bip-ci.ssb.no/repository/maven-releases/</url>
-        </repository>
         <snapshotRepository>
-          <id>ssb-bip-snapshots</id>
-          <name>SSB Snapshot Repository</name>
-          <url>https://nexus.prod-bip-ci.ssb.no/repository/maven-snapshots/</url>
+          <id>artifact-registry</id>
+          <url>artifactregistry://europe-north1-maven.pkg.dev/artifact-registry-14da/maven-snapshots</url>
         </snapshotRepository>
+        <repository>
+          <id>artifact-registry</id>
+          <url>artifactregistry://europe-north1-maven.pkg.dev/artifact-registry-14da/maven-releases</url>
+        </repository>
       </distributionManagement>
     </profile>
     <profile>
@@ -218,4 +223,37 @@
       </build>
     </profile>
   </profiles>
+
+  <repositories>
+    <repository>
+      <id>artifact-registry</id>
+      <url>
+        artifactregistry://europe-north1-maven.pkg.dev/artifact-registry-14da/maven-releases
+      </url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>artifact-registry-snapshot</id>
+      <url>
+        artifactregistry://europe-north1-maven.pkg.dev/artifact-registry-14da/maven-snapshots
+      </url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+
+    <repository>
+      <id>central</id>
+      <url>https://repo.maven.apache.org/maven2</url>
+    </repository>
+  </repositories>
+
 </project>

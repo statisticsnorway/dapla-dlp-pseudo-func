@@ -9,15 +9,12 @@ trigger:
       - '*'
 
 resources:
-  containers:
-    - container: 'ubuntu_container_for_build_deply_to_nexus'
-      image: 'ubuntu:latest'
   repositories:
     - repository: templates
       type:       github
       name:       statisticsnorway/azure-pipelines-templates
-      ref:        refs/tags/1.1.29
-      endpoint:   statisticsnorway (6)
+      ref:        refs/tags/1.1.30
+      endpoint:   statisticsnorway
 
 # Pipeline will be run on this base image
 pool:
@@ -38,8 +35,12 @@ variables:
 
 # Job which will run mvn build, mvn install and Sonar Analysis (if branch is master)
 jobs:
-  - template: complete-builds/job-test-gar.yml@templates
+
+  - template: java/library-complete-build.yml@templates
     parameters:
       artifactName: dapla-dlp-pseudo-func
-      checkStyleRunAnalysis: false
+      mavenContainer: maven:3.8-openjdk-17
+      checkStyleRunAnalysis: true
+      pmdRunAnalysis: true
+      sonarQubeRunAnalysis: true
       sonarCloud: bipSonarCloud-Dapla

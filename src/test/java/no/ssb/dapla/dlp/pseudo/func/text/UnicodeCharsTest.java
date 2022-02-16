@@ -6,8 +6,7 @@ import java.util.List;
 
 import static java.lang.Character.UnicodeBlock.BASIC_LATIN;
 import static java.lang.Character.UnicodeBlock.LATIN_1_SUPPLEMENT;
-import static no.ssb.dapla.dlp.pseudo.func.text.UnicodeChars.CharType.LETTERS;
-import static no.ssb.dapla.dlp.pseudo.func.text.UnicodeChars.CharType.LOWERCASE;
+import static no.ssb.dapla.dlp.pseudo.func.text.UnicodeChars.CharType.*;
 import static no.ssb.dapla.dlp.pseudo.func.text.UnicodeChars.subset;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -37,6 +36,15 @@ class UnicodeCharsTest {
             }
         }
         assertThat(sb).hasToString(" !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~");
+
+        chars = UnicodeChars.arrayOf(BASIC_LATIN, DIGITS);
+        assertThat(chars).containsExactly('0', '1', '2', '3', '4', '5', '6', '7', '8', '9');
     }
 
+    @Test
+    void testStringOf() {
+        assertThat(UnicodeChars.stringOf(BASIC_LATIN)).isEqualTo(" !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~");
+        assertThat(UnicodeChars.stringOf(subset(BASIC_LATIN).and(DIGITS))).isEqualTo("0123456789");
+        assertThat(UnicodeChars.stringOf(BASIC_LATIN, DIGITS)).isEqualTo("0123456789");
+    }
 }

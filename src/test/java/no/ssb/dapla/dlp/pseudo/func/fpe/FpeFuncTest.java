@@ -2,11 +2,7 @@ package no.ssb.dapla.dlp.pseudo.func.fpe;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import no.ssb.dapla.dlp.pseudo.func.PseudoFunc;
-import no.ssb.dapla.dlp.pseudo.func.PseudoFuncConfig;
-import no.ssb.dapla.dlp.pseudo.func.PseudoFuncFactory;
-import no.ssb.dapla.dlp.pseudo.func.PseudoFuncInput;
-import no.ssb.dapla.dlp.pseudo.func.PseudoFuncOutput;
+import no.ssb.dapla.dlp.pseudo.func.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;

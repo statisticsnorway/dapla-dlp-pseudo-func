@@ -3,8 +3,6 @@ package no.ssb.dapla.dlp.pseudo.func;
 import com.google.common.collect.ImmutableList;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PseudoFuncOutputTest {

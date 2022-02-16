@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 @Accessors(fluent = true)
 public class ParamMetadata {
 
-    private static final Pattern letterPattern = Pattern.compile("[a-zA-z]");
+    private static final Pattern letterPattern = Pattern.compile("[a-zA-Z]");
     private static final Pattern digitPattern = Pattern.compile("[0-9]");
     private static final Pattern whitespacePattern = Pattern.compile ("[\\s]");
     private static final Pattern punctuationPattern = Pattern.compile ("[\\.,;!?]");

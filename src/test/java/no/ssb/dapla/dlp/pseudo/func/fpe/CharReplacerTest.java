@@ -13,7 +13,7 @@ class CharReplacerTest {
         assertThat(CharReplacer.replace("a_b-c$d#", "?", allowedChars).getResult()).isEqualTo("a?b?c?d?");
         Assertions.assertThat(CharReplacer.replace("a_b-c$d#", "", allowedChars).getResult()).isEqualTo("abcd");
         assertThat(CharReplacer.replace("a_b-c$d#", null, allowedChars).getResult()).isEqualTo("aXbXcXdX");
-        assertThat(CharReplacer.replace(null, "?", allowedChars).getResult()).isEqualTo(null);
+        assertThat(CharReplacer.replace(null, "?", allowedChars).getResult()).isNull();
         assertThat(CharReplacer.replace("abc", null, 'X').getResult()).isEqualTo("XXX");
     }
 

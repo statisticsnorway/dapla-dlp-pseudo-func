@@ -3,25 +3,10 @@ package no.ssb.dapla.dlp.pseudo.func.text;
 import com.google.common.primitives.Chars;
 import lombok.RequiredArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
-import static no.ssb.dapla.dlp.pseudo.func.text.CharacterGroup.ALPHANUMERIC;
-import static no.ssb.dapla.dlp.pseudo.func.text.UnicodeChars.CharType.CONTROL;
-import static no.ssb.dapla.dlp.pseudo.func.text.UnicodeChars.CharType.DIGITS;
-import static no.ssb.dapla.dlp.pseudo.func.text.UnicodeChars.CharType.LETTERS;
-import static no.ssb.dapla.dlp.pseudo.func.text.UnicodeChars.CharType.LOWERCASE;
-import static no.ssb.dapla.dlp.pseudo.func.text.UnicodeChars.CharType.SPACE;
-import static no.ssb.dapla.dlp.pseudo.func.text.UnicodeChars.CharType.SYMBOLS;
-import static no.ssb.dapla.dlp.pseudo.func.text.UnicodeChars.CharType.UPPERCASE;
-import static no.ssb.dapla.dlp.pseudo.func.text.UnicodeChars.CharType.WHITESPACE;
+import static no.ssb.dapla.dlp.pseudo.func.text.UnicodeChars.CharType.*;
 
 /**
  * See https://en.wikipedia.org/wiki/List_of_Unicode_characters
@@ -52,31 +37,31 @@ public class UnicodeChars {
               if (included.isEmpty()) {
                   return true;
               }
-              if (included.contains(LETTERS) && !Character.isLetter(c)) {
+              else if (included.contains(LETTERS) && !Character.isLetter(c)) {
                   return false;
               }
-              if (included.contains(DIGITS) && !Character.isDigit(c)) {
+              else if (included.contains(DIGITS) && !Character.isDigit(c)) {
                   return false;
               }
-              if (included.contains(ALPHANUMERIC) && !Character.isLetterOrDigit(c)) {
+              else if (included.contains(ALPHANUMERIC) && !Character.isLetterOrDigit(c)) {
                   return false;
               }
-              if (included.contains(SPACE) && !Character.isSpaceChar(c)) {
+              else if (included.contains(SPACE) && !Character.isSpaceChar(c)) {
                   return false;
               }
-              if (included.contains(WHITESPACE) && !Character.isWhitespace(c)) {
+              else if (included.contains(WHITESPACE) && !Character.isWhitespace(c)) {
                   return false;
               }
-              if (included.contains(SYMBOLS) && Character.isLetterOrDigit(c)) {
+              else if (included.contains(SYMBOLS) && Character.isLetterOrDigit(c)) {
                   return false;
               }
-              if (included.contains(LOWERCASE) && !Character.isLowerCase(c)) {
+              else if (included.contains(LOWERCASE) && !Character.isLowerCase(c)) {
                   return false;
               }
-              if (included.contains(UPPERCASE) && !Character.isUpperCase(c)) {
+              else if (included.contains(UPPERCASE) && !Character.isUpperCase(c)) {
                   return false;
               }
-              if (included.contains(CONTROL) && !Character.isISOControl(c)) {
+              else if (included.contains(CONTROL) && !Character.isISOControl(c)) {
                   return false;
               }
 
@@ -97,31 +82,31 @@ public class UnicodeChars {
               if (included.isEmpty()) {
                   return true;
               }
-              if (included.contains(LETTERS) && !Character.isLetter(c)) {
+              else if (included.contains(LETTERS) && !Character.isLetter(c)) {
                   return false;
               }
-              if (included.contains(DIGITS) && !Character.isDigit(c)) {
+              else if (included.contains(DIGITS) && !Character.isDigit(c)) {
                   return false;
               }
-              if (included.contains(ALPHANUMERIC) && !Character.isLetterOrDigit(c)) {
+              else if (included.contains(ALPHANUMERIC) && !Character.isLetterOrDigit(c)) {
                   return false;
               }
-              if (included.contains(SPACE) && !Character.isSpaceChar(c)) {
+              else if (included.contains(SPACE) && !Character.isSpaceChar(c)) {
                   return false;
               }
-              if (included.contains(WHITESPACE) && !Character.isWhitespace(c)) {
+              else if (included.contains(WHITESPACE) && !Character.isWhitespace(c)) {
                   return false;
               }
-              if (included.contains(SYMBOLS) && Character.isLetterOrDigit(c) && Character.isWhitespace(c)) {
+              else if (included.contains(SYMBOLS) && Character.isLetterOrDigit(c) && Character.isWhitespace(c)) {
                   return false;
               }
-              if (included.contains(LOWERCASE) && !Character.isLowerCase(c)) {
+              else if (included.contains(LOWERCASE) && !Character.isLowerCase(c)) {
                   return false;
               }
-              if (included.contains(UPPERCASE) && !Character.isUpperCase(c)) {
+              else if (included.contains(UPPERCASE) && !Character.isUpperCase(c)) {
                   return false;
               }
-              if (included.contains(CONTROL) && !Character.isISOControl(c)) {
+              else if (included.contains(CONTROL) && !Character.isISOControl(c)) {
                   return false;
               }
 
@@ -175,7 +160,7 @@ public class UnicodeChars {
             char c = (char) cp;
             if (Character.UnicodeBlock.of(c) == unicodeBlock) {
                 chars.add(c);
-            } else if (chars.size() > 0) {
+            } else if (! chars.isEmpty()) {
                 // Since unicode blocks are contiguous, there's no need to seek further
                 break;
             }

@@ -4,8 +4,8 @@ import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 import com.idealista.fpe.config.Alphabet;
 import lombok.experimental.UtilityClass;
-import no.ssb.dapla.dlp.pseudo.func.text.CharacterGroup;
 import no.ssb.dapla.dlp.pseudo.func.PseudoFuncException;
+import no.ssb.dapla.dlp.pseudo.func.text.CharacterGroup;
 
 import java.util.Arrays;
 import java.util.Objects;

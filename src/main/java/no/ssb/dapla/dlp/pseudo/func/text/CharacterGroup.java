@@ -1,7 +1,5 @@
 package no.ssb.dapla.dlp.pseudo.func.text;
 
-import com.google.common.base.CharMatcher;
-import com.google.common.collect.Range;
 import no.ssb.dapla.dlp.pseudo.func.text.UnicodeChars.CharType;
 
 import java.util.Arrays;
@@ -210,16 +208,6 @@ public enum CharacterGroup {
 
     CharacterGroup(String chars) {
         this.chars = chars;
-    }
-
-    CharacterGroup(Range<Integer>... codePointRanges) {
-        StringBuilder sb = new StringBuilder();
-        for (Range<Integer> r : codePointRanges) {
-            for (int charNo = r.lowerEndpoint(); charNo <= r.upperEndpoint(); charNo++) {
-                sb.append((char) charNo);
-            }
-        }
-        this.chars = sb.toString();
     }
 
     CharacterGroup(CharacterGroup... characterGroups) {

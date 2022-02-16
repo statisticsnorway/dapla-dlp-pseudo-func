@@ -59,7 +59,7 @@ class FromStringTest {
 
     @Test
     void stringValue_shouldConvertToString() {
-        assertThat(FromString.convert("", String.class)).isEqualTo("");
+        assertThat(FromString.convert("", String.class)).isEmpty();
         assertThat(FromString.convert("          ", String.class)).isEqualTo("          ");
         assertThat(FromString.convert("abc", String.class)).isEqualTo("abc");
         assertThat(FromString.convert(null, String.class)).isNull();

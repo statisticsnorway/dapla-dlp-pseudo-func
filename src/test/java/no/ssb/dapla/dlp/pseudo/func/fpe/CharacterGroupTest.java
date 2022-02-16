@@ -22,22 +22,13 @@ class CharacterGroupTest {
     }
 
     @Test
-    public void deleteMe() {
-        for (CharacterGroup cg : CharacterGroup.values()) {
-            System.out.println(cg.name() + ":");
-            System.out.println(cg.getChars());
-            System.out.println("------------------------------------------------------");
-        }
-    }
-
-    @Test
     void charsOf_shouldParseCharacterGroup() {
-        assertThat(CharacterGroup.charsOf("alphanumeric").get().equals("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"));
-        assertThat(CharacterGroup.charsOf("ALPHANUMERIC").get().equals("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"));
-        assertThat(CharacterGroup.charsOf("AlPhANuMeRiC").get().equals("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"));
-        assertThat(CharacterGroup.charsOf("lphanumeric").orElse("foo").equals("foo"));
-        assertThat(CharacterGroup.charsOf(null).orElse("foo").equals("foo"));
-        assertThat(CharacterGroup.charsOf("").orElse("foo").equals("foo"));
+        assertThat(CharacterGroup.charsOf("alphanumeric").get()).contains("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
+        assertThat(CharacterGroup.charsOf("ALPHANUMERIC").get()).contains("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
+        assertThat(CharacterGroup.charsOf("AlPhANuMeRiC").get()).contains("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
+        assertThat(CharacterGroup.charsOf("lphanumeric").orElse("foo")).isEqualTo("foo");
+        assertThat(CharacterGroup.charsOf(null).orElse("foo")).isEqualTo("foo");
+        assertThat(CharacterGroup.charsOf("").orElse("foo")).isEqualTo("foo");
     }
 
 }

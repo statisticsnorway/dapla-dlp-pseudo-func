@@ -1,12 +1,12 @@
 package no.ssb.dapla.dlp.pseudo.func.fpe;
 
-  import no.ssb.dapla.dlp.pseudo.func.text.CharacterGroup;
-  import no.ssb.dapla.dlp.pseudo.func.PseudoFuncException;
-  import org.junit.jupiter.api.Test;
+import no.ssb.dapla.dlp.pseudo.func.PseudoFuncException;
+import no.ssb.dapla.dlp.pseudo.func.text.CharacterGroup;
+import org.junit.jupiter.api.Test;
 
-  import static no.ssb.dapla.dlp.pseudo.func.fpe.Alphabets.alphabetOf;
-  import static org.assertj.core.api.Assertions.assertThat;
-  import static org.junit.jupiter.api.Assertions.assertThrows;
+import static no.ssb.dapla.dlp.pseudo.func.fpe.Alphabets.alphabetOf;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class AlphabetsTest {
 
@@ -14,7 +14,7 @@ class AlphabetsTest {
     void distinctCharacters() {
         assertThat(Alphabets.distinctCharacters("abcc", "cdee", "cdf")).isEqualTo("abcdef");
         assertThat(Alphabets.distinctCharacters("abcc", null, "")).isEqualTo("abc");
-        assertThat(Alphabets.distinctCharacters(null)).isEqualTo("");
+        assertThat(Alphabets.distinctCharacters(null)).isEmpty();
 
         for (CharacterGroup cg : CharacterGroup.values()) {
             assertThat(Alphabets.distinctCharacters(cg.getChars())).isEqualTo(cg.getChars());
@@ -23,7 +23,7 @@ class AlphabetsTest {
 
     @Test
     void customAlphabet_alphabetOf_shouldReturnDefault() {
-        assertThat(alphabetOf("abcd1234!#$% ").availableCharacters().length).isEqualTo(13);
+        assertThat(alphabetOf("abcd1234!#$% ").availableCharacters()).hasSize(13);
     }
 
     @Test

@@ -19,7 +19,7 @@ class ParamMetadataTest {
     private static final CharType[] ALL = CharType.values();
 
     @Test
-    public void parse_strings_shouldDetectCharTypePresence() {
+    void parse_strings_shouldDetectCharTypePresence() {
         assertPresent("foo", LETTER);
         assertPresent("foo BAR", LETTER, WHITESPACE);
         assertPresent("foo\tBAR.", LETTER, WHITESPACE, PUNCTUATION);
@@ -30,17 +30,17 @@ class ParamMetadataTest {
     }
 
     @Test
-    public void parse_null_shouldNotFail() {
+    void parse_null_shouldNotFail() {
         assertPresent(null, NONE);
     }
 
     @Test
-    public void parse_empty_shouldNotFail() {
+    void parse_empty_shouldNotFail() {
         assertPresent("", NONE);
     }
 
     @Test
-    public void merge_collectionOfParamMetadataObjects_shouldDescribeAllRelevantCharacterTypes() {
+    void merge_collectionOfParamMetadataObjects_shouldDescribeAllRelevantCharacterTypes() {
         ParamMetadata letters = ParamMetadata.parse("abc");
         assertPresent("abc", LETTER);
         ParamMetadata digitsAndWhitespace = ParamMetadata.parse("1 2 3");
@@ -58,10 +58,10 @@ class ParamMetadataTest {
     }
 
     @Test
-    public void shouldPrintReadableToString() {
-        assertThat(ParamMetadata.parse("a,b,c").toString()).isEqualTo("letter, punctuation");
-        assertThat(ParamMetadata.parse("").toString()).isEqualTo("empty");
-        assertThat(ParamMetadata.parse(null).toString()).isEqualTo("empty");
+    void shouldPrintReadableToString() {
+        assertThat(ParamMetadata.parse("a,b,c")).hasToString("letter, punctuation");
+        assertThat(ParamMetadata.parse("")).hasToString("empty");
+        assertThat(ParamMetadata.parse(null)).hasToString("empty");
     }
 
     /**

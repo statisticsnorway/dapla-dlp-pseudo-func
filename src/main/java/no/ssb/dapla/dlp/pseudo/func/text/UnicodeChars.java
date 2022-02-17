@@ -29,46 +29,7 @@ public class UnicodeChars {
     }
 
     private static List<Character> listOf(CharQuery q) {
-        Set<CharType> included = q.setOfIncludedCharTypes();
-
-        List<Character> chars = listOf(q.unicodeBlock);
-        return chars.stream()
-          .filter(c -> {
-              if (included.isEmpty()) {
-                  return true;
-              }
-              else if (included.contains(LETTERS) && !Character.isLetter(c)) {
-                  return false;
-              }
-              else if (included.contains(DIGITS) && !Character.isDigit(c)) {
-                  return false;
-              }
-              else if (included.contains(ALPHANUMERIC) && !Character.isLetterOrDigit(c)) {
-                  return false;
-              }
-              else if (included.contains(SPACE) && !Character.isSpaceChar(c)) {
-                  return false;
-              }
-              else if (included.contains(WHITESPACE) && !Character.isWhitespace(c)) {
-                  return false;
-              }
-              else if (included.contains(SYMBOLS) && Character.isLetterOrDigit(c)) {
-                  return false;
-              }
-              else if (included.contains(LOWERCASE) && !Character.isLowerCase(c)) {
-                  return false;
-              }
-              else if (included.contains(UPPERCASE) && !Character.isUpperCase(c)) {
-                  return false;
-              }
-              else if (included.contains(CONTROL) && !Character.isISOControl(c)) {
-                  return false;
-              }
-
-              return true;
-          })
-
-          .collect(Collectors.toList());
+        return listOf(q.unicodeBlock, q.setOfIncludedCharTypes());
     }
 
     public static List<Character> listOf(Character.UnicodeBlock unicodeBlock, CharType... includedCharTypes) {
@@ -76,37 +37,42 @@ public class UnicodeChars {
         if (includedCharTypes != null) {
             Collections.addAll(included, includedCharTypes);
         }
+
+        return listOf(unicodeBlock, included);
+    }
+
+    static List<Character> listOf(Character.UnicodeBlock unicodeBlock, Set<CharType> includedCharTypes) {
         List<Character> chars = listOf(unicodeBlock);
         return chars.stream()
           .filter(c -> {
-              if (included.isEmpty()) {
+              if (includedCharTypes.isEmpty()) {
                   return true;
               }
-              else if (included.contains(LETTERS) && !Character.isLetter(c)) {
+              else if (includedCharTypes.contains(LETTERS) && !Character.isLetter(c)) {
                   return false;
               }
-              else if (included.contains(DIGITS) && !Character.isDigit(c)) {
+              else if (includedCharTypes.contains(DIGITS) && !Character.isDigit(c)) {
                   return false;
               }
-              else if (included.contains(ALPHANUMERIC) && !Character.isLetterOrDigit(c)) {
+              else if (includedCharTypes.contains(ALPHANUMERIC) && !Character.isLetterOrDigit(c)) {
                   return false;
               }
-              else if (included.contains(SPACE) && !Character.isSpaceChar(c)) {
+              else if (includedCharTypes.contains(SPACE) && !Character.isSpaceChar(c)) {
                   return false;
               }
-              else if (included.contains(WHITESPACE) && !Character.isWhitespace(c)) {
+              else if (includedCharTypes.contains(WHITESPACE) && !Character.isWhitespace(c)) {
                   return false;
               }
-              else if (included.contains(SYMBOLS) && Character.isLetterOrDigit(c) && Character.isWhitespace(c)) {
+              else if (includedCharTypes.contains(SYMBOLS) && (Character.isLetterOrDigit(c) || Character.isWhitespace(c) || Character.isISOControl(c))) {
                   return false;
               }
-              else if (included.contains(LOWERCASE) && !Character.isLowerCase(c)) {
+              else if (includedCharTypes.contains(LOWERCASE) && !Character.isLowerCase(c)) {
                   return false;
               }
-              else if (included.contains(UPPERCASE) && !Character.isUpperCase(c)) {
+              else if (includedCharTypes.contains(UPPERCASE) && !Character.isUpperCase(c)) {
                   return false;
               }
-              else if (included.contains(CONTROL) && !Character.isISOControl(c)) {
+              else if (includedCharTypes.contains(CONTROL) && !Character.isISOControl(c)) {
                   return false;
               }
 

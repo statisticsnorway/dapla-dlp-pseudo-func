@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -54,39 +55,50 @@ class PseudoFuncFactoryTest {
     }
 
     @Test
-    void missingParam_create_shouldFailWithProperError() {
-        PseudoFuncException e;
-        e = assertThrows(PseudoFuncException.class, () -> {
-            PseudoFuncConfig config = new PseudoFuncConfig(ImmutableMap.of(
-              PseudoFuncConfig.Param.FUNC_IMPL, FpeFunc.class.getName(),
-              FpeFuncConfig.Param.ALPHABET, CharacterGroup.ALPHANUMERIC.getChars(),
-              FpeFuncConfig.Param.KEY_ID, KEY_ID,
-              FpeFuncConfig.Param.KEY, KEY_CONTENT
-            ));
-            PseudoFuncFactory.create(config);
+    void missingDeclParam_create_shouldFailWithProperError() {
+         final Map<String, Object> params = ImmutableMap.of(
+                 PseudoFuncConfig.Param.FUNC_IMPL, FpeFunc.class.getName(),
+                 FpeFuncConfig.Param.ALPHABET, CharacterGroup.ALPHANUMERIC.getChars(),
+                 FpeFuncConfig.Param.KEY_ID, KEY_ID,
+                 FpeFuncConfig.Param.KEY, KEY_CONTENT
+         );
+         PseudoFuncException e = assertThrows(PseudoFuncException.class, () -> {
+             PseudoFuncConfig config = new PseudoFuncConfig(params);
+             PseudoFuncFactory.create(config);
         });
+
         assertThat(e.getMessage()).isEqualTo("Missing pseudo func param 'decl'");
+    }
 
-        e = assertThrows(PseudoFuncException.class, () -> {
-            PseudoFuncConfig config = new PseudoFuncConfig(ImmutableMap.of(
-              PseudoFuncConfig.Param.FUNC_DECL, "fpe-alphanumeric(param1)",
-              FpeFuncConfig.Param.ALPHABET, CharacterGroup.ALPHANUMERIC.getChars(),
-              FpeFuncConfig.Param.KEY_ID, KEY_ID,
-              FpeFuncConfig.Param.KEY, KEY_CONTENT
-            ));
+    @Test
+    void missingImplParam_create_shouldFailWithProperError() {
+        final Map<String, Object> params = ImmutableMap.of(
+                PseudoFuncConfig.Param.FUNC_DECL, "fpe-alphanumeric(param1)",
+                FpeFuncConfig.Param.ALPHABET, CharacterGroup.ALPHANUMERIC.getChars(),
+                FpeFuncConfig.Param.KEY_ID, KEY_ID,
+                FpeFuncConfig.Param.KEY, KEY_CONTENT
+        );
+        PseudoFuncException e = assertThrows(PseudoFuncException.class, () -> {
+            PseudoFuncConfig config = new PseudoFuncConfig(params);
             PseudoFuncFactory.create(config);
         });
+
         assertThat(e.getMessage()).isEqualTo("Missing pseudo func param 'impl'");
+    }
 
-        e = assertThrows(PseudoFuncException.class, () -> {
-            PseudoFuncConfig config = new PseudoFuncConfig(ImmutableMap.of(
-              PseudoFuncConfig.Param.FUNC_DECL, "fpe-text",
-              PseudoFuncConfig.Param.FUNC_IMPL, FpeFunc.class.getName(),
-              FpeFuncConfig.Param.KEY_ID, KEY_ID,
-              FpeFuncConfig.Param.KEY, KEY_CONTENT
-            ));
+    @Test
+    void missingAlphabetParam_create_shouldFailWithProperError() {
+        final Map<String, Object> params = ImmutableMap.of(
+                PseudoFuncConfig.Param.FUNC_DECL, "fpe-text",
+                PseudoFuncConfig.Param.FUNC_IMPL, FpeFunc.class.getName(),
+                FpeFuncConfig.Param.KEY_ID, KEY_ID,
+                FpeFuncConfig.Param.KEY, KEY_CONTENT
+        );
+        PseudoFuncException e = assertThrows(PseudoFuncException.class, () -> {
+            PseudoFuncConfig config = new PseudoFuncConfig(params);
             PseudoFuncFactory.create(config);
         });
+
         assertThat(stacktraceStringOf(e)).contains("Missing pseudo func param 'alphabet'") ;
     }
 

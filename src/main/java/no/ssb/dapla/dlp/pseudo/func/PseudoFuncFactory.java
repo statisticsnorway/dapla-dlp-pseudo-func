@@ -8,7 +8,7 @@ import java.lang.reflect.Constructor;
 public class PseudoFuncFactory {
     public static <T extends PseudoFuncConfig> PseudoFunc create(T config) {
         try {
-            Class c = Class.forName(config.getFuncImpl());
+            Class<PseudoFunc> c = (Class<PseudoFunc>) Class.forName(config.getFuncImpl());
             Constructor<PseudoFunc> ctr = c.getConstructor(PseudoFuncConfig.class);
             return ctr.newInstance(config);
         }

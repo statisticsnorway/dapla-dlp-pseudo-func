@@ -5,11 +5,11 @@
 
   <groupId>no.ssb.dapla.dlp.pseudo.func</groupId>
   <artifactId>dapla-dlp-pseudo-func</artifactId>
-  <version>1.0.3-SNAPSHOT</version>
+  <version>1.1.0-SNAPSHOT</version>
   <name>dapla-dlp-pseudo-func</name>
 
   <properties>
-    <java.version>8</java.version>
+    <java.version>11</java.version>
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -25,6 +25,7 @@
     <logback.version>1.2.10</logback.version>
     <lombok.version>1.18.22</lombok.version>
     <slf4j.version>1.7.36</slf4j.version>
+    <tink.version>1.7.0</tink.version>
 
     <!-- Plugin/extension versions -->
     <artifactregistry-maven-wagon.version>2.1.4</artifactregistry-maven-wagon.version>
@@ -52,6 +53,28 @@
       <artifactId>format-preserving-encryption</artifactId>
       <version>${format-preserving-encryption.version}</version>
     </dependency>
+    <dependency>
+      <groupId>com.google.crypto.tink</groupId>
+      <artifactId>tink</artifactId>
+      <version>${tink.version}</version>
+    </dependency>
+
+    <!--
+    <dependency>
+      <groupId>com.google.crypto.tink</groupId>
+      <artifactId>tink-gcpkms</artifactId>
+      <version>${tinkVersion}</version>
+    </dependency>
+    -->
+    <!-- to fix CVE-2021-22573 in tink-gcpkms -->
+    <!--
+    <dependency>
+      <groupId>com.google.oauth-client</groupId>
+      <artifactId>google-oauth-client</artifactId>
+      <version>1.34.1</version>
+    </dependency>
+    -->
+
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>

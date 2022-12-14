@@ -19,11 +19,11 @@
     <assertj.version>3.22.0</assertj.version>
     <format-preserving-encryption.version>1.0.0</format-preserving-encryption.version>
     <guava.version>31.0.1-jre</guava.version>
-    <jackson.version>2.13.3</jackson.version>
-    <jsonassert.version>1.5.0</jsonassert.version>
-    <junit5.version>5.8.2</junit5.version>
-    <logback.version>1.2.10</logback.version>
-    <lombok.version>1.18.22</lombok.version>
+    <jackson.version>2.14.0</jackson.version>
+    <jsonassert.version>1.5.1</jsonassert.version>
+    <junit5.version>5.9.1</junit5.version>
+    <logback.version>1.4.5</logback.version>
+    <lombok.version>1.18.24</lombok.version>
     <slf4j.version>1.7.36</slf4j.version>
     <tink.version>1.7.0</tink.version>
 
@@ -58,22 +58,6 @@
       <artifactId>tink</artifactId>
       <version>${tink.version}</version>
     </dependency>
-
-    <!--
-    <dependency>
-      <groupId>com.google.crypto.tink</groupId>
-      <artifactId>tink-gcpkms</artifactId>
-      <version>${tinkVersion}</version>
-    </dependency>
-    -->
-    <!-- to fix CVE-2021-22573 in tink-gcpkms -->
-    <!--
-    <dependency>
-      <groupId>com.google.oauth-client</groupId>
-      <artifactId>google-oauth-client</artifactId>
-      <version>1.34.1</version>
-    </dependency>
-    -->
 
     <dependency>
       <groupId>org.projectlombok</groupId>

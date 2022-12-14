@@ -16,9 +16,9 @@
     <artifact-registry.url>artifactregistry://europe-north1-maven.pkg.dev/artifact-registry-14da</artifact-registry.url>
 
     <!-- Dependency versions -->
-    <assertj.version>3.22.0</assertj.version>
+    <assertj.version>3.23.1</assertj.version>
     <format-preserving-encryption.version>1.0.0</format-preserving-encryption.version>
-    <guava.version>31.0.1-jre</guava.version>
+    <guava.version>31.1-jre</guava.version>
     <jackson.version>2.14.0</jackson.version>
     <jsonassert.version>1.5.1</jsonassert.version>
     <junit5.version>5.9.1</junit5.version>

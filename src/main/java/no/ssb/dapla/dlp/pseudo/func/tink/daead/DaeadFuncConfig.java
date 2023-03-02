@@ -1,4 +1,4 @@
-package no.ssb.dapla.dlp.pseudo.func.daead;
+package no.ssb.dapla.dlp.pseudo.func.tink.daead;
 
 import com.google.crypto.tink.DeterministicAead;
 import lombok.Builder;

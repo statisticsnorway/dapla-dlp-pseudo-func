@@ -1,10 +1,10 @@
-package no.ssb.dapla.dlp.pseudo.func.daead;
+package no.ssb.dapla.dlp.pseudo.func.tink.daead;
 
 import com.google.crypto.tink.DeterministicAead;
 import lombok.extern.slf4j.Slf4j;
 import no.ssb.dapla.dlp.pseudo.func.PseudoFuncConfig;
 
-import static no.ssb.dapla.dlp.pseudo.func.daead.DaeadFuncConfig.Param.DAEAD;
+import static no.ssb.dapla.dlp.pseudo.func.tink.daead.DaeadFuncConfig.Param.DAEAD;
 
 @Slf4j
 public class DaeadFuncConfigService {

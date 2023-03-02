@@ -26,6 +26,7 @@
     <lombok.version>1.18.24</lombok.version>
     <slf4j.version>1.7.36</slf4j.version>
     <tink.version>1.7.0</tink.version>
+    <tink-fpe-java.version>0.0.1-SNAPSHOT</tink-fpe-java.version>
 
     <!-- Plugin/extension versions -->
     <artifactregistry-maven-wagon.version>2.1.4</artifactregistry-maven-wagon.version>
@@ -58,7 +59,11 @@
       <artifactId>tink</artifactId>
       <version>${tink.version}</version>
     </dependency>
-
+    <dependency>
+      <groupId>no.ssb.crypto.tink</groupId>
+      <artifactId>tink-fpe-java</artifactId>
+      <version>${tink-fpe-java.version}</version>
+    </dependency>
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>

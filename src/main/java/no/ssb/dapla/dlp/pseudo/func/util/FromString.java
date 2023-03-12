@@ -16,6 +16,7 @@ public class FromString {
 
     private static Map<Class<?>, Function<String,?>> fromStringFunctionMap = ImmutableMap.<Class<?>, Function<String,?>>builder()
       .put(String.class, s -> s)
+      .put(Character.class, s -> (blankToNull(s) == null) ? null : Character.valueOf(s.charAt(0)))
       .put(Long.class, s -> (blankToNull(s) == null) ? null : Long.valueOf(s))
       .put(Integer.class, s -> (blankToNull(s) == null) ? null : Integer.valueOf(s))
       .put(Double.class, s -> (blankToNull(s) == null) ? null : Double.valueOf(s))
@@ -36,8 +37,26 @@ public class FromString {
         return emptyToNull(nullToEmpty(s).trim());
     }
 
+    private static <E extends Enum<E>> E convertEnum(String name, Class<E> clazz) {
+        if (blankToNull(name) == null) {
+            return null;
+        }
+        for (E e : clazz.getEnumConstants()) {
+            if (name.equalsIgnoreCase(e.toString())) {
+                return e;
+            }
+        }
+
+        throw new IllegalArgumentException("No matching enum value '" + name + "' in enum " + clazz);
+    }
+
     public static <T> T convert(String data, Class<T> clazz) {
-        return (T) fromStringFunctionMap.get(clazz).apply(data);
+        if (clazz.isEnum()) {
+            return (T) convertEnum(data, (Class<Enum>) clazz);
+        }
+        else {
+            return (T) fromStringFunctionMap.get(clazz).apply(data);
+        }
     }
 
 }

@@ -12,7 +12,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class DaeadFuncTest {
+class TinkDaeadFuncTest {
 
     @BeforeAll
     static void initTink() throws GeneralSecurityException {
@@ -25,8 +25,8 @@ class DaeadFuncTest {
         String originalVal = "Ken sent me";
         transformAndRestore(originalVal, new PseudoFuncConfig(ImmutableMap.of(
                 PseudoFuncConfig.Param.FUNC_DECL, String.format("tink-daead(%s)", daeadWrapper.getKeyId()),
-                PseudoFuncConfig.Param.FUNC_IMPL, DaeadFunc.class.getName(),
-                DaeadFuncConfig.Param.DAEAD, daeadWrapper.getDaead()
+                PseudoFuncConfig.Param.FUNC_IMPL, TinkDaeadFunc.class.getName(),
+                TinkDaeadFuncConfig.Param.DAEAD, daeadWrapper.getDaead()
         )));
     }
 
@@ -36,8 +36,8 @@ class DaeadFuncTest {
         List originalVal = ImmutableList.of("Ken sent me...", "Kilroy was here!");
         transformAndRestore(originalVal, new PseudoFuncConfig(ImmutableMap.of(
                 PseudoFuncConfig.Param.FUNC_DECL, String.format("tink-daead(%s)", daeadWrapper.getKeyId()),
-                PseudoFuncConfig.Param.FUNC_IMPL, DaeadFunc.class.getName(),
-                DaeadFuncConfig.Param.DAEAD, daeadWrapper.getDaead()
+                PseudoFuncConfig.Param.FUNC_IMPL, TinkDaeadFunc.class.getName(),
+                TinkDaeadFuncConfig.Param.DAEAD, daeadWrapper.getDaead()
         )));
     }
 

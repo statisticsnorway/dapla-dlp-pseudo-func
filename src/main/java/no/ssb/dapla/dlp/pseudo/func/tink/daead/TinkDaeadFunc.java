@@ -11,14 +11,13 @@ import java.security.GeneralSecurityException;
 import java.util.Base64;
 
 @Slf4j
-public class DaeadFunc extends AbstractPseudoFunc {
+public class TinkDaeadFunc extends AbstractPseudoFunc {
 
-    // FIXME: Replace this with something real
     private static final byte[] DAEAD_STAMP_BYTES = "".getBytes(StandardCharsets.UTF_8);
-    private final DaeadFuncConfigService configService = new DaeadFuncConfigService();
-    private final DaeadFuncConfig config;
+    private final TinkDaeadFuncConfigService configService = new TinkDaeadFuncConfigService();
+    private final TinkDaeadFuncConfig config;
 
-    public DaeadFunc(@NonNull PseudoFuncConfig genericConfig) {
+    public TinkDaeadFunc(@NonNull PseudoFuncConfig genericConfig) {
         super(genericConfig.getFuncDecl());
         this.config = configService.resolve(genericConfig);
     }

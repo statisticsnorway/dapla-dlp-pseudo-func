@@ -11,11 +11,11 @@ import static no.ssb.crypto.tink.fpe.util.ByteArrayUtil.b2s;
 import static no.ssb.crypto.tink.fpe.util.ByteArrayUtil.s2b;
 
 @Slf4j
-public class FpeFunc extends AbstractPseudoFunc {
-    private final FpeFuncConfigService configService = new FpeFuncConfigService();
-    private final FpeFuncConfig config;
+public class TinkFpeFunc extends AbstractPseudoFunc {
+    private final TinkFpeFuncConfigService configService = new TinkFpeFuncConfigService();
+    private final TinkFpeFuncConfig config;
 
-    public FpeFunc(@NonNull PseudoFuncConfig genericConfig) {
+    public TinkFpeFunc(@NonNull PseudoFuncConfig genericConfig) {
         super(genericConfig.getFuncDecl());
         this.config = configService.resolve(genericConfig);
     }
@@ -34,7 +34,7 @@ public class FpeFunc extends AbstractPseudoFunc {
                 output.add(b2s(ciphertext));
             }
             catch (GeneralSecurityException e) {
-                throw new FpePseudoFuncException("Tink FPE apply error. func=" + getFuncDecl() + ", contentType=" + input.getParamMetadata(), e);
+                throw new TinkFpePseudoFuncException("Tink FPE apply error. func=" + getFuncDecl() + ", contentType=" + input.getParamMetadata(), e);
             }
         });
 
@@ -48,19 +48,18 @@ public class FpeFunc extends AbstractPseudoFunc {
                     byte[] ciphertext = s2b(String.valueOf(in));
                     try {
                         byte[] plaintext = fpe().decrypt(ciphertext, config.getFpeParams());
-                        //output.add(FromString.convert(new String(plaintext), in.getClass()));
                         output.add(b2s(plaintext));
                     }
                     catch (GeneralSecurityException e) {
-                        throw new FpePseudoFuncException("Tink FPE restore error. func=" + getFuncDecl() + ", contentType=" + input.getParamMetadata(), e);
+                        throw new TinkFpePseudoFuncException("Tink FPE restore error. func=" + getFuncDecl() + ", contentType=" + input.getParamMetadata(), e);
                     }
         });
 
         return output;
     }
 
-    public static class FpePseudoFuncException extends PseudoFuncException {
-        public FpePseudoFuncException(String message, Throwable cause) {
+    public static class TinkFpePseudoFuncException extends PseudoFuncException {
+        public TinkFpePseudoFuncException(String message, Throwable cause) {
             super(message, cause);
         }
     }

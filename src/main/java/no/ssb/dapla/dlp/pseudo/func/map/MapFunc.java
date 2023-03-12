@@ -30,7 +30,6 @@ public class MapFunc extends AbstractPseudoFunc {
         for (Object inputValue : input.getValues()) {
             String plain = String.valueOf(inputValue);
             final Object pseudonymized = mapper.map(plain);
-            //output.add(FromString.convert(pseudonymized, inputValue.getClass()));
             output.add(pseudonymized);
         }
 
@@ -44,7 +43,6 @@ public class MapFunc extends AbstractPseudoFunc {
         for (Object inputValue : input.getValues()) {
             String mapped = String.valueOf(inputValue);
             final Object clear = mapper.restore(mapped);
-            //output.add(FromString.convert(clear, inputValue.getClass()));
             output.add(clear);
         }
 

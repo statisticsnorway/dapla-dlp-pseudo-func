@@ -24,7 +24,7 @@ class FpeFuncTest {
           PseudoFuncConfig.Param.FUNC_IMPL, FpeFunc.class.getName(),
           FpeFuncConfig.Param.ALPHABET, "alphanumeric+whitespace",
           FpeFuncConfig.Param.KEY_ID, "keyId1",
-          FpeFuncConfig.Param.KEY, BASE64_ENCODED_KEY
+          FpeFuncConfig.Param.KEY_DATA, BASE64_ENCODED_KEY
 
         )));
     }
@@ -38,7 +38,7 @@ class FpeFuncTest {
           PseudoFuncConfig.Param.FUNC_IMPL, FpeFunc.class.getName(),
           FpeFuncConfig.Param.ALPHABET, "alphanumeric+whitespace+symbols",
           FpeFuncConfig.Param.KEY_ID, "keyId1",
-          FpeFuncConfig.Param.KEY, BASE64_ENCODED_KEY
+          FpeFuncConfig.Param.KEY_DATA, BASE64_ENCODED_KEY
         )));
     }
 
@@ -54,7 +54,7 @@ class FpeFuncTest {
           PseudoFuncConfig.Param.FUNC_IMPL, FpeFunc.class.getName(),
           FpeFuncConfig.Param.ALPHABET, "digits",
           FpeFuncConfig.Param.KEY_ID, "keyId1",
-          FpeFuncConfig.Param.KEY, BASE64_ENCODED_KEY
+          FpeFuncConfig.Param.KEY_DATA, BASE64_ENCODED_KEY
         )));
     }
 
@@ -67,7 +67,7 @@ class FpeFuncTest {
               PseudoFuncConfig.Param.FUNC_IMPL, FpeFunc.class.getName(),
               FpeFuncConfig.Param.ALPHABET, "ABCDEFGHIJ",
               FpeFuncConfig.Param.KEY_ID, "keyId1",
-              FpeFuncConfig.Param.KEY, BASE64_ENCODED_KEY
+              FpeFuncConfig.Param.KEY_DATA, BASE64_ENCODED_KEY
         )));
     }
 
@@ -80,7 +80,7 @@ class FpeFuncTest {
           .put(PseudoFuncConfig.Param.FUNC_IMPL, FpeFunc.class.getName())
           .put(FpeFuncConfig.Param.ALPHABET, "ABCDEFGHIJ")
           .put(FpeFuncConfig.Param.KEY_ID, "keyId1")
-          .put(FpeFuncConfig.Param.KEY, BASE64_ENCODED_KEY)
+          .put(FpeFuncConfig.Param.KEY_DATA, BASE64_ENCODED_KEY)
           .build()
         ));
 
@@ -98,7 +98,7 @@ class FpeFuncTest {
           PseudoFuncConfig.Param.FUNC_IMPL, FpeFunc.class.getName(),
           FpeFuncConfig.Param.ALPHABET, "digits",
           FpeFuncConfig.Param.KEY_ID, "keyId1",
-          FpeFuncConfig.Param.KEY, BASE64_ENCODED_KEY
+          FpeFuncConfig.Param.KEY_DATA, BASE64_ENCODED_KEY
         )));
     }
 

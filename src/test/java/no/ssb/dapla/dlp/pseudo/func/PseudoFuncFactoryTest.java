@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class PseudoFuncFactoryTest {
 
     private final static String KEY_ID = "01DWENC90WW9K41EN0QS2Q23X4";
-    private final static String KEY_CONTENT = "8weo9VlQTuPqxjVWaHAupOdCwNpn4CFz";
+    private final static String KEY_MATERIAL = "8weo9VlQTuPqxjVWaHAupOdCwNpn4CFz";
 
     private final static List<PseudoFuncConfig> GENERIC_CONFIG = ImmutableList.of(
       new PseudoFuncConfig(ImmutableMap.of(
@@ -26,7 +26,7 @@ class PseudoFuncFactoryTest {
         PseudoFuncConfig.Param.FUNC_IMPL, FpeFunc.class.getName(),
         FpeFuncConfig.Param.ALPHABET, "digits",
         FpeFuncConfig.Param.KEY_ID, KEY_ID,
-        FpeFuncConfig.Param.KEY, KEY_CONTENT
+        FpeFuncConfig.Param.KEY_DATA, KEY_MATERIAL
       )),
 
       new PseudoFuncConfig(ImmutableMap.of(
@@ -34,7 +34,7 @@ class PseudoFuncFactoryTest {
         PseudoFuncConfig.Param.FUNC_IMPL, FpeFunc.class.getName(),
         FpeFuncConfig.Param.ALPHABET, "alphanumeric+whitespace",
         FpeFuncConfig.Param.KEY_ID, "01DWENC90WW9K41EN0QS2Q23X4",
-        FpeFuncConfig.Param.KEY, KEY_CONTENT
+        FpeFuncConfig.Param.KEY_DATA, KEY_MATERIAL
       )),
 
       new PseudoFuncConfig(ImmutableMap.of(
@@ -42,7 +42,7 @@ class PseudoFuncFactoryTest {
         PseudoFuncConfig.Param.FUNC_IMPL, FpeFunc.class.getName(),
         FpeFuncConfig.Param.ALPHABET, "alphanumeric+whitespace",
         FpeFuncConfig.Param.KEY_ID, KEY_ID,
-        FpeFuncConfig.Param.KEY, KEY_CONTENT
+        FpeFuncConfig.Param.KEY_DATA, KEY_MATERIAL
       ))
     );
 
@@ -60,7 +60,7 @@ class PseudoFuncFactoryTest {
                  PseudoFuncConfig.Param.FUNC_IMPL, FpeFunc.class.getName(),
                  FpeFuncConfig.Param.ALPHABET, CharacterGroup.ALPHANUMERIC.getChars(),
                  FpeFuncConfig.Param.KEY_ID, KEY_ID,
-                 FpeFuncConfig.Param.KEY, KEY_CONTENT
+                 FpeFuncConfig.Param.KEY_DATA, KEY_MATERIAL
          );
          PseudoFuncException e = assertThrows(PseudoFuncException.class, () -> {
              PseudoFuncConfig config = new PseudoFuncConfig(params);
@@ -76,7 +76,7 @@ class PseudoFuncFactoryTest {
                 PseudoFuncConfig.Param.FUNC_DECL, "fpe-alphanumeric(param1)",
                 FpeFuncConfig.Param.ALPHABET, CharacterGroup.ALPHANUMERIC.getChars(),
                 FpeFuncConfig.Param.KEY_ID, KEY_ID,
-                FpeFuncConfig.Param.KEY, KEY_CONTENT
+                FpeFuncConfig.Param.KEY_DATA, KEY_MATERIAL
         );
         PseudoFuncException e = assertThrows(PseudoFuncException.class, () -> {
             PseudoFuncConfig config = new PseudoFuncConfig(params);
@@ -92,7 +92,7 @@ class PseudoFuncFactoryTest {
                 PseudoFuncConfig.Param.FUNC_DECL, "fpe-text",
                 PseudoFuncConfig.Param.FUNC_IMPL, FpeFunc.class.getName(),
                 FpeFuncConfig.Param.KEY_ID, KEY_ID,
-                FpeFuncConfig.Param.KEY, KEY_CONTENT
+                FpeFuncConfig.Param.KEY_DATA, KEY_MATERIAL
         );
         PseudoFuncException e = assertThrows(PseudoFuncException.class, () -> {
             PseudoFuncConfig config = new PseudoFuncConfig(params);

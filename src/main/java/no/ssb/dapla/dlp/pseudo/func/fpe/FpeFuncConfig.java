@@ -16,8 +16,9 @@ public class FpeFuncConfig {
     @UtilityClass
     public static class Param {
         public static final String ALPHABET = "alphabet";
+
         public static final String KEY_ID = "keyId";
-        public static final String KEY = "key";
+        public static final String KEY_DATA = "keyData";
         public static final String REPLACE_ILLEGAL_CHARS = "replaceIllegalChars";
         public static final String REPLACE_ILLEGAL_CHARS_WITH = "replaceIllegalCharsWith";
     }

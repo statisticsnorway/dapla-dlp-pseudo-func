@@ -26,7 +26,7 @@
     <lombok.version>1.18.26</lombok.version>
     <slf4j.version>2.0.6</slf4j.version>
     <tink.version>1.8.0</tink.version>
-    <tink-fpe-java.version>0.0.1</tink-fpe-java.version>
+    <tink-fpe-java.version>0.0.2</tink-fpe-java.version>
 
     <!-- Plugin/extension versions -->
     <artifactregistry-maven-wagon.version>2.1.4</artifactregistry-maven-wagon.version>

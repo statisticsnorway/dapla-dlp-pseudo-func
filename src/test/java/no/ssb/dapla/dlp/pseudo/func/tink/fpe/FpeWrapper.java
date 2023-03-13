@@ -1,24 +1,28 @@
-package no.ssb.dapla.dlp.pseudo.func.daead;
+package no.ssb.dapla.dlp.pseudo.func.tink.fpe;
 
-import com.google.crypto.tink.*;
+import com.google.crypto.tink.CleartextKeysetHandle;
+import com.google.crypto.tink.JsonKeysetWriter;
+import com.google.crypto.tink.KeyTemplates;
+import com.google.crypto.tink.KeysetHandle;
+import no.ssb.crypto.tink.fpe.Fpe;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
-public class DaeadWrapper {
+public class FpeWrapper {
 
     private final KeysetHandle keysetHandle;
 
-    private final DeterministicAead daead;
+    private final Fpe fpe;
 
-    public DaeadWrapper() {
+    public FpeWrapper() {
         try {
-            this.keysetHandle = KeysetHandle.generateNew(KeyTemplates.get("AES256_SIV"));
-            this.daead = keysetHandle.getPrimitive(DeterministicAead.class);
+            this.keysetHandle = KeysetHandle.generateNew(KeyTemplates.get("FPE_FF31_256_ALPHANUMERIC"));
+            this.fpe = keysetHandle.getPrimitive(Fpe.class);
         }
         catch (GeneralSecurityException e) {
-            throw new DaeadWrapperException("Error initializing DaeadWrapper for testing", e);
+            throw new FpeWrapperException("Error initializing FpeWrapper for testing", e);
         }
     }
 
@@ -33,7 +37,7 @@ public class DaeadWrapper {
             return toKeyJson(keysetHandle);
         }
         catch (IOException e) {
-            throw new DaeadWrapperException("Error deducing keyJson", e);
+            throw new FpeWrapperException("Error deducing keyJson", e);
         }
     }
 
@@ -42,16 +46,16 @@ public class DaeadWrapper {
             return String.valueOf(keysetHandle.primaryKey().getId());
         }
         catch (GeneralSecurityException e) {
-            throw new DaeadWrapperException("Error deducing keyId", e);
+            throw new FpeWrapperException("Error deducing keyId", e);
         }
     }
 
-    public DeterministicAead getDaead() {
-        return daead;
+    public Fpe getFpe() {
+        return fpe;
     }
 
-    public static class DaeadWrapperException extends RuntimeException {
-        public DaeadWrapperException(String message, Throwable cause) {
+    public static class FpeWrapperException extends RuntimeException {
+        public FpeWrapperException(String message, Throwable cause) {
             super(message, cause);
         }
     }

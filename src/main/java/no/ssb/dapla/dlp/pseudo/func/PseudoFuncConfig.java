@@ -19,7 +19,6 @@ public class PseudoFuncConfig implements Serializable {
     @Getter
     private final String funcImpl;
 
-
     private final Map<String, Object> config = new HashMap<>();
 
     /** Construct from Map */
@@ -46,6 +45,10 @@ public class PseudoFuncConfig implements Serializable {
     public <T> T getRequired(String paramName, Class<T> clazz) {
         return get(paramName, clazz)
           .orElseThrow(() -> new PseudoFuncMissingParamException(paramName));
+    }
+
+    public Map<String, Object> asMap() {
+        return Map.copyOf(config);
     }
 
     public void add(String paramName, Object o) {

@@ -24,6 +24,13 @@ public class MapFunc extends AbstractPseudoFunc {
     }
 
     @Override
+    public void init(PseudoFuncInput input) {
+        for (Object inputValue : input.getValues()) {
+            mapper.init(String.valueOf(inputValue));
+        }
+    }
+
+    @Override
     public PseudoFuncOutput apply(PseudoFuncInput input) {
         PseudoFuncOutput output = new PseudoFuncOutput();
 

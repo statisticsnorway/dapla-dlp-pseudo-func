@@ -9,4 +9,9 @@ public abstract class AbstractPseudoFunc implements PseudoFunc {
 
     @NonNull @Getter
     private final String funcDecl;
+
+    @Override
+    public void init(PseudoFuncInput input) {
+        // Do nothing, can be overridden by subclasses
+    }
 }

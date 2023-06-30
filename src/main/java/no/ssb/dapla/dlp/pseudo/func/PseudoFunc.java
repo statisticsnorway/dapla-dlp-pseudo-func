@@ -6,6 +6,10 @@ public interface PseudoFunc {
     String getFuncDecl();
 
     /**
+     * Preprocessing of input. This will be called before apply
+     */
+    void init(PseudoFuncInput input);
+    /**
      * Pseudonymize
      */
     PseudoFuncOutput apply(PseudoFuncInput input);

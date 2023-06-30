@@ -5,6 +5,6 @@ public interface Mapper {
     void init(Object data);
     Object map(Object data);
 
-    Object restore(String Object);
+    Object restore(Object data);
 
 }

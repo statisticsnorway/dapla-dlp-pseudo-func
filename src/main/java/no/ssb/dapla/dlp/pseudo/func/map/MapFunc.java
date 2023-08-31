@@ -21,6 +21,7 @@ public class MapFunc extends AbstractPseudoFunc {
         this.mapper = ServiceLoader.load(Mapper.class)
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException(getClass().getSimpleName() + " requires a " + Mapper.class.getName() + " implementation to be present on the classpath"));
+        this.mapper.setConfig(genericConfig.asMap());
     }
 
     @Override

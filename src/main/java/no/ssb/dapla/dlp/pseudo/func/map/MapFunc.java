@@ -17,10 +17,16 @@ public class MapFunc extends AbstractPseudoFunc {
     public MapFunc(PseudoFuncConfig genericConfig) {
         super(genericConfig.getFuncDecl());
         this.config = mapFuncConfigService.resolve(genericConfig);
+        this.mapper = loadMapper();
+        this.mapper.setConfig(genericConfig.asMap());
+    }
+
+    public static Mapper loadMapper() {
         // TODO: Filter Service Implementation by some annotation (to choose the implementation that is used)
-        this.mapper = ServiceLoader.load(Mapper.class)
+        return ServiceLoader.load(Mapper.class)
                 .findFirst()
-                .orElseThrow(() -> new IllegalStateException(getClass().getSimpleName() + " requires a " + Mapper.class.getName() + " implementation to be present on the classpath"));
+                .orElseThrow(() -> new IllegalStateException(MapFunc.class.getSimpleName() + " requires a " +
+                        Mapper.class.getName() + " implementation to be present on the classpath"));
     }
 
     @Override

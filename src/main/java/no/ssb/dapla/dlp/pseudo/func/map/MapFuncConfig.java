@@ -8,9 +8,11 @@ import lombok.experimental.UtilityClass;
 @Builder
 public class MapFuncConfig {
     private final String context;
+    private final String versionTimestamp;
 
     @UtilityClass
     public static class Param {
         public static final String CONTEXT = "context";
+        public static final String VERSION_TIMESTAMP = "versionTimestamp";
     }
 }

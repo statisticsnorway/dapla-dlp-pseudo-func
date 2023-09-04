@@ -5,7 +5,7 @@
 
   <groupId>no.ssb.dapla.dlp.pseudo.func</groupId>
   <artifactId>dapla-dlp-pseudo-func</artifactId>
-  <version>1.2.4</version>
+  <version>1.2.5-SNAPSHOT</version>
   <name>dapla-dlp-pseudo-func</name>
 
   <properties>
@@ -45,7 +45,7 @@
     <connection>scm:git:git://github.com/statisticsnorway/dapla-dlp-pseudo-func.git</connection>
     <developerConnection>scm:git:git@github.com:statisticsnorway/dapla-dlp-pseudo-func.git</developerConnection>
     <url>https://github.com/statisticsnorway/dapla-dlp-pseudo-func</url>
-    <tag>dapla-dlp-pseudo-func-1.2.4</tag>
+    <tag>HEAD</tag>
   </scm>
 
   <dependencies>

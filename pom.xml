@@ -13,7 +13,7 @@
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <artifact-registry.url>artifactregistry://europe-north1-maven.pkg.dev/artifact-registry-14da</artifact-registry.url>
+    <artifact-registry.url>artifactregistry://europe-north1-maven.pkg.dev/artifact-registry-5n/dapla-pseudo-maven</artifact-registry.url>
 
     <!-- Dependency versions -->
     <assertj.version>3.24.2</assertj.version>
@@ -220,9 +220,7 @@
   <repositories>
     <repository>
       <id>artifact-registry</id>
-      <url>
-        artifactregistry://europe-north1-maven.pkg.dev/artifact-registry-14da/maven-releases
-      </url>
+      <url>${artifact-registry.url}/maven-releases</url>
       <releases>
         <enabled>true</enabled>
       </releases>
@@ -232,9 +230,7 @@
     </repository>
     <repository>
       <id>artifact-registry-snapshot</id>
-      <url>
-        artifactregistry://europe-north1-maven.pkg.dev/artifact-registry-14da/maven-snapshots
-      </url>
+      <url>${artifact-registry.url}/maven-snapshots</url>
       <releases>
         <enabled>false</enabled>
       </releases>

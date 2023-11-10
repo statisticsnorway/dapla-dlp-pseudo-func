@@ -164,48 +164,6 @@
           </execution>
         </executions>
       </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-shade-plugin</artifactId>
-        <version>${maven-shade-plugin.version}</version>
-        <executions>
-          <execution>
-            <phase>package</phase>
-            <goals>
-              <goal>shade</goal>
-            </goals>
-            <configuration>
-              <transformers>
-                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
-              </transformers>
-              <relocations>
-                <relocation>
-                  <pattern>com.idealista</pattern>
-                  <shadedPattern>no.ssb.dapla.dlp.shaded.com.idealista</shadedPattern>
-                </relocation>
-                <relocation>
-                  <pattern>com.google.common</pattern>
-                  <shadedPattern>no.ssb.dapla.dlp.shaded.com.google.common</shadedPattern>
-                </relocation>
-                <relocation>
-                  <pattern>com.fasterxml.jackson</pattern>
-                  <shadedPattern>no.ssb.dapla.dlp.shaded.jackson</shadedPattern>
-                </relocation>
-              </relocations>
-              <shadedClassifierName>shaded</shadedClassifierName>
-              <shadedArtifactAttached>true</shadedArtifactAttached>
-              <artifactSet>
-                <includes>
-                  <include>com.idealista:*</include>
-                  <include>com.google.guava:*</include>
-                  <include>com.fasterxml.jackson.core:*</include>
-                </includes>
-              </artifactSet>
-              <minimizeJar>false</minimizeJar>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
 
     </plugins>
     <extensions>

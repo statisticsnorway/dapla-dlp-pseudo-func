@@ -43,9 +43,8 @@
   </properties>
 
   <scm>
-    <connection>scm:git:git://github.com/statisticsnorway/dapla-dlp-pseudo-func.git</connection>
-    <developerConnection>scm:git:git@github.com:statisticsnorway/dapla-dlp-pseudo-func.git</developerConnection>
-    <url>https://github.com/statisticsnorway/dapla-dlp-pseudo-func</url>
+    <developerConnection>scm:git:https://github.com/${github.repository}.git</developerConnection>
+    <url>https://github.com/${github.repository}</url>
     <tag>HEAD</tag>
   </scm>
 

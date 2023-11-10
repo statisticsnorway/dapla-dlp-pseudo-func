@@ -19,7 +19,7 @@ release-dryrun: ## Simulate a release in order to detect any issues
 
 .PHONY: release
 release: ## Release a new version. Update POMs and tag the new version in git. Pipeline will deploy upon tag detection.
-	git push origin main:release
+	git push origin master:release
 
 .PHONY: help
 help:

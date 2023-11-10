@@ -1,0 +1,100 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - release
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+      packages: write
+
+    steps:
+      - uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ secrets.DAPLA_BOT_APP_ID }}
+          private-key: ${{ secrets.DAPLA_BOT_PRIVATE_KEY }}
+
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          ref: refs/heads/master
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v3
+        with:
+          java-version: 21
+          distribution: zulu
+          server-id: github
+
+      - name: Authenticate to Google Cloud
+        id: auth
+        uses: google-github-actions/auth@v1.1.1
+        with:
+          workload_identity_provider: "projects/848539402404/locations/global/workloadIdentityPools/gh-actions/providers/gh-actions"
+          service_account: "gh-actions-dapla-pseudo@artifact-registry-5n.iam.gserviceaccount.com"
+          token_format: access_token
+
+      - name: Cache Maven packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+
+      - name: Configure Git user
+        run: |
+          git config user.name "dapla-bot[bot]"
+          git config user.email "143391972+dapla-bot[bot]@users.noreply.github.com"
+
+      - name: Setup Maven authentication to GitHub packages
+        uses: s4u/maven-settings-action@v2.8.0
+        id: maven_settings
+        with:
+          servers: '[{"id": "github","configuration": {"httpHeaders": {"property": {"name": "Authorization","value": "Bearer ${{ secrets.GITHUB_TOKEN }}"}}}}]'
+
+      - name: Maven release and deploy to GitHub packages
+        id: release_jar
+        env:
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          # Get the release version from the pom.xml before the next snapshot increment
+          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout | sed "s/-SNAPSHOT//")
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+          # Perform the release/deploy and increment the version to the next snapshot
+          mvn --batch-mode release:prepare -Darguments="-Dmaven.deploy.skip=true -DskipTests"
+          mvn --batch-mode release:perform
+          TAG=$(git describe --abbrev=0 --tags)
+          echo "tag=${TAG}" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub release draft
+        uses: release-drafter/release-drafter@v5
+        id: create_github_release
+        env:
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
+        with:
+          tag: ${{ steps.release_jar.outputs.tag }}
+
+      - name: Upload assets to GitHub release draft
+        env:
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          ARTIFACT_ID=$(mvn help:evaluate -Dexpression=project.artifactId -q -DforceStdout)
+          # Get all files matching the artifact id and version (source, javadoc, etc.)
+          ARTIFACT_GLOB=(./target/$ARTIFACT_ID-${{ steps.release_jar.outputs.version }}*.jar)
+          for file in "${ARTIFACT_GLOB[@]}"; do
+            echo "Uploading $file"
+            gh release upload ${{ steps.create_github_release.outputs.tag_name }} $file
+          done
+
+      - name: Publish GitHub release
+        uses: eregon/publish-release@v1
+        env:
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
+        with:
+          release_id: ${{ steps.create_github_release.outputs.id }}

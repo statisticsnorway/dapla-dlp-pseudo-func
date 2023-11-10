@@ -24,7 +24,7 @@
     <jsonassert.version>1.5.1</jsonassert.version>
     <junit5.version>5.9.2</junit5.version>
     <logback.version>1.4.5</logback.version>
-    <lombok.version>1.18.26</lombok.version>
+    <lombok.version>1.18.30</lombok.version>
     <slf4j.version>2.0.6</slf4j.version>
     <tink.version>1.8.0</tink.version>
     <tink-fpe-java.version>0.0.13</tink-fpe-java.version>

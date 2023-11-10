@@ -9,11 +9,12 @@
   <name>dapla-dlp-pseudo-func</name>
 
   <properties>
-    <java.version>11</java.version>
+    <java.version>21</java.version>
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <artifact-registry.url>artifactregistry://europe-north1-maven.pkg.dev/artifact-registry-5n/dapla-pseudo-maven</artifact-registry.url>
+    <artifact-registry.url>artifactregistry://europe-north1-maven.pkg.dev/artifact-registry-5n/dapla-pseudo-maven/</artifact-registry.url>
+    <github.repository>statisticsnorway/dapla-dlp-pseudo-func</github.repository>
 
     <!-- Dependency versions -->
     <assertj.version>3.24.2</assertj.version>
@@ -31,12 +32,12 @@
     <!-- Plugin/extension versions -->
     <artifactregistry-maven-wagon.version>2.1.4</artifactregistry-maven-wagon.version>
     <checkstyle.version>10.8.1</checkstyle.version>
-    <maven-checkstyle-plugin.version>3.1.2</maven-checkstyle-plugin.version>
-    <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
-    <maven-javadoc-plugin.version>3.3.0</maven-javadoc-plugin.version>
-    <maven-shade-plugin.version>3.2.4</maven-shade-plugin.version>
-    <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
-    <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
+    <maven-checkstyle-plugin.version>3.3.1</maven-checkstyle-plugin.version>
+    <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
+    <maven-javadoc-plugin.version>3.6.2</maven-javadoc-plugin.version>
+    <maven-shade-plugin.version>3.5.1</maven-shade-plugin.version>
+    <maven-surefire-plugin.version>3.2.2</maven-surefire-plugin.version>
+    <maven-source-plugin.version>3.3.0</maven-source-plugin.version>
     <jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
     <sonar-maven-plugin.version>3.9.1.2184</sonar-maven-plugin.version>
   </properties>
@@ -220,7 +221,7 @@
   <repositories>
     <repository>
       <id>artifact-registry</id>
-      <url>${artifact-registry.url}/maven-releases</url>
+      <url>${artifact-registry.url}</url>
       <releases>
         <enabled>true</enabled>
       </releases>
@@ -230,7 +231,7 @@
     </repository>
     <repository>
       <id>artifact-registry-snapshot</id>
-      <url>${artifact-registry.url}/maven-snapshots</url>
+      <url>${artifact-registry.url}</url>
       <releases>
         <enabled>false</enabled>
       </releases>
@@ -296,14 +297,21 @@
       <distributionManagement>
         <repository>
           <id>artifact-registry</id>
-          <url>${artifact-registry.url}/maven-releases</url>
+          <url>${artifact-registry.url}</url>
         </repository>
         <snapshotRepository>
           <id>artifact-registry-snapshots</id>
-          <url>${artifact-registry.url}/maven-snapshots</url>
+          <url>${artifact-registry.url}</url>
         </snapshotRepository>
       </distributionManagement>
     </profile>
   </profiles>
+  <distributionManagement>
+    <repository>
+      <id>github</id>
+      <name>GitHub Packages</name>
+      <url>https://maven.pkg.github.com/${github.repository}</url>
+    </repository>
+  </distributionManagement>
 
 </project>

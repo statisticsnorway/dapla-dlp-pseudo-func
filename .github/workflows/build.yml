@@ -8,11 +8,6 @@ on:
     branches:
       - master
 
-env:
-  REGISTRY: europe-north1-docker.pkg.dev/artifact-registry-5n/dapla-pseudo-maven
-  IMAGE: dapla-dlp-pseudo-func
-  TAG: ${{ github.ref_name }}-${{ github.sha }}
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -44,6 +39,6 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
 
-      - name: Build with Maven
-        run: mvn --batch-mode -P ssb-bip package
+      - name: Build with Maven and deploy to Artifact Registry
+        run: mvn --batch-mode -P ssb-bip deploy
 

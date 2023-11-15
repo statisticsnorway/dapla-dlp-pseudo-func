@@ -4,18 +4,18 @@ default: | help
 .PHONY: build-mvn
 build-mvn: ## Build the project and install to your local maven repo
 ifndef skipTest
-	mvn clean install
+	./mvnw clean install
 else
-	mvn clean install -Dmaven.test.skip=true
+	./mvnw clean install -Dmaven.test.skip=true
 endif
 
 .PHONY: test
 test: ## Run tests
-	mvn clean test
+	./mvnw clean test
 
 .PHONY: release-dryrun
 release-dryrun: ## Simulate a release in order to detect any issues
-	mvn release:prepare release:perform -Darguments="-Dmaven.deploy.skip=true" -DdryRun=true
+	./mvnw release:prepare release:perform -Darguments="-Dmaven.deploy.skip=true" -DdryRun=true
 
 .PHONY: release
 release: ## Release a new version. Update POMs and tag the new version in git. Pipeline will deploy upon tag detection.

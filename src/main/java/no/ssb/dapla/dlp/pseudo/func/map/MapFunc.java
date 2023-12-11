@@ -12,6 +12,11 @@ import java.util.ServiceLoader;
 public class MapFunc extends AbstractPseudoFunc {
     private final Mapper mapper;
 
+    @Override
+    public String getAlgorithm() {
+        return null;
+    }
+
     public MapFunc(PseudoFuncConfig genericConfig) {
         super(genericConfig.getFuncDecl());
         this.mapper = loadMapper();

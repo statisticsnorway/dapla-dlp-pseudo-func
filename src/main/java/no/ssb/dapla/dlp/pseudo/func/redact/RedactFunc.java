@@ -16,6 +16,14 @@ public class RedactFunc extends AbstractPseudoFunc {
     private final RedactFuncConfigService configService = new RedactFuncConfigService();
     private final RedactFuncConfig config;
 
+    // A.k.a Free Text Redaction
+    private static final String ALGORITHM = "REDACT";
+
+    @Override
+    public String getAlgorithm() {
+        return ALGORITHM;
+    }
+
     public RedactFunc(@NonNull PseudoFuncConfig genericConfig) {
         super(genericConfig.getFuncDecl());
         this.config = configService.resolve(genericConfig);

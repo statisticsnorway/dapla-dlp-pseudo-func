@@ -10,13 +10,10 @@ import java.util.ServiceLoader;
 
 @Slf4j
 public class MapFunc extends AbstractPseudoFunc {
-    private final MapFuncConfig config;
-    private final MapFuncConfigService mapFuncConfigService = new MapFuncConfigService();
     private final Mapper mapper;
 
     public MapFunc(PseudoFuncConfig genericConfig) {
         super(genericConfig.getFuncDecl());
-        this.config = mapFuncConfigService.resolve(genericConfig);
         this.mapper = loadMapper();
         this.mapper.setConfig(genericConfig.asMap());
     }
@@ -31,35 +28,17 @@ public class MapFunc extends AbstractPseudoFunc {
 
     @Override
     public void init(PseudoFuncInput input) {
-        for (Object inputValue : input.getValues()) {
-            mapper.init(String.valueOf(inputValue));
-        }
+        mapper.init(input);
     }
 
     @Override
     public PseudoFuncOutput apply(PseudoFuncInput input) {
-        PseudoFuncOutput output = new PseudoFuncOutput();
-
-        for (Object inputValue : input.getValues()) {
-            String plain = String.valueOf(inputValue);
-            final Object pseudonymized = mapper.map(plain);
-            output.add(pseudonymized);
-        }
-
-        return output;
+        return mapper.map(input);
     }
 
     @Override
     public PseudoFuncOutput restore(PseudoFuncInput input) {
-        PseudoFuncOutput output = new PseudoFuncOutput();
-
-        for (Object inputValue : input.getValues()) {
-            String mapped = String.valueOf(inputValue);
-            final Object clear = mapper.restore(mapped);
-            output.add(clear);
-        }
-
-        return output;
+        return mapper.restore(input);
     }
 
 }

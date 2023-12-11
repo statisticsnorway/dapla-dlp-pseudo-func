@@ -14,9 +14,16 @@ public class FpeFunc extends AbstractPseudoFunc {
     private final FormatPreservingEncryption fpe;
     private final FpeConfigService fpeConfigService = new FpeConfigService();
 
+    private static final String ALGORITHM = "FPE";
+
     // We should consider implementing a more sophisticated tweak, see:
     // https://crypto.stackexchange.com/questions/10903/what-are-the-uses-of-tweaks-in-block-ciphers
     private static final byte[] STATIC_TWEAK = new byte[0];
+
+    @Override
+    public String getAlgorithm() {
+        return ALGORITHM;
+    }
 
     public FpeFunc(PseudoFuncConfig genericConfig) {
         super(genericConfig.getFuncDecl());

@@ -5,7 +5,7 @@ public interface PseudoFunc {
     /** Name of the function declaration (including any parameters), e.g. foo(param1,param2) */
     String getFuncDecl();
 
-    /** Name of the encryption algorithm, e.g. TINK_FPE, TINK_DEEAD */
+    /** Name of the encryption algorithm, e.g. TINK_FPE, TINK-DAEAD */
     String getAlgorithm();
 
     /**

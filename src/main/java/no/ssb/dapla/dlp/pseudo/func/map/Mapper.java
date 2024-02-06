@@ -1,13 +1,16 @@
 package no.ssb.dapla.dlp.pseudo.func.map;
 
+import no.ssb.dapla.dlp.pseudo.func.PseudoFuncInput;
+import no.ssb.dapla.dlp.pseudo.func.PseudoFuncOutput;
+
 import java.util.Map;
 
 public interface Mapper {
 
-    void init(Object data);
+    void init(PseudoFuncInput data);
     void setConfig(Map<String, Object> config);
-    Object map(Object data);
+    PseudoFuncOutput map(PseudoFuncInput data);
 
-    Object restore(Object mapped);
+    PseudoFuncOutput restore(PseudoFuncInput mapped);
 
 }

@@ -15,6 +15,12 @@ public class TinkFpeFunc extends AbstractPseudoFunc {
     private final TinkFpeFuncConfigService configService = new TinkFpeFuncConfigService();
     private final TinkFpeFuncConfig config;
 
+    private static final String ALGORITHM = "TINK-FPE";
+    @Override
+    public String getAlgorithm() {
+        return ALGORITHM;
+    }
+
     public TinkFpeFunc(@NonNull PseudoFuncConfig genericConfig) {
         super(genericConfig.getFuncDecl());
         this.config = configService.resolve(genericConfig);

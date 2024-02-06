@@ -6,14 +6,18 @@ import lombok.Value;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Value
 @NoArgsConstructor
 public class PseudoFuncOutput {
-    private List<Object> values = new ArrayList<>();
-    private List<String> warnings = new ArrayList<>();
+    List<Object> values = new ArrayList<>();
+    List<String> warnings = new ArrayList<>();
+    Map<String, String> metadata = new HashMap<>();
+
 
     public PseudoFuncOutput(Object v) {
         if (v instanceof Collection) {
@@ -39,6 +43,10 @@ public class PseudoFuncOutput {
         warnings.add(warning);
     }
 
+    public void addMetadata(String key, String value) {
+        metadata.put(key, value);
+    }
+
     public List<String> getStringValues() {
         return values.stream()
           .map(String::valueOf)
@@ -46,7 +54,7 @@ public class PseudoFuncOutput {
     }
 
     public Object getFirstValue() {
-        return getValues().get(0);
+        return getValues().getFirst();
     }
 
     @Override
@@ -57,4 +65,5 @@ public class PseudoFuncOutput {
     public boolean hasWarnings() {
         return ! warnings.isEmpty();
     }
+
 }

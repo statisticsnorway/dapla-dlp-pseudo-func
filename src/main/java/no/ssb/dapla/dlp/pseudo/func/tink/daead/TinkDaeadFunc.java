@@ -17,6 +17,13 @@ public class TinkDaeadFunc extends AbstractPseudoFunc {
     private final TinkDaeadFuncConfigService configService = new TinkDaeadFuncConfigService();
     private final TinkDaeadFuncConfig config;
 
+    private static final String ALGORITHM = "TINK-DAEAD";
+
+    @Override
+    public String getAlgorithm() {
+        return ALGORITHM;
+    }
+
     public TinkDaeadFunc(@NonNull PseudoFuncConfig genericConfig) {
         super(genericConfig.getFuncDecl());
         this.config = configService.resolve(genericConfig);

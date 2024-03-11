@@ -1,11 +1,14 @@
 package no.ssb.dapla.dlp.pseudo.func.tink.fpe;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import no.ssb.crypto.tink.fpe.FpeConfig;
 import no.ssb.crypto.tink.fpe.IncompatiblePlaintextException;
 import no.ssb.crypto.tink.fpe.UnknownCharacterStrategy;
-import no.ssb.dapla.dlp.pseudo.func.*;
+import no.ssb.dapla.dlp.pseudo.func.PseudoFunc;
+import no.ssb.dapla.dlp.pseudo.func.PseudoFuncConfig;
+import no.ssb.dapla.dlp.pseudo.func.PseudoFuncFactory;
+import no.ssb.dapla.dlp.pseudo.func.PseudoFuncInput;
+import no.ssb.dapla.dlp.pseudo.func.PseudoFuncOutput;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -13,8 +16,7 @@ import org.junit.jupiter.api.Test;
 import java.security.GeneralSecurityException;
 import java.util.regex.Pattern;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.assertj.core.api.Assertions.*;
 
 class TinkFpeFuncTest {
 
@@ -86,17 +88,15 @@ class TinkFpeFuncTest {
                 TinkFpeFuncConfig.Param.UNKNOWN_CHARACTER_STRATEGY, UnknownCharacterStrategy.SKIP
         )));
         PseudoFuncOutput pseudonymized = func.apply(PseudoFuncInput.of(originalVal));
-        String pseudonymizedText = pseudonymized.getStringValues().iterator().next();
+        String pseudonymizedText = pseudonymized.getValue();
         System.out.println(pseudonymizedText);
         assertThat(pseudonymizedText).matches(Pattern.compile("^Å.{2}\\sÅ.{4}$"));
     }
 
-    private void transformAndRestore(Object originalVal, PseudoFuncConfig config) {
-        Iterable originalElements = (originalVal instanceof Iterable) ? (Iterable) originalVal : ImmutableList.of(originalVal);
+    private void transformAndRestore(String originalVal, PseudoFuncConfig config) {
         PseudoFunc func = PseudoFuncFactory.create(config);
         PseudoFuncOutput pseudonymized = func.apply(PseudoFuncInput.of(originalVal));
-        System.out.println(pseudonymized.getValues());
-        PseudoFuncOutput depseudonymized = func.restore(PseudoFuncInput.of(pseudonymized.getValues()));
-        assertThat(depseudonymized.getValues()).containsExactlyElementsOf(originalElements);
+        PseudoFuncOutput depseudonymized = func.restore(PseudoFuncInput.of(pseudonymized.getValue()));
+        assertThat(depseudonymized.getValue()).isEqualTo(originalVal);
     }
 }

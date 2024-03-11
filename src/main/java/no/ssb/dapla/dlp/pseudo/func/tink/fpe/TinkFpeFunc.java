@@ -12,7 +12,6 @@ import static no.ssb.crypto.tink.fpe.util.ByteArrayUtil.s2b;
 
 @Slf4j
 public class TinkFpeFunc extends AbstractPseudoFunc {
-    private final TinkFpeFuncConfigService configService = new TinkFpeFuncConfigService();
     private final TinkFpeFuncConfig config;
 
     private static final String ALGORITHM = "TINK-FPE";
@@ -23,6 +22,7 @@ public class TinkFpeFunc extends AbstractPseudoFunc {
 
     public TinkFpeFunc(@NonNull PseudoFuncConfig genericConfig) {
         super(genericConfig.getFuncDecl());
+        TinkFpeFuncConfigService configService = new TinkFpeFuncConfigService();
         this.config = configService.resolve(genericConfig);
     }
 
@@ -32,36 +32,25 @@ public class TinkFpeFunc extends AbstractPseudoFunc {
 
     @Override
     public PseudoFuncOutput apply(PseudoFuncInput input) {
-        PseudoFuncOutput output = new PseudoFuncOutput();
-        input.getValues().forEach(in -> {
-            String plain = String.valueOf(in);
-            try {
-                byte[] ciphertext = fpe().encrypt(s2b(plain), config.getFpeParams());
-                output.add(b2s(ciphertext));
-            }
-            catch (GeneralSecurityException e) {
-                throw new TinkFpePseudoFuncException("Tink FPE apply error. func=" + getFuncDecl() + ", contentType=" + input.getParamMetadata(), e);
-            }
-        });
-
-        return output;
+        String plain = String.valueOf(input.value());
+        try {
+            byte[] ciphertext = fpe().encrypt(s2b(plain), config.getFpeParams());
+            return PseudoFuncOutput.of(b2s(ciphertext));
+        }
+        catch (GeneralSecurityException e) {
+            throw new TinkFpePseudoFuncException("Tink FPE apply error. func=" + getFuncDecl(), e);
+        }
     }
 
     @Override
     public PseudoFuncOutput restore(PseudoFuncInput input) {
-        PseudoFuncOutput output = new PseudoFuncOutput();
-        input.getValues().forEach(in -> {
-                    byte[] ciphertext = s2b(String.valueOf(in));
-                    try {
-                        byte[] plaintext = fpe().decrypt(ciphertext, config.getFpeParams());
-                        output.add(b2s(plaintext));
-                    }
-                    catch (GeneralSecurityException e) {
-                        throw new TinkFpePseudoFuncException("Tink FPE restore error. func=" + getFuncDecl() + ", contentType=" + input.getParamMetadata(), e);
-                    }
-        });
-
-        return output;
+        byte[] ciphertext = s2b(String.valueOf(input.value()));
+        try {
+            byte[] plaintext = fpe().decrypt(ciphertext, config.getFpeParams());
+            return PseudoFuncOutput.of(b2s(plaintext));
+        } catch (GeneralSecurityException e) {
+            throw new TinkFpePseudoFuncException("Tink FPE restore error. func=" + getFuncDecl(), e);
+        }
     }
 
     public static class TinkFpePseudoFuncException extends PseudoFuncException {

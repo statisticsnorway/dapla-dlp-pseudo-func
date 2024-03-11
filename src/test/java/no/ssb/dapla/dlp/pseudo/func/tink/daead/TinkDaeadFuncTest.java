@@ -1,16 +1,18 @@
 package no.ssb.dapla.dlp.pseudo.func.tink.daead;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.crypto.tink.daead.DeterministicAeadConfig;
-import no.ssb.dapla.dlp.pseudo.func.*;
+import no.ssb.dapla.dlp.pseudo.func.PseudoFunc;
+import no.ssb.dapla.dlp.pseudo.func.PseudoFuncConfig;
+import no.ssb.dapla.dlp.pseudo.func.PseudoFuncFactory;
+import no.ssb.dapla.dlp.pseudo.func.PseudoFuncInput;
+import no.ssb.dapla.dlp.pseudo.func.PseudoFuncOutput;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.security.GeneralSecurityException;
-import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 class TinkDaeadFuncTest {
 
@@ -30,37 +32,11 @@ class TinkDaeadFuncTest {
         )));
     }
 
-    @Test
-    void multipleAlphanumeric_daead_shouldTransformAndRestore() {
-        DaeadWrapper daeadWrapper = new DaeadWrapper();
-        List originalVal = ImmutableList.of("Ken sent me...", "Kilroy was here!");
-        transformAndRestore(originalVal, new PseudoFuncConfig(ImmutableMap.of(
-                PseudoFuncConfig.Param.FUNC_DECL, String.format("tink-daead(%s)", daeadWrapper.getKeyId()),
-                PseudoFuncConfig.Param.FUNC_IMPL, TinkDaeadFunc.class.getName(),
-                TinkDaeadFuncConfig.Param.DAEAD, daeadWrapper.getDaead()
-        )));
-    }
-
-    /*
-    TODO: Implement a typesafe daead func (e.g. by storing type metadata in the ciphertext?)
-    @Test
-    void longValue_fpe_shouldTransformAndRestore() {
-        DaeadWrapper daeadWrapper = new DaeadWrapper();
-        Long originalVal = 123456789L;
-        transformAndRestore(originalVal, new PseudoFuncConfig(ImmutableMap.of(
-                PseudoFuncConfig.Param.FUNC_DECL, String.format("tink-daead(%s)", daeadWrapper.getKeyId()),
-                PseudoFuncConfig.Param.FUNC_IMPL, DaeadFunc.class.getName(),
-                DaeadFuncConfig.Param.DAEAD, daeadWrapper.getDaead()
-        )));
-    }
-    */
-
-    private void transformAndRestore(Object originalVal,  PseudoFuncConfig config) {
-        Iterable originalElements = (originalVal instanceof Iterable) ? (Iterable) originalVal : ImmutableList.of(originalVal);
+    private void transformAndRestore(String originalVal, PseudoFuncConfig config) {
         PseudoFunc func = PseudoFuncFactory.create(config);
         PseudoFuncOutput pseudonymized = func.apply(PseudoFuncInput.of(originalVal));
-        PseudoFuncOutput depseudonymized = func.restore(PseudoFuncInput.of(pseudonymized.getValues()));
-        assertThat(depseudonymized.getValues()).containsExactlyElementsOf(originalElements);
+        PseudoFuncOutput depseudonymized = func.restore(PseudoFuncInput.of(pseudonymized.getValue()));
+        assertThat(depseudonymized.getValue()).isEqualTo(originalVal);
     }
 
 }

@@ -1,15 +1,16 @@
 package no.ssb.dapla.dlp.pseudo.func.fpe;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import no.ssb.dapla.dlp.pseudo.func.*;
+import no.ssb.dapla.dlp.pseudo.func.PseudoFunc;
+import no.ssb.dapla.dlp.pseudo.func.PseudoFuncConfig;
+import no.ssb.dapla.dlp.pseudo.func.PseudoFuncFactory;
+import no.ssb.dapla.dlp.pseudo.func.PseudoFuncInput;
+import no.ssb.dapla.dlp.pseudo.func.PseudoFuncOutput;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 class FpeFuncTest {
 
@@ -26,19 +27,6 @@ class FpeFuncTest {
           FpeFuncConfig.Param.KEY_ID, "keyId1",
           FpeFuncConfig.Param.KEY_DATA, BASE64_ENCODED_KEY
 
-        )));
-    }
-
-    @Test
-    void multipleAlphanumeric_fpe_shouldTransformAndRestore() {
-        List originalVal = ImmutableList.of("Ken sent me...", "Kilroy was here!");
-        List expectedVal = ImmutableList.of("dvm.'pvDY¼&lZ$", "p³h<N¥£u¿lZ²'­S ");
-        transformAndRestore(originalVal, expectedVal, new PseudoFuncConfig(ImmutableMap.of(
-          PseudoFuncConfig.Param.FUNC_DECL, "fpe-test",
-          PseudoFuncConfig.Param.FUNC_IMPL, FpeFunc.class.getName(),
-          FpeFuncConfig.Param.ALPHABET, "alphanumeric+whitespace+symbols",
-          FpeFuncConfig.Param.KEY_ID, "keyId1",
-          FpeFuncConfig.Param.KEY_DATA, BASE64_ENCODED_KEY
         )));
     }
 
@@ -85,34 +73,18 @@ class FpeFuncTest {
         ));
 
         PseudoFuncOutput pseudonymized = func.apply(PseudoFuncInput.of(originalVal));
-        assertThat(pseudonymized.getValues()).containsExactly("GGB");
+        assertThat(pseudonymized.getValue()).isEqualTo("GGB");
     }
 
 
-    @Test
-    void longValue_fpe_shouldTransformAndRestore() {
-        Long originalVal = 123456789L;
-        Long expectedVal = 204992912L;
-        transformAndRestore(originalVal, expectedVal, new PseudoFuncConfig(ImmutableMap.of(
-          PseudoFuncConfig.Param.FUNC_DECL, "fpe-digits-test",
-          PseudoFuncConfig.Param.FUNC_IMPL, FpeFunc.class.getName(),
-          FpeFuncConfig.Param.ALPHABET, "digits",
-          FpeFuncConfig.Param.KEY_ID, "keyId1",
-          FpeFuncConfig.Param.KEY_DATA, BASE64_ENCODED_KEY
-        )));
-    }
-
-    private void transformAndRestore(Object originalVal, Object expectedVal, PseudoFuncConfig config) {
+    private void transformAndRestore(String originalVal, String expectedVal, PseudoFuncConfig config) {
         PseudoFunc func = PseudoFuncFactory.create(config);
 
-        Iterable expectedElements = (expectedVal instanceof Iterable) ? (Iterable) expectedVal : ImmutableList.of(expectedVal);
-        Iterable originalElements = (originalVal instanceof Iterable) ? (Iterable) originalVal : ImmutableList.of(originalVal);
-
         PseudoFuncOutput pseudonymized = func.apply(PseudoFuncInput.of(originalVal));
-        assertThat(pseudonymized.getValues()).containsExactlyElementsOf(expectedElements);
+        assertThat(pseudonymized.getValue()).isEqualTo(expectedVal);
 
-        PseudoFuncOutput depseudonymized = func.restore(PseudoFuncInput.of(pseudonymized.getValues()));
-        assertThat(depseudonymized.getValues()).containsExactlyElementsOf(originalElements);
+        PseudoFuncOutput depseudonymized = func.restore(PseudoFuncInput.of(pseudonymized.getValue()));
+        assertThat(depseudonymized.getValue()).isEqualTo(originalVal);
     }
 
 }

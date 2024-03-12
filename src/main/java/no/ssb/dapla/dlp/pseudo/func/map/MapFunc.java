@@ -5,6 +5,7 @@ import no.ssb.dapla.dlp.pseudo.func.AbstractPseudoFunc;
 import no.ssb.dapla.dlp.pseudo.func.PseudoFuncConfig;
 import no.ssb.dapla.dlp.pseudo.func.PseudoFuncInput;
 import no.ssb.dapla.dlp.pseudo.func.PseudoFuncOutput;
+import no.ssb.dapla.dlp.pseudo.func.TransformDirection;
 
 import java.util.ServiceLoader;
 
@@ -32,7 +33,8 @@ public class MapFunc extends AbstractPseudoFunc {
     }
 
     @Override
-    public void init(PseudoFuncInput input) {
+    public void init(PseudoFuncInput input, TransformDirection direction) {
+        // Init method is the same regardless of the direction
         mapper.init(input);
     }
 

@@ -11,6 +11,19 @@ import java.util.function.Function;
 
 import static no.ssb.dapla.dlp.pseudo.func.composite.MapAndEncryptFuncConfig.Param.*;
 
+/**
+ * This is a composite {@code PseudoFunc} that combines two {@code PseudoFunc}s into a single operation.
+ * <p>
+ * It assumes that one is a mapping function (e.g. MapFunc) and the other is an encryption function
+ * (e.g FpeFunc, TinkFpeFunk, TinkDaeadFunc).
+ *
+ * The {@code MapAndEncryptFunc} must be configured with a
+ *    {@link no.ssb.dapla.dlp.pseudo.func.composite.MapAndEncryptFuncConfig.Param#ENCRYPTION_FUNC_IMPL} and a
+ *    {@link no.ssb.dapla.dlp.pseudo.func.composite.MapAndEncryptFuncConfig.Param#MAP_FUNC_IMPL}.
+ *
+ *  The {@code PseudoFuncConfig} must also contain all the necessary configs for each of the underlying
+ *  {@code PseudoFunc}s. For example MapFuncConfig and TinkFpeFuncConfig.
+ */
 public class MapAndEncryptFunc implements PseudoFunc {
 
     final PseudoFunc encryptionFunc;

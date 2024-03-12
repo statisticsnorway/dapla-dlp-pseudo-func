@@ -15,7 +15,7 @@ import static no.ssb.dapla.dlp.pseudo.func.composite.MapAndEncryptFuncConfig.Par
  * This is a composite {@code PseudoFunc} that combines two {@code PseudoFunc}s into a single operation.
  * <p>
  * It assumes that one is a mapping function (e.g. MapFunc) and the other is an encryption function
- * (e.g FpeFunc, TinkFpeFunk, TinkDaeadFunc).
+ * (e.g FpeFunc, TinkFpeFunc, TinkDaeadFunc).
  *
  * The {@code MapAndEncryptFunc} must be configured with a
  *    {@link no.ssb.dapla.dlp.pseudo.func.composite.MapAndEncryptFuncConfig.Param#ENCRYPTION_FUNC_IMPL} and a

@@ -1,5 +1,6 @@
 package no.ssb.dapla.dlp.pseudo.func.composite;
 
+import no.ssb.dapla.dlp.pseudo.func.AbstractPseudoFunc;
 import no.ssb.dapla.dlp.pseudo.func.PseudoFunc;
 import no.ssb.dapla.dlp.pseudo.func.PseudoFuncConfig;
 import no.ssb.dapla.dlp.pseudo.func.PseudoFuncFactory;
@@ -24,12 +25,13 @@ import static no.ssb.dapla.dlp.pseudo.func.composite.MapAndEncryptFuncConfig.Par
  *  The {@code PseudoFuncConfig} must also contain all the necessary configs for each of the underlying
  *  {@code PseudoFunc}s. For example MapFuncConfig and TinkFpeFuncConfig.
  */
-public class MapAndEncryptFunc implements PseudoFunc {
+public class MapAndEncryptFunc extends AbstractPseudoFunc {
 
     final PseudoFunc encryptionFunc;
     final PseudoFunc mapFunc;
 
     public MapAndEncryptFunc(PseudoFuncConfig genericConfig) {
+        super(genericConfig.getFuncDecl());
         genericConfig.add(PseudoFuncConfig.Param.FUNC_IMPL,
                 genericConfig.getRequired(ENCRYPTION_FUNC_IMPL, String.class));
         var encryptionFuncConfig = genericConfig.asMap();
@@ -39,11 +41,6 @@ public class MapAndEncryptFunc implements PseudoFunc {
 
         this.encryptionFunc = PseudoFuncFactory.create(new PseudoFuncConfig(encryptionFuncConfig));
         this.mapFunc = PseudoFuncFactory.create(new PseudoFuncConfig(mapFuncConfig));
-    }
-
-    @Override
-    public String getFuncDecl() {
-        return encryptionFunc.getFuncDecl() + ", " + mapFunc.getFuncDecl();
     }
 
     @Override

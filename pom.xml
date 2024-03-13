@@ -30,7 +30,7 @@
     <tink-fpe-java.version>0.0.13</tink-fpe-java.version>
 
     <!-- Plugin/extension versions -->
-    <artifactregistry-maven-wagon.version>2.1.4</artifactregistry-maven-wagon.version>
+    <artifactregistry-maven-wagon.version>2.2.1</artifactregistry-maven-wagon.version>
     <checkstyle.version>10.8.1</checkstyle.version>
     <maven-checkstyle-plugin.version>3.3.1</maven-checkstyle-plugin.version>
     <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>

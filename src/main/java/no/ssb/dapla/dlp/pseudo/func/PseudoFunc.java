@@ -9,9 +9,9 @@ public interface PseudoFunc {
     String getAlgorithm();
 
     /**
-     * Preprocessing of input. This will be called before apply
+     * Preprocessing of input. This will be called before apply or restore
      */
-    void init(PseudoFuncInput input);
+    void init(PseudoFuncInput input, TransformDirection direction);
     /**
      * Pseudonymize
      */

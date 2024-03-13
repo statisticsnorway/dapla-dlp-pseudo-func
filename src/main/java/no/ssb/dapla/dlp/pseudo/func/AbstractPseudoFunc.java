@@ -11,7 +11,7 @@ public abstract class AbstractPseudoFunc implements PseudoFunc {
     private final String funcDecl;
 
     @Override
-    public void init(PseudoFuncInput input) {
+    public void init(PseudoFuncInput input, TransformDirection direction) {
         // Do nothing, can be overridden by subclasses
     }
 }

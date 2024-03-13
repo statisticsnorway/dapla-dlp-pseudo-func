@@ -39,6 +39,10 @@ jobs:
           workload_identity_provider: "projects/848539402404/locations/global/workloadIdentityPools/gh-actions/providers/gh-actions"
           service_account: "gh-actions-dapla-pseudo@artifact-registry-5n.iam.gserviceaccount.com"
           token_format: access_token
+          create_credentials_file: true
+          export_environment_variables: true
+
+
 
       - name: Cache Maven packages
         uses: actions/cache@v3

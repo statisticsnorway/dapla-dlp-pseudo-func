@@ -41,5 +41,5 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
 
       - name: Build with Maven and deploy to Artifact Registry
-        run: mvn --batch-mode -P ssb-bip deploy -Dmaven.javadoc.skip=true
+        run: mvn -P ssb-bip deploy -Dmaven.javadoc.skip=true
 

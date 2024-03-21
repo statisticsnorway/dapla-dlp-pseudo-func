@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     permissions:
       contents: read
       id-token: write
@@ -23,6 +23,7 @@ jobs:
         with:
           java-version: 21
           distribution: zulu
+          cache: maven
 
       - name: Authenticate to Google Cloud
         id: auth
@@ -31,14 +32,6 @@ jobs:
           workload_identity_provider: "projects/848539402404/locations/global/workloadIdentityPools/gh-actions/providers/gh-actions"
           service_account: "gh-actions-dapla-pseudo@artifact-registry-5n.iam.gserviceaccount.com"
           token_format: access_token
-          export_environment_variables: true
-
-      - name: Cache Maven packages
-        uses: actions/cache@v3
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
 
       - name: Build with Maven and deploy to Artifact Registry
         run: mvn -P ssb-bip deploy -Dmaven.javadoc.skip=true

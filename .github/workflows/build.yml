@@ -34,5 +34,5 @@ jobs:
           token_format: access_token
 
       - name: Build with Maven and deploy to Artifact Registry
-        run: mvn -P ssb-bip deploy -Dmaven.javadoc.skip=true
+        run: mvn --batch-mode -P ssb-bip deploy -Dmaven.javadoc.skip=true
 

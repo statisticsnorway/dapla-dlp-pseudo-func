@@ -26,4 +26,28 @@ public class MapFuncTest {
         assertThat(depseudonymized.getValue()).isEqualTo(TestMapper.ORIGINAL);
     }
 
+    @Test
+    public void testInvalidMappingStrategyIgnore() {
+        final PseudoFuncConfig config = new PseudoFuncConfig(ImmutableMap.of(
+                PseudoFuncConfig.Param.FUNC_DECL, "map-test",
+                PseudoFuncConfig.Param.FUNC_IMPL, MapFunc.class.getName(),
+                MapFuncConfig.Param.MAP_FAILURE_STRATEGY, MapFailureStrategy.RETURN_ORIGINAL
+        ));
+        PseudoFunc func = PseudoFuncFactory.create(config);
+
+        PseudoFuncOutput mapOutput = func.apply(PseudoFuncInput.of("nomappingavailable"));
+        assertThat(mapOutput.getValue()).isEqualTo("nomappingavailable");
+    }
+
+    @Test
+    public void testInvalidMappingStrategyAbort() {
+        final PseudoFuncConfig config = new PseudoFuncConfig(ImmutableMap.of(
+                PseudoFuncConfig.Param.FUNC_DECL, "map-test",
+                PseudoFuncConfig.Param.FUNC_IMPL, MapFunc.class.getName(),
+                MapFuncConfig.Param.MAP_FAILURE_STRATEGY, MapFailureStrategy.RETURN_NULL
+        ));
+        PseudoFunc func = PseudoFuncFactory.create(config);
+
+        assertThat(func.apply(PseudoFuncInput.of("unknown")).getValue()).isNull();
+    }
 }

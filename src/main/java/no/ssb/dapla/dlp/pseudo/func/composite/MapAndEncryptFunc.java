@@ -86,6 +86,9 @@ public class MapAndEncryptFunc extends AbstractPseudoFunc {
                                        Function<PseudoFuncInput, PseudoFuncOutput> inner,
                                        Function<PseudoFuncInput, PseudoFuncOutput> outer) {
         final PseudoFuncOutput innerOutput = inner.apply(input);
+        if (innerOutput.getValue() == null) {
+            return innerOutput;
+        }
         final PseudoFuncOutput outerOutput = outer.apply(
                 PseudoFuncInput.of(innerOutput.getValue()));
         innerOutput.getWarnings().forEach(outerOutput::addWarning);

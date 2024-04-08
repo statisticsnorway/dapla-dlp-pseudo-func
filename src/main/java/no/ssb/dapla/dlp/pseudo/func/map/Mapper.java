@@ -9,8 +9,8 @@ public interface Mapper {
 
     void init(PseudoFuncInput data);
     void setConfig(Map<String, Object> config);
-    PseudoFuncOutput map(PseudoFuncInput data) throws MappingNotFoundException;
+    PseudoFuncOutput map(PseudoFuncInput data);
 
-    PseudoFuncOutput restore(PseudoFuncInput mapped) throws MappingNotFoundException;
+    PseudoFuncOutput restore(PseudoFuncInput mapped);
 
 }

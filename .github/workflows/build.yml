@@ -23,6 +23,7 @@ jobs:
         with:
           java-version: 21
           distribution: zulu
+          cache: maven
 
       - name: Authenticate to Google Cloud
         id: auth

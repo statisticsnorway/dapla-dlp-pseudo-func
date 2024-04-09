@@ -5,7 +5,7 @@
 
   <groupId>no.ssb.dapla.dlp.pseudo.func</groupId>
   <artifactId>dapla-dlp-pseudo-func</artifactId>
-  <version>1.3.3</version>
+  <version>1.3.4-SNAPSHOT</version>
   <name>dapla-dlp-pseudo-func</name>
 
   <properties>
@@ -46,7 +46,7 @@
   <scm>
     <developerConnection>scm:git:https://github.com/${github.repository}.git</developerConnection>
     <url>https://github.com/${github.repository}</url>
-    <tag>v1.3.3</tag>
+    <tag>HEAD</tag>
   </scm>
 
   <dependencies>

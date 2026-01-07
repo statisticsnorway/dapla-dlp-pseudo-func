@@ -1,0 +1,17 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: pseudo-func
+  title: Pseudo Func
+  description: |
+    Library containing functions that can be used to implement data pseudonymization.
+  tags:
+    - java
+    - docker
+    - encryption
+  annotations:
+    github.com/project-slug: statisticsnorway/dapla-dlp-pseudo-func
+spec:
+  type: library
+  owner: dapla-stat-developers
+  lifecycle: production

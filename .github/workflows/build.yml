@@ -33,8 +33,14 @@ jobs:
           service_account: "gh-actions-dapla-pseudo@artifact-registry-5n.iam.gserviceaccount.com"
           token_format: access_token
 
-      - name: Build with Maven and deploy to Artifact Registry
-        run: mvn -P ssb-bip deploy -Dmaven.javadoc.skip=true
+      #- name: Build with Maven and deploy to Artifact Registry
+      #  run: mvn -P ssb-bip deploy -Dmaven.javadoc.skip=true
+      - name: Build with Maven
+        run: mvn -P ssb-bip package -Dmaven.javadoc.skip=true
+
+      - name: Deploy to Artifact Registry
+        run: mvn -P ssb-bip deploy -Dmaven.javadoc.skip=true -DskipTests
+
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@0.33.1

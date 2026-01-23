@@ -33,21 +33,32 @@ jobs:
           service_account: "gh-actions-dapla-pseudo@artifact-registry-5n.iam.gserviceaccount.com"
           token_format: access_token
 
-      - name: Build with Maven and deploy to Artifact Registry
-        run: mvn -P ssb-bip deploy -Dmaven.javadoc.skip=true
+      - name: Fail build on High/Critical Vulnerabilities
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          format: 'table'
+          scan-ref: '.'
+          severity: 'HIGH,CRITICAL'
+          ignore-unfixed: true
+          exit-code: 1
 
-      - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@0.33.1
+      - name: Run Trivy vulnerability scanner (SARIF for reporting)
+        uses: aquasecurity/trivy-action@master
         with:
           scan-type: 'fs'
           ignore-unfixed: true
           format: 'sarif'
           output: 'trivy-results.sarif'
-          severity: 'CRITICAL'
+          severity: 'CRITICAL,HIGH'
+          skip-setup-trivy: true
 
       - name: Upload Trivy scan results to GitHub Security tab
         uses: github/codeql-action/upload-sarif@v4
         with:
           sarif_file: 'trivy-results.sarif'
 
+      - name: Build with Maven and deploy to Artifact Registry
+        if: success()
+        run: mvn -P ssb-gar deploy -Dmaven.javadoc.skip=true
 

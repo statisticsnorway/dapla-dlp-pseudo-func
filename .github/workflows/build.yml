@@ -40,11 +40,11 @@ jobs:
           format: 'sarif'
           output: 'trivy-results.sarif'
           severity: 'CRITICAL'
-      
+
+      - name: Build adnd test with Maven
+        if: github.event_name == 'pull_request'
+        run: mvn -P ssb-bip clean test
+
       - name: Build with Maven and deploy to Artifact Registry
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         run: mvn -P ssb-bip deploy -Dmaven.javadoc.skip=true
-
-      - name: Build with Maven and deploy to Artifact Registry
-        if: github.event_name == 'pull_request'
-        run: mvn -P ssb-bip build -Dmaven.javadoc.skip=true

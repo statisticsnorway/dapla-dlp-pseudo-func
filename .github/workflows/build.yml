@@ -34,7 +34,9 @@ jobs:
           token_format: access_token
 
       - name: Build with Maven and deploy to Artifact Registry
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         run: mvn -P ssb-bip deploy -Dmaven.javadoc.skip=true
+<<<<<<< Updated upstream
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@0.33.1
@@ -51,3 +53,9 @@ jobs:
           sarif_file: 'trivy-results.sarif'
 
 
+=======
+      
+      - name: Build with Maven and deploy to Artifact Registry
+        if: github.event_name == 'pull_request'
+        run: mvn -P ssb-bip build -Dmaven.javadoc.skip=true
+>>>>>>> Stashed changes

@@ -32,12 +32,6 @@ jobs:
           workload_identity_provider: "projects/848539402404/locations/global/workloadIdentityPools/gh-actions/providers/gh-actions"
           service_account: "gh-actions-dapla-pseudo@artifact-registry-5n.iam.gserviceaccount.com"
           token_format: access_token
-
-      - name: Build with Maven and deploy to Artifact Registry
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-        run: mvn -P ssb-bip deploy -Dmaven.javadoc.skip=true
-<<<<<<< Updated upstream
-
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@0.33.1
         with:
@@ -46,16 +40,11 @@ jobs:
           format: 'sarif'
           output: 'trivy-results.sarif'
           severity: 'CRITICAL'
-
-      - name: Upload Trivy scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v4
-        with:
-          sarif_file: 'trivy-results.sarif'
-
-
-=======
       
+      - name: Build with Maven and deploy to Artifact Registry
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        run: mvn -P ssb-bip deploy -Dmaven.javadoc.skip=true
+
       - name: Build with Maven and deploy to Artifact Registry
         if: github.event_name == 'pull_request'
         run: mvn -P ssb-bip build -Dmaven.javadoc.skip=true
->>>>>>> Stashed changes

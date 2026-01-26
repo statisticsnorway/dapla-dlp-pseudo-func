@@ -17,7 +17,7 @@
     <github.repository>statisticsnorway/dapla-dlp-pseudo-func</github.repository>
 
     <!-- Dependency versions -->
-    <assertj.version>3.24.2</assertj.version>
+    <assertj.version>3.27.7</assertj.version>
     <format-preserving-encryption.version>1.0.0</format-preserving-encryption.version>
     <guava.version>32.0.0-jre</guava.version>
     <jackson.version>2.15.0</jackson.version>

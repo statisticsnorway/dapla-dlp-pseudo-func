@@ -33,6 +33,9 @@ jobs:
           workload_identity_provider: "projects/848539402404/locations/global/workloadIdentityPools/gh-actions/providers/gh-actions"
           service_account: "gh-actions-dapla-pseudo@artifact-registry-5n.iam.gserviceaccount.com"
           token_format: access_token
+      
+      - name: Build with Maven
+        run: mvn --batch-mode -P ssb-gar package
 
       - name: Fail build on High/Critical Vulnerabilities
         uses: aquasecurity/trivy-action@master

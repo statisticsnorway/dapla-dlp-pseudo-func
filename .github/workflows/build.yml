@@ -33,6 +33,7 @@ jobs:
           workload_identity_provider: "projects/848539402404/locations/global/workloadIdentityPools/gh-actions/providers/gh-actions"
           service_account: "gh-actions-dapla-pseudo@artifact-registry-5n.iam.gserviceaccount.com"
           token_format: access_token
+
       - name: Build with Maven
         run: mvn --batch-mode -P ssb-gar package
 
@@ -63,9 +64,7 @@ jobs:
 
       - name: Build and test with Maven
         if: github.event_name == 'pull_request'
-        #run: mvn --batch-mode -P ssb-gar clean test
-        run: mvn -X --batch-mode -P ssb-gar deploy -Dmaven.javadoc.skip=true
-
+        run: mvn --batch-mode -P ssb-gar clean test
 
       - name: Build with Maven and deploy to Artifact Registry
         if: github.event_name == 'push' && github.ref == 'refs/heads/master' && success()

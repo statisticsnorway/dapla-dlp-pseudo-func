@@ -65,6 +65,7 @@ jobs:
       - name: Build and test with Maven
         if: github.event_name == 'pull_request'
         env:
+          GOOGLE_CLOUD_ACCESS_TOKEN: ${{ steps.auth.outputs.access_token }}
           MAVEN_OPTS: >
             -Dmaven.wagon.http.retryHandler.count=5
             -Dmaven.wagon.httpconnectionManager.ttlSeconds=30

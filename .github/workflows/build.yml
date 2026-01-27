@@ -11,6 +11,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        auth_version: [v1.1.1, v2, v3]
     permissions:
       contents: read
       id-token: write
@@ -28,11 +32,17 @@ jobs:
 
       - name: Authenticate to Google Cloud
         id: auth
-        uses: google-github-actions/auth@v2
+        uses: google-github-actions/auth@${{ matrix.auth_version }}
         with:
           workload_identity_provider: "projects/848539402404/locations/global/workloadIdentityPools/gh-actions/providers/gh-actions"
           service_account: "gh-actions-dapla-pseudo@artifact-registry-5n.iam.gserviceaccount.com"
           token_format: access_token
+
+      - name: Log auth token length and Maven version
+        run: |
+          echo "Auth version: ${{ matrix.auth_version }}"
+          echo "Access token length: ${#ACTIONS_ID_TOKEN_REQUEST_TOKEN}"
+          mvn -v
 
       - name: Fail build on High/Critical Vulnerabilities
         uses: aquasecurity/trivy-action@master
@@ -63,6 +73,6 @@ jobs:
         with:
           sarif_file: 'trivy-results.sarif'
 
-      - name: Build with Maven and deploy to Artifact Registry
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master' && success()
-        run: mvn -P ssb-gar deploy -Dmaven.javadoc.skip=true
+      - name: Dry-run deploy with Maven
+        if: success()
+        run: mvn -P ssb-gar deploy -Dmaven.deploy.skip=true -Dmaven.javadoc.skip=true

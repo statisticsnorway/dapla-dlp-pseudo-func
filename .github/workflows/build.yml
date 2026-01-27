@@ -30,9 +30,25 @@ jobs:
           distribution: zulu
           cache: maven
 
-      - name: Authenticate to Google Cloud
-        id: auth
-        uses: google-github-actions/auth@${{ matrix.auth_version }}
+      - name: Authenticate to Google Cloud (v1.1.1)
+        if: matrix.auth_version == 'v1.1.1'
+        uses: google-github-actions/auth@v1.1.1
+        with:
+          workload_identity_provider: "projects/848539402404/locations/global/workloadIdentityPools/gh-actions/providers/gh-actions"
+          service_account: "gh-actions-dapla-pseudo@artifact-registry-5n.iam.gserviceaccount.com"
+          token_format: access_token
+
+      - name: Authenticate to Google Cloud (v2)
+        if: matrix.auth_version == 'v2'
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: "projects/848539402404/locations/global/workloadIdentityPools/gh-actions/providers/gh-actions"
+          service_account: "gh-actions-dapla-pseudo@artifact-registry-5n.iam.gserviceaccount.com"
+          token_format: access_token
+
+      - name: Authenticate to Google Cloud (v3)
+        if: matrix.auth_version == 'v3'
+        uses: google-github-actions/auth@v3
         with:
           workload_identity_provider: "projects/848539402404/locations/global/workloadIdentityPools/gh-actions/providers/gh-actions"
           service_account: "gh-actions-dapla-pseudo@artifact-registry-5n.iam.gserviceaccount.com"

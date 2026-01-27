@@ -28,11 +28,13 @@ jobs:
 
       - name: Authenticate to Google Cloud
         id: auth
-        uses: google-github-actions/auth@v2
+        uses: google-github-actions/auth@v1.1.1
         with:
           workload_identity_provider: "projects/848539402404/locations/global/workloadIdentityPools/gh-actions/providers/gh-actions"
           service_account: "gh-actions-dapla-pseudo@artifact-registry-5n.iam.gserviceaccount.com"
           token_format: access_token
+      - name: Build with Maven
+        run: mvn --batch-mode -P ssb-gar package
 
       - name: Fail build on High/Critical Vulnerabilities
         uses: aquasecurity/trivy-action@master
@@ -54,15 +56,17 @@ jobs:
           severity: 'CRITICAL,HIGH'
           skip-setup-trivy: true
 
-      - name: Build and test with Maven
-        if: github.event_name == 'pull_request'
-        run: mvn -P ssb-gar clean test
-
       - name: Upload Trivy scan results to GitHub Security tab
         uses: github/codeql-action/upload-sarif@v4
         with:
           sarif_file: 'trivy-results.sarif'
 
+      - name: Build and test with Maven
+        if: github.event_name == 'pull_request'
+        #run: mvn --batch-mode -P ssb-gar clean test
+        run: mvn -X --batch-mode -P ssb-gar deploy -Dmaven.javadoc.skip=true
+
+
       - name: Build with Maven and deploy to Artifact Registry
         if: github.event_name == 'push' && github.ref == 'refs/heads/master' && success()
-        run: mvn -P ssb-gar deploy -Dmaven.javadoc.skip=true
+        run: mvn --batch-mode -P ssb-gar deploy -Dmaven.javadoc.skip=true

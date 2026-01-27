@@ -56,7 +56,7 @@ jobs:
 
       - name: Build and test with Maven
         if: github.event_name == 'pull_request'
-        run: mvn -X -P ssb-gar deploy -Dmaven.javadoc.skip=true
+        run: mvn -X --batch-mode -P ssb-gar deploy -Dmaven.javadoc.skip=true
 
       - name: Upload Trivy scan results to GitHub Security tab
         uses: github/codeql-action/upload-sarif@v4

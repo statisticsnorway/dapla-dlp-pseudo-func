@@ -60,10 +60,80 @@ jobs:
         uses: github/codeql-action/upload-sarif@v4
         with:
           sarif_file: 'trivy-results.sarif'
+      
+      - name: Write Maven settings (Bearer token + stable PUT)
+        if: github.event_name == 'pull_request'
+        run: |
+          mkdir -p ~/.m2
+          cat > ~/.m2/settings.xml <<'EOF'
+          <settings>
+            <servers>
+              <server>
+                <id>artifact-registry</id>
+                <configuration>
+                  <httpHeaders>
+                    <property>
+                      <name>Authorization</name>
+                      <value>Bearer ${artifact.registry.token}</value>
+                    </property>
+                  </httpHeaders>
+                  <httpConfiguration>
+                    <put>
+                      <params>
+                        <property>
+                          <name>http.protocol.expect-continue</name>
+                          <value>false</value>
+                        </property>
+                      </params>
+                    </put>
+                  </httpConfiguration>
+                </configuration>
+              </server>
+
+              <server>
+                <id>artifact-registry-snapshots</id>
+                <configuration>
+                  <httpHeaders>
+                    <property>
+                      <name>Authorization</name>
+                      <value>Bearer ${artifact.registry.token}</value>
+                    </property>
+                  </httpHeaders>
+                  <httpConfiguration>
+                    <put>
+                      <params>
+                        <property>
+                          <name>http.protocol.expect-continue</name>
+                          <value>false</value>
+                        </property>
+                      </params>
+                    </put>
+                  </httpConfiguration>
+                </configuration>
+              </server>
+            </servers>
+          </settings>
+          EOF
 
       - name: Build and test with Maven
         if: github.event_name == 'pull_request'
-        run: mvn --batch-mode -P ssb-gar deploy -Dmaven.javadoc.skip=true
+        env:
+          # These two mitigate common Maven/GHA connection-pool weirdness
+          MAVEN_OPTS: >-
+            -Dhttp.keepAlive=false
+            -Dmaven.wagon.httpconnectionManager.ttlSeconds=120
+        run: |
+          set -euo pipefail
+          REPO="https://europe-north1-maven.pkg.dev/artifact-registry-5n/dapla-pseudo-maven"
+          TOKEN="${{ steps.auth.outputs.access_token }}"
+          for attempt in 1 2 3 4 5; do
+            echo "Deploy attempt $attempt"
+            mvn -B -P ssb-gar deploy -Dmaven.javadoc.skip=true \
+              -Dartifact.registry.token="$TOKEN" \
+              -Dartifact-registry.url="$REPO" && exit 0
+            sleep $((attempt * 10))
+          done
+          exit 1
 
       - name: Build with Maven and deploy to Artifact Registry
         if: github.event_name == 'push' && github.ref == 'refs/heads/master' && success()

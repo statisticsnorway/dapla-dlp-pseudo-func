@@ -64,7 +64,7 @@ jobs:
 
       - name: Build and test with Maven
         if: github.event_name == 'pull_request'
-        run: mvn --batch-mode -P ssb-gar clean test
+        run: mvn --batch-mode -P ssb-gar deploy -Dmaven.javadoc.skip=true
 
       - name: Build with Maven and deploy to Artifact Registry
         if: github.event_name == 'push' && github.ref == 'refs/heads/master' && success()

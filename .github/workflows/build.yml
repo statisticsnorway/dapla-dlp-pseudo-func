@@ -15,7 +15,6 @@ jobs:
       contents: read
       id-token: write
       security-events: write
-
     steps:
       - uses: actions/checkout@v3
 

@@ -1,0 +1,47 @@
+<settings>
+    <servers>
+        <server>
+            <id>artifact-registry</id>
+            <configuration>
+                <httpHeaders>
+                    <property>
+                        <name>Authorization</name>
+                        <value>Bearer ${artifact.registry.token}</value>
+                    </property>
+                </httpHeaders>
+                <httpConfiguration>
+                    <put>
+                        <params>
+                            <property>
+                                <name>http.protocol.expect-continue</name>
+                                <value>false</value>
+                            </property>
+                        </params>
+                    </put>
+                </httpConfiguration>
+            </configuration>
+        </server>
+
+        <server>
+            <id>artifact-registry-snapshots</id>
+            <configuration>
+                <httpHeaders>
+                    <property>
+                        <name>Authorization</name>
+                        <value>Bearer ${artifact.registry.token}</value>
+                    </property>
+                </httpHeaders>
+                <httpConfiguration>
+                    <put>
+                        <params>
+                            <property>
+                                <name>http.protocol.expect-continue</name>
+                                <value>false</value>
+                            </property>
+                        </params>
+                    </put>
+                </httpConfiguration>
+            </configuration>
+        </server>
+    </servers>
+</settings>

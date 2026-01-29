@@ -63,8 +63,14 @@ jobs:
 
       - name: Build and test with Maven
         if: github.event_name == 'pull_request'
-        run: mvn --batch-mode -P ssb-gar clean test
+        run: |
+          mvn --batch-mode -P ssb-gar clean test
 
       - name: Build with Maven and deploy to Artifact Registry
         if: github.event_name == 'push' && github.ref == 'refs/heads/master' && success()
-        run: mvn --batch-mode -P ssb-gar deploy -Dmaven.javadoc.skip=true
+        run: |
+          mkdir -p ~/.m2
+          cp .github/maven/settings.xml ~/.m2/settings.xml
+          mvn -B -P ssb-gar deploy -Dmaven.javadoc.skip=true \
+              -Dartifact.registry.token="${{ steps.auth.outputs.access_token }}" \
+              -Dartifact-registry.url="https://europe-north1-maven.pkg.dev/artifact-registry-5n/dapla-pseudo-maven"

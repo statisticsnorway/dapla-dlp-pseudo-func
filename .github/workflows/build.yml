@@ -67,8 +67,8 @@ jobs:
           mkdir -p ~/.m2
           cp .github/maven/settings.xml ~/.m2/settings.xml
           mvn -B -P ssb-gar deploy -Dmaven.javadoc.skip=true \
-              -Dartifact.registry.token="$TOKEN" \
-              -Dartifact-registry.url="$REPO"
+              -Dartifact.registry.token="${{ steps.auth.outputs.access_token }}" \
+              -Dartifact-registry.url="https://europe-north1-maven.pkg.dev/artifact-registry-5n/dapla-pseudo-maven"
 
       - name: Build with Maven and deploy to Artifact Registry
         if: github.event_name == 'push' && github.ref == 'refs/heads/master' && success()

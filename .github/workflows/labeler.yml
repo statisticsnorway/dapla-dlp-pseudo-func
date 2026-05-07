@@ -18,6 +18,6 @@ jobs:
 
       # Reads labels from .github/labels.yml
       - name: Run Labeler
-        uses: crazy-max/ghaction-github-labeler@f4f6b96e7e747b5416cd470f3cfecf26abaa811e # v4
+        uses: crazy-max/ghaction-github-labeler@548a7c3603594ec17c819e1239f281a3b801ab4d # v6.0.0
         with:
           skip-delete: true

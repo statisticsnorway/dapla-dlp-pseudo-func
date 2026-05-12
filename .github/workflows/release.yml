@@ -53,7 +53,7 @@ jobs:
           git config user.email "143391972+dapla-bot[bot]@users.noreply.github.com"
 
       - name: Setup Maven authentication to GitHub packages
-        uses: s4u/maven-settings-action@60912582505985be4cc55d2b890eb32767f8de5f # v2.8.0
+        uses: s4u/maven-settings-action@894661b3ddae382f1ae8edbeab60987e08cf0788 # v4.0.0
         id: maven_settings
         with:
           servers: '[{"id": "github","configuration": {"httpHeaders": {"property": {"name": "Authorization","value": "Bearer ${{ secrets.GITHUB_TOKEN }}"}}}}]'

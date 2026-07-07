@@ -36,7 +36,7 @@ jobs:
         run: mvn --batch-mode -P ssb-gar package
 
       - name: Fail build on High/Critical Vulnerabilities
-        uses: aquasecurity/trivy-action@54f647b7e1bb85c95cddabcd46b0c578ec92bc1a # v4.36.3
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
         with:
           scan-type: 'fs'
           format: 'table'
